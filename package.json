@@ -1,21 +1,36 @@
 {
-  "name": "@ndive/design-system",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "yujeong-jeon",
-  "license": "ISC",
-  "dependencies": {
-    "@changesets/cli": "^2.27.8",
-    "turbo": "^2.1.2"
-  },
-  "packageManager": "pnpm@9.6.0",
-  "engines": {
-    "node": "20.13.1",
-    "pnpm": "9.6.0"
-  }
+    "name": "@ndive/design-system",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "lint": "eslint '**/*.{js,jsx,ts,tsx}'",
+        "lint:fix": "eslint '**/*.{js,jsx,ts,tsx}' --fix",
+        "prettier": "prettier --check '**/*.{ts,tsx,js,mjs,cjs,jsx,json,yaml,yml}'",
+        "prettier:fix": "prettier --write '**/*.{ts,tsx,js,mjs,cjs,jsx,json,yaml,yml}'",
+        "md": "markdownlint '*.md'",
+        "md:fix": "markdownlint --fix '*.md'",
+        "fix:all": "pnpm run lint:fix & pnpm run prettier:fix & pnpm run md:fix",
+        "prepare": "lefthook install"
+    },
+    "keywords": [],
+    "author": "yujeong-jeon",
+    "license": "ISC",
+    "dependencies": {
+        "@changesets/cli": "^2.27.8",
+        "turbo": "^2.1.2"
+    },
+    "packageManager": "pnpm@9.6.0",
+    "engines": {
+        "node": "20.13.1",
+        "pnpm": "9.6.0"
+    },
+    "devDependencies": {
+        "@naverpay/editorconfig": "^0.0.4",
+        "@naverpay/eslint-config": "^1.0.7",
+        "@naverpay/markdown-lint": "^0.0.3",
+        "@naverpay/prettier-config": "^1.0.0",
+        "lefthook": "^1.7.15"
+    }
 }
