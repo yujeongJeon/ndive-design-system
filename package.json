@@ -10,11 +10,12 @@
   "author": "yujeong-jeon",
   "license": "ISC",
   "dependencies": {
+    "@changesets/cli": "^2.27.8",
     "turbo": "^2.1.2"
   },
   "packageManager": "pnpm@9.6.0",
   "engines": {
-      "node": "20.13.1",
-      "pnpm": "9.6.0"
+    "node": "20.13.1",
+    "pnpm": "9.6.0"
   }
 }
