@@ -18,8 +18,12 @@
             "dependsOn": [],
             "cache": false
         },
+        "fetch:icon": {
+            "dependsOn": [],
+            "cache": false
+        },
         "fetch:tokens": {
-            "dependsOn": ["fetch:color", "fetch:typo"],
+            "dependsOn": ["fetch:color", "fetch:typo", "fetch:icon"],
             "cache": false,
             "persistent": true
         }

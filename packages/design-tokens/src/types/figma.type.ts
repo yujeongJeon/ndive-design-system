@@ -49,9 +49,9 @@ export interface IFigmaDocument<T extends IFrame = IFrame> {
 
 export type TNodeType = 'TEXT' | 'VECTOR' | 'COMPONENT' | 'COMPONENT_SET' | 'FRAME' | 'GROUP'
 
-export interface ICommon<T extends string = string> {
+export interface ICommon<Name extends string = string> {
     id: string
-    name: T
+    name: Name
     type: TNodeType
     fills: TPaint[]
     absoluteBoundingBox: TRectangle
@@ -81,7 +81,7 @@ export interface IText<Name extends string = string> extends ICommon<Name> {
 
 export interface IGroup<Name extends string = string, NameSet extends string = string> extends ICommon<Name> {
     type: 'GROUP'
-    children: (ICommon | IGroup<NameSet>)[]
+    children: ICommon<NameSet>[]
 }
 
 export interface IComponent extends ICommon {

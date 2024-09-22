@@ -7,7 +7,8 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "fetch:color": "node ./scripts/fetchColor.js",
-        "fetch:typo": "node ./scripts/fetchTypo.js"
+        "fetch:typo": "node ./scripts/fetchTypo.js",
+        "fetch:icon": "node ./scripts/fetchIcon.js"
     },
     "keywords": [],
     "author": "yujeong-jeon",

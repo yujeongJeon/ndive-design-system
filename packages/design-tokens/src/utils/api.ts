@@ -48,3 +48,14 @@ export const getFileNode = async <T>({
         throw error
     }
 }
+
+export const getSvgCodeFromUrl = async (url: string) => {
+    const res = await axios.get(url, {
+        headers: {
+            'Content-Type': 'text/html',
+        },
+    })
+    const svgCode: string = res.data
+
+    return svgCode
+}
