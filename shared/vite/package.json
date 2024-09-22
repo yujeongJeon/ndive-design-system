@@ -2,6 +2,7 @@
     "name": "@ndive/vite",
     "version": "1.0.0",
     "description": "",
+    "private": true,
     "main": "dist/defineConfig.mjs",
     "types": "./dist/defineConfig.d.mts",
     "exports": {
