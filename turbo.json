@@ -14,8 +14,12 @@
             "dependsOn": [],
             "cache": false
         },
+        "fetch:typo": {
+            "dependsOn": [],
+            "cache": false
+        },
         "fetch:tokens": {
-            "dependsOn": ["fetch:color"],
+            "dependsOn": ["fetch:color", "fetch:typo"],
             "cache": false,
             "persistent": true
         }

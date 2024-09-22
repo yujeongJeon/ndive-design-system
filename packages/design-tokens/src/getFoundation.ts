@@ -1,8 +1,11 @@
-import {COLOR_NODE_ID} from './config'
-import {TColorDocumentFrame, TColorReturnType, TColorSetFrame} from './types/color.type'
+import {COLOR_NODE_ID, TYPO_NODE_ID} from './config'
 import {getFileNode} from './utils/api'
 import {parseColor} from './utils/color'
-import {isFrame} from './utils/figmaUtils'
+import {isFrame, isText} from './utils/figmaUtils'
+import {toSnakeCaseBySeparator} from './utils/string'
+
+import type {TColorDocumentFrame, TColorReturnType, TColorSetFrame} from './types/color.type'
+import type {TTypoDocumentFrame, TTypoFrame, TUsageFrame} from './types/typo.type'
 
 async function fetchFromFigma<T>({
     nodeId,
@@ -39,6 +42,25 @@ export async function setColor({accessToken}: {accessToken: string}) {
                 )
 
             return colorSet
+        },
+    })
+}
+
+export async function setTypo({accessToken}: {accessToken: string}) {
+    return await fetchFromFigma({
+        nodeId: TYPO_NODE_ID,
+        accessToken,
+        transform(document: TTypoDocumentFrame) {
+            const usage =
+                document.children.filter<TUsageFrame>(isFrame).filter(({name}) => name === 'Usage')?.[0].children || []
+
+            return usage.filter<TTypoFrame>(isFrame).reduce(
+                (obj, {name, children}) => ({
+                    ...obj,
+                    [toSnakeCaseBySeparator(name)]: children.filter(isText)?.[0].style,
+                }),
+                {},
+            )
         },
     })
 }

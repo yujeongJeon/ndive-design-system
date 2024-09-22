@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
-import {setColor} from '@ndive/design-tokens'
+import {setTypo} from '@ndive/design-tokens'
 import * as dotenv from 'dotenv'
 
 function normalize(relativePath) {
@@ -10,10 +10,8 @@ function normalize(relativePath) {
 
 dotenv.config({path: normalize('../.env')})
 
-async function fetchColor() {
-    const colorSet = await setColor({
-        accessToken: process.env.FIGMA_TOKEN,
-    })
+async function fetchTypo() {
+    const typoSet = await setTypo({accessToken: process.env.FIGMA_TOKEN})
 
     const jsonDir = normalize('../src/json')
 
@@ -22,9 +20,9 @@ async function fetchColor() {
             recursive: true,
         })
 
-    fs.writeFileSync(path.join(jsonDir, 'color.json'), JSON.stringify(colorSet), {
+    fs.writeFileSync(path.join(jsonDir, 'typo.json'), JSON.stringify(typoSet), {
         encoding: 'utf-8',
     })
 }
 
-fetchColor()
+fetchTypo()
