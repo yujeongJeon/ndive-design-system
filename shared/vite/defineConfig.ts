@@ -3,6 +3,7 @@ import path from 'node:path'
 
 import browserslistToEsbuild from 'browserslist-to-esbuild'
 import {defineConfig} from 'vite'
+import dts from 'vite-plugin-dts'
 
 const normalizeOutput = (exportPath: string | {default: string}) => {
     return typeof exportPath === 'string' ? exportPath : exportPath?.default
@@ -18,6 +19,12 @@ export default ({pkg, entry}: {pkg: Record<string, any>; entry: {index: string} 
     const outDir = path.dirname(buildOutput)
 
     return defineConfig({
+        plugins: [
+            dts({
+                outDir,
+                rollupTypes: true,
+            }),
+        ],
         build: {
             outDir,
             lib: {
