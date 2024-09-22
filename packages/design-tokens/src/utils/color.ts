@@ -29,12 +29,10 @@ export const rgbaToHex = (color: TColor) => {
     return `#${r}${g}${b}`
 }
 
-export const parseColor = (children: IFrame[], rootName: string) =>
+export const parseColor = (children: IFrame[]) =>
     children
         .map(({name, children: subChildren}) => ({
-            name: camelToSnakeCase(name, {
-                exclude: rootName,
-            }).toUpperCase(),
+            name: camelToSnakeCase(name).toUpperCase(),
             colors: subChildren.filter(isVector)[0].fills[0].color, // VECTOR 객체의 fills 속성을 추출
         }))
         .reduce(
