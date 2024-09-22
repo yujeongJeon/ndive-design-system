@@ -13,7 +13,8 @@
         "md:fix": "markdownlint --fix '*.md'",
         "fix:all": "pnpm run lint:fix & pnpm run prettier:fix & pnpm run md:fix",
         "prepare": "lefthook install",
-        "build": "turbo clean build"
+        "build": "turbo clean build",
+        "fetch:tokens": "turbo fetch:tokens && pnpm fix:all"
     },
     "keywords": [],
     "author": "yujeong-jeon",

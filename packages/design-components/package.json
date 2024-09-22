@@ -3,10 +3,18 @@
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
+    "type": "module",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "fetch:color": "node ./scripts/fetchColor.js"
     },
     "keywords": [],
     "author": "yujeong-jeon",
-    "license": "ISC"
+    "license": "ISC",
+    "devDependencies": {
+        "@ndive/design-tokens": "workspace:^",
+        "@ndive/tsconfig": "workspace:*",
+        "@types/node": "^22.5.5",
+        "dotenv": "^16.4.5"
+    }
 }

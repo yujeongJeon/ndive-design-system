@@ -9,6 +9,15 @@
         "build": {
             "dependsOn": ["^build"],
             "outputs": ["dist/**"]
+        },
+        "fetch:color": {
+            "dependsOn": [],
+            "cache": false
+        },
+        "fetch:tokens": {
+            "dependsOn": ["fetch:color"],
+            "cache": false,
+            "persistent": true
         }
     }
 }
