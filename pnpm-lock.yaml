@@ -43,12 +43,18 @@ importers:
       '@ndive/tsconfig':
         specifier: workspace:*
         version: link:../../shared/tsconfig
+      '@ndive/vite':
+        specifier: workspace:^
+        version: link:../../shared/vite
       '@types/node':
         specifier: ^22.5.5
         version: 22.5.5
       axios:
         specifier: ^1.7.7
         version: 1.7.7
+      vite:
+        specifier: ^5.4.6
+        version: 5.4.6(@types/node@22.5.5)
 
   packages/design-tracker: {}
 
@@ -60,6 +66,9 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1(browserslist@4.23.3)
     devDependencies:
+      '@ndive/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
       tsup:
         specifier: ^8.3.0
         version: 8.3.0(postcss@8.4.47)(typescript@5.6.2)

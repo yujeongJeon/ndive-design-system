@@ -1,1 +1,1 @@
-export * from './getFoundation'
+export {setColor} from './getFoundation'
