@@ -22,7 +22,6 @@
         "vite": "^5.4.6"
     },
     "dependencies": {
-        "browserslist-to-esbuild": "^2.1.1",
         "vite-plugin-dts": "^4.2.1"
     },
     "peerDependencies": {

@@ -1,17 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import path from 'node:path'
 
-import browserslistToEsbuild from 'browserslist-to-esbuild'
-import {defineConfig} from 'vite'
+import {BuildOptions, defineConfig} from 'vite'
 import dts from 'vite-plugin-dts'
 
 const normalizeOutput = (exportPath: string | {default: string}) => {
     return typeof exportPath === 'string' ? exportPath : exportPath?.default
 }
 
-const SUPPORT_TARGETS = browserslistToEsbuild()
-
-export default ({pkg, entry}: {pkg: Record<string, any>; entry: {index: string} & Record<string, string>}) => {
+export default ({
+    pkg,
+    entry,
+    target,
+}: {
+    pkg: Record<string, any>
+    entry: {index: string} & Record<string, string>
+    target: BuildOptions['target']
+}) => {
     const outputPath = pkg.exports ? pkg.exports['.'] : pkg.main
 
     const buildOutput = typeof outputPath === 'object' ? normalizeOutput(outputPath.import) : outputPath
@@ -46,7 +51,7 @@ export default ({pkg, entry}: {pkg: Record<string, any>; entry: {index: string} 
                     },
                 ],
             },
-            target: SUPPORT_TARGETS,
+            target,
         },
     })
 }
