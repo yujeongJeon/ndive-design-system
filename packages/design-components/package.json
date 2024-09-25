@@ -8,7 +8,15 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "fetch:color": "node ./scripts/fetchColor.js",
         "fetch:typo": "node ./scripts/fetchTypo.js",
-        "fetch:icon": "node ./scripts/fetchIcon.js"
+        "fetch:icon": "node ./scripts/fetchIcon.js",
+        "clean": "rm -rf dist",
+        "build": "vite build --config vite.config.mts"
+    },
+    "exports": {
+        ".": {
+            "import": "./dist/index.mjs",
+            "types": "./dist/index.d.mts"
+        }
     },
     "keywords": [],
     "author": "yujeong-jeon",
@@ -16,7 +24,20 @@
     "devDependencies": {
         "@ndive/design-tokens": "workspace:^",
         "@ndive/tsconfig": "workspace:*",
+        "@ndive/vite": "workspace:^",
         "@types/node": "^22.5.5",
-        "dotenv": "^16.4.5"
+        "@types/react": "^18.3.9",
+        "@types/react-dom": "^18.3.0",
+        "browserslist-to-esbuild": "^2.1.1",
+        "dotenv": "^16.4.5",
+        "react": "^18",
+        "react-dom": "^18",
+        "vite": "^5.4.6"
+    },
+    "peerDependencies": {
+        "@types/react": "^18",
+        "@types/react-dom": "^18",
+        "react": "^18",
+        "react-dom": "^18"
     }
 }
