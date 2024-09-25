@@ -17,8 +17,19 @@ jobs:
               with:
                   node-version: '20'
                   cache: 'pnpm'
-            - run: pnpm i --frozen-lockfile
+            - name: Restore node_modules cache
+              id: restore-cache
+              uses: actions/cache@v3
+              with:
+                  path: node_modules
+                  key: ${{ runner.os }}-pnpm-node_modules-${{ hashFiles('pnpm-lock.yaml') }}
+                  restore-keys: |
+                      ${{ runner.os }}-pnpm-node_modules-
+            - name: Install dependencies
+              if: steps.restore-cache.outputs.cache-hit != 'true'
+              run: pnpm i --frozen-lockfile
             - name: Cache node_modules
+              if: steps.restore-cache.outputs.cache-hit != 'true'
               uses: actions/cache@v3
               with:
                   path: node_modules
