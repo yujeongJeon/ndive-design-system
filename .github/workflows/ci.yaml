@@ -1,4 +1,4 @@
-name: Publish Packages
+name: Check Pull Request
 
 on:
     pull_request:
