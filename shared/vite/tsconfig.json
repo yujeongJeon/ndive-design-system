@@ -1,0 +1,9 @@
+{
+    "extends": "@ndive/tsconfig/node.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "noEmit": true
+    },
+    "include": ["./defineConfig.ts"],
+    "exclude": ["node_modules", "dist"]
+}

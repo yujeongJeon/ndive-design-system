@@ -1,0 +1,31 @@
+{
+    "$schema": "https://turbo.build/schema.json",
+    "ui": "tui",
+    "tasks": {
+        "clean": {
+            "dependsOn": ["^clean"]
+        },
+        "test": {},
+        "build": {
+            "dependsOn": ["^build"],
+            "outputs": ["dist/**"]
+        },
+        "fetch:color": {
+            "dependsOn": [],
+            "cache": false
+        },
+        "fetch:typo": {
+            "dependsOn": [],
+            "cache": false
+        },
+        "fetch:icon": {
+            "dependsOn": [],
+            "cache": false
+        },
+        "fetch:tokens": {
+            "dependsOn": ["fetch:color", "fetch:typo", "fetch:icon"],
+            "cache": false,
+            "persistent": true
+        }
+    }
+}

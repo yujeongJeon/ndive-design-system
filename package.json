@@ -12,7 +12,11 @@
         "md": "markdownlint '*.md'",
         "md:fix": "markdownlint --fix '*.md'",
         "fix:all": "pnpm run lint:fix & pnpm run prettier:fix & pnpm run md:fix",
-        "prepare": "lefthook install"
+        "prepare": "lefthook install",
+        "build": "turbo clean build",
+        "fetch:tokens": "turbo fetch:tokens && pnpm fix:all",
+        "changeset-version": "changeset version && pnpm run md:fix",
+        "release": "changeset publish"
     },
     "keywords": [],
     "author": "yujeong-jeon",
@@ -31,6 +35,7 @@
         "@naverpay/eslint-config": "^1.0.7",
         "@naverpay/markdown-lint": "^0.0.3",
         "@naverpay/prettier-config": "^1.0.0",
-        "lefthook": "^1.7.15"
+        "lefthook": "^1.7.15",
+        "typescript": "^5.6.2"
     }
 }
