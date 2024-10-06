@@ -1,5 +1,5 @@
 {
-    "PRETENDARD_36_BOLD": {
+    "Display_Bold": {
         "fontFamily": "Pretendard",
         "fontPostScriptName": "Pretendard-Bold",
         "fontWeight": 700,
@@ -13,21 +13,7 @@
         "lineHeightPercentFontSize": 120.00000762939453,
         "lineHeightUnit": "FONT_SIZE_%"
     },
-    "PRETENDARD_36_MEDIUM": {
-        "fontFamily": "Pretendard",
-        "fontPostScriptName": "Pretendard-Medium",
-        "fontWeight": 500,
-        "textAutoResize": "WIDTH_AND_HEIGHT",
-        "fontSize": 36,
-        "textAlignHorizontal": "LEFT",
-        "textAlignVertical": "TOP",
-        "letterSpacing": 0,
-        "lineHeightPx": 43.20000076293945,
-        "lineHeightPercent": 100.55647277832031,
-        "lineHeightPercentFontSize": 120.00000762939453,
-        "lineHeightUnit": "FONT_SIZE_%"
-    },
-    "PRETENDARD_24_BOLD": {
+    "Head_1-Bold": {
         "fontFamily": "Pretendard",
         "fontPostScriptName": "Pretendard-Bold",
         "fontWeight": 700,
@@ -41,21 +27,7 @@
         "lineHeightPercentFontSize": 120.00000762939453,
         "lineHeightUnit": "FONT_SIZE_%"
     },
-    "PRETENDARD_14_MEDIUM": {
-        "fontFamily": "Pretendard",
-        "fontPostScriptName": "Pretendard-Medium",
-        "fontWeight": 500,
-        "textAutoResize": "WIDTH_AND_HEIGHT",
-        "fontSize": 14,
-        "textAlignHorizontal": "LEFT",
-        "textAlignVertical": "TOP",
-        "letterSpacing": 0,
-        "lineHeightPx": 19.600000381469727,
-        "lineHeightPercent": 117.31587219238281,
-        "lineHeightPercentFontSize": 140,
-        "lineHeightUnit": "FONT_SIZE_%"
-    },
-    "PRETENDARD_20_BOLD": {
+    "Head_2-Bold": {
         "fontFamily": "Pretendard",
         "fontPostScriptName": "Pretendard-Bold",
         "fontWeight": 700,
@@ -69,7 +41,7 @@
         "lineHeightPercentFontSize": 120.00000762939453,
         "lineHeightUnit": "FONT_SIZE_%"
     },
-    "PRETENDARD_16_BOLD": {
+    "Head_3-Bold": {
         "fontFamily": "Pretendard",
         "fontPostScriptName": "Pretendard-Bold",
         "fontWeight": 700,
@@ -83,7 +55,7 @@
         "lineHeightPercentFontSize": 140,
         "lineHeightUnit": "FONT_SIZE_%"
     },
-    "PRETENDARD_14_BOLD": {
+    "Head_4-Bold": {
         "fontFamily": "Pretendard",
         "fontPostScriptName": "Pretendard-Bold",
         "fontWeight": 700,
@@ -97,7 +69,7 @@
         "lineHeightPercentFontSize": 140,
         "lineHeightUnit": "FONT_SIZE_%"
     },
-    "PRETENDARD_13_BOLD": {
+    "Body_2-Bold": {
         "fontFamily": "Pretendard",
         "fontPostScriptName": "Pretendard-Bold",
         "fontWeight": 700,
@@ -111,21 +83,7 @@
         "lineHeightPercentFontSize": 140,
         "lineHeightUnit": "FONT_SIZE_%"
     },
-    "PRETENDARD_13_MEDIUM": {
-        "fontFamily": "Pretendard",
-        "fontPostScriptName": "Pretendard-Medium",
-        "fontWeight": 500,
-        "textAutoResize": "WIDTH_AND_HEIGHT",
-        "fontSize": 13,
-        "textAlignHorizontal": "LEFT",
-        "textAlignVertical": "TOP",
-        "letterSpacing": 0,
-        "lineHeightPx": 18.19999885559082,
-        "lineHeightPercent": 117.31587219238281,
-        "lineHeightPercentFontSize": 140,
-        "lineHeightUnit": "FONT_SIZE_%"
-    },
-    "PRETENDARD_12_BOLD": {
+    "Caption_Bold": {
         "fontFamily": "Pretendard",
         "fontPostScriptName": "Pretendard-Bold",
         "fontWeight": 700,
@@ -139,7 +97,49 @@
         "lineHeightPercentFontSize": 140,
         "lineHeightUnit": "FONT_SIZE_%"
     },
-    "PRETENDARD_12_MEDIUM": {
+    "Display_Medium": {
+        "fontFamily": "Pretendard",
+        "fontPostScriptName": "Pretendard-Medium",
+        "fontWeight": 500,
+        "textAutoResize": "WIDTH_AND_HEIGHT",
+        "fontSize": 36,
+        "textAlignHorizontal": "LEFT",
+        "textAlignVertical": "TOP",
+        "letterSpacing": 0,
+        "lineHeightPx": 43.20000076293945,
+        "lineHeightPercent": 100.55647277832031,
+        "lineHeightPercentFontSize": 120.00000762939453,
+        "lineHeightUnit": "FONT_SIZE_%"
+    },
+    "Body_1-Medium": {
+        "fontFamily": "Pretendard",
+        "fontPostScriptName": "Pretendard-Medium",
+        "fontWeight": 500,
+        "textAutoResize": "WIDTH_AND_HEIGHT",
+        "fontSize": 14,
+        "textAlignHorizontal": "LEFT",
+        "textAlignVertical": "TOP",
+        "letterSpacing": 0,
+        "lineHeightPx": 19.600000381469727,
+        "lineHeightPercent": 117.31587219238281,
+        "lineHeightPercentFontSize": 140,
+        "lineHeightUnit": "FONT_SIZE_%"
+    },
+    "Body_2-Medium": {
+        "fontFamily": "Pretendard",
+        "fontPostScriptName": "Pretendard-Medium",
+        "fontWeight": 500,
+        "textAutoResize": "WIDTH_AND_HEIGHT",
+        "fontSize": 13,
+        "textAlignHorizontal": "LEFT",
+        "textAlignVertical": "TOP",
+        "letterSpacing": 0,
+        "lineHeightPx": 18.19999885559082,
+        "lineHeightPercent": 117.31587219238281,
+        "lineHeightPercentFontSize": 140,
+        "lineHeightUnit": "FONT_SIZE_%"
+    },
+    "Caption_Medium": {
         "fontFamily": "Pretendard",
         "fontPostScriptName": "Pretendard-Medium",
         "fontWeight": 500,
