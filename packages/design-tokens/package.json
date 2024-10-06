@@ -19,12 +19,14 @@
         "@ndive/tsconfig": "workspace:*",
         "@ndive/vite": "workspace:^",
         "@types/node": "^22.5.5",
+        "@types/qs": "^6.9.16",
         "vite": "^5.4.6"
     },
     "files": [
         "dist"
     ],
     "dependencies": {
-        "axios": "^1.7.7"
+        "axios": "^1.7.7",
+        "qs": "^6.13.0"
     }
 }

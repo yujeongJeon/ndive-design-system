@@ -1,12 +1,11 @@
-import {COLOR_NODE_ID, FILE_KEY, ICON_NODE_ID, TYPO_NODE_ID} from './config'
-import {TImageResponse} from './types/figma.type'
-import {getFigmaApi, getFileNode, getSvgCodeFromUrl} from './utils/api'
-import {parseColor} from './utils/color'
+import {FILE_KEY, ICON_NODE_ID, TYPO_NODE_ID} from './config'
+import {TImageResponse, TPaint} from './types/figma.type'
+import {getFigmaApi, getFileNode, getFileNodeWithIds, getStyles, getSvgCodeFromUrl} from './utils/api'
+import {rgbaToHex} from './utils/color'
 import {isComponent, isFrame, isGroup, isText} from './utils/figmaUtils'
 import {toSnakeCaseBySeparator} from './utils/string'
 import {isFulfilled, isNonEmpty} from './utils/utils'
 
-import type {TColorDocumentFrame, TColorReturnType, TColorSetFrame} from './types/color.type'
 import type {TIconDocumentFrame, TSizeGroup, TSizeReturnType} from './types/icon.type'
 import type {TTypoDocumentFrame, TTypoFrame, TUsageFrame} from './types/typo.type'
 
@@ -26,27 +25,30 @@ async function fetchFromFigma<T>({
 }
 
 export async function setColor({accessToken}: {accessToken: string}) {
-    return await fetchFromFigma({
-        nodeId: COLOR_NODE_ID,
-        accessToken,
-        transform: function transform(document: TColorDocumentFrame) {
-            const colorSet: TColorReturnType = document.children
-                .filter<TColorSetFrame>(isFrame) // 1-depth : Sub, Grayscale, ...
-                .map(({name, children}) => ({
-                    name,
-                    children: children.filter(isFrame), // 2-depth : [Gray_10, Gray_9, ...]
-                }))
-                .reduce(
-                    (root, {name, children}) => ({
-                        ...root,
-                        [name.toUpperCase()]: parseColor(children),
-                    }),
-                    {} as TColorReturnType,
-                )
+    const styles = await getStyles(accessToken)
 
-            return colorSet
-        },
-    })
+    const colorEntries = Object.entries(styles).filter(([, {styleType}]) => styleType === 'FILL')
+
+    const ids = colorEntries.map(([nodeId]) => nodeId)
+
+    const nodes = await getFileNodeWithIds(accessToken, ids)
+
+    const nodeEntries = Object.entries(nodes).map(
+        ([
+            ,
+            {
+                document: {name, fills},
+            },
+        ]) => [name, fills] as [string, TPaint[]],
+    )
+
+    return nodeEntries.reduce(
+        (colorSet, [name, fills]) => ({
+            ...colorSet,
+            [name.replace('/', '_')]: rgbaToHex(fills[0].color), // rgba -> hex로 변환
+        }),
+        {} as Record<string, string>,
+    )
 }
 
 export async function setTypo({accessToken}: {accessToken: string}) {

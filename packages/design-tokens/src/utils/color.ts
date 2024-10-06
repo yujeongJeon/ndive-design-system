@@ -1,6 +1,4 @@
-import {IFrame, TColor} from '../types/figma.type'
-import {isVector} from './figmaUtils'
-import {camelToSnakeCase} from './string'
+import {TColor} from '../types/figma.type'
 
 export const normalizeToHex = (colorNumber: number) => Math.round(colorNumber * 255)
 
@@ -28,17 +26,3 @@ export const rgbaToHex = (color: TColor) => {
 
     return `#${r}${g}${b}`
 }
-
-export const parseColor = (children: IFrame[]) =>
-    children
-        .map(({name, children: subChildren}) => ({
-            name: camelToSnakeCase(name).toUpperCase(),
-            colors: subChildren.filter(isVector)[0].fills[0].color, // VECTOR 객체의 fills 속성을 추출
-        }))
-        .reduce(
-            (colorSet, {name, colors}) => ({
-                ...colorSet,
-                [name]: rgbaToHex(colors), // rgba -> hex로 변환
-            }),
-            {},
-        )

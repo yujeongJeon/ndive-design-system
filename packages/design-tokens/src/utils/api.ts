@@ -1,12 +1,47 @@
 import axios, {isAxiosError} from 'axios'
+import qs from 'qs'
 
 import {FILE_KEY} from '../config/index'
-import {IFigmaDocument, IFrame} from '../types/figma.type'
+import {FileResponse, IFigmaDocument, IFrame} from '../types/figma.type'
 
 export const getFigmaApi = () =>
     axios.create({
         baseURL: 'https://api.figma.com/v1',
+        paramsSerializer: (params) => {
+            return qs.stringify(params, {arrayFormat: 'comma'})
+        },
     })
+
+export const getStyles = async (accessToken: string) => {
+    if (!accessToken) {
+        throw new Error('figma access token이 없습니다.')
+    }
+
+    const {data} = await getFigmaApi().get<FileResponse>(`/files/${FILE_KEY}`, {
+        headers: {
+            'X-Figma-Token': accessToken,
+        },
+    })
+
+    return data.styles
+}
+
+export const getFileNodeWithIds = async (accessToken: string, ids: string[]) => {
+    if (!accessToken) {
+        throw new Error('figma access token이 없습니다.')
+    }
+
+    const {data} = await getFigmaApi().get<IFigmaDocument>(`/files/${FILE_KEY}/nodes`, {
+        headers: {
+            'X-Figma-Token': accessToken,
+        },
+        params: {
+            ids,
+        },
+    })
+
+    return data.nodes
+}
 
 export const getFileNode = async <T>({
     nodeId,

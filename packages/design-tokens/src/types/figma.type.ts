@@ -7,7 +7,7 @@ export interface TColor {
     a: number
 }
 
-interface TPaint {
+export interface TPaint {
     type:
         | 'SOLID'
         | 'GRADIENT_LINEAR'
@@ -92,4 +92,36 @@ export interface IComponent extends ICommon {
 export interface TImageResponse {
     err?: number
     images: Record<string, string>
+}
+
+type NodeId = string
+
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions
+type CommonNodeData = {
+    key: string
+    name: string
+    description: string
+}
+
+export interface FileResponse {
+    styles: Record<
+        NodeId,
+        CommonNodeData & {
+            styleType: 'FILL' | 'TEXT' | 'EFFECT' | 'GRID'
+            remote: boolean
+        }
+    >
+    components: Record<
+        NodeId,
+        CommonNodeData & {
+            remote: boolean
+            documentationLinks: string[]
+        }
+    >
+    componentSets: Record<
+        NodeId,
+        CommonNodeData & {
+            documentationLinks: string[]
+        }
+    >
 }
