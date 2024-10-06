@@ -20,7 +20,20 @@ async function fetchTypo() {
             recursive: true,
         })
 
-    fs.writeFileSync(path.join(jsonDir, 'typo.json'), JSON.stringify(typoSet), {
+    const typoMap = Object.entries(typoSet).reduce(
+        (acc, [name, {fontSize, fontWeight, lineHeightPx, fontFamily}]) => ({
+            ...acc,
+            [name]: {
+                fontSize,
+                fontWeight,
+                lineHeightPx,
+                fontFamily,
+            },
+        }),
+        {},
+    )
+
+    fs.writeFileSync(path.join(jsonDir, 'typo.json'), JSON.stringify(typoMap), {
         encoding: 'utf-8',
     })
 }
