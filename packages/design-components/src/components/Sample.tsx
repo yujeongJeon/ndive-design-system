@@ -1,3 +1,9 @@
+import classnames from 'classnames/bind'
+
+import styles from './Sample.module.scss'
+
+const cx = classnames.bind(styles)
+
 export default function Sample() {
-    return <>Sample Component</>
+    return <div className={cx('article')}>Sample Component</div>
 }
