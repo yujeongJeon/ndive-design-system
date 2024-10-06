@@ -2,7 +2,7 @@ import axios, {isAxiosError} from 'axios'
 import qs from 'qs'
 
 import {FILE_KEY} from '../config/index'
-import {FileResponse, IFigmaDocument, IFrame} from '../types/figma.type'
+import {FileResponse, ICommon, IFigmaDocument, IFrame} from '../types/figma.type'
 
 export const getFigmaApi = () =>
     axios.create({
@@ -26,12 +26,12 @@ export const getStyles = async (accessToken: string) => {
     return data.styles
 }
 
-export const getFileNodeWithIds = async (accessToken: string, ids: string[]) => {
+export const getFileNodeWithIds = async <T extends ICommon>(accessToken: string, ids: string[]) => {
     if (!accessToken) {
         throw new Error('figma access token이 없습니다.')
     }
 
-    const {data} = await getFigmaApi().get<IFigmaDocument>(`/files/${FILE_KEY}/nodes`, {
+    const {data} = await getFigmaApi().get<IFigmaDocument<T>>(`/files/${FILE_KEY}/nodes`, {
         headers: {
             'X-Figma-Token': accessToken,
         },

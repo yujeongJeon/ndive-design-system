@@ -1,13 +1,11 @@
-import {FILE_KEY, ICON_NODE_ID, TYPO_NODE_ID} from './config'
-import {TImageResponse, TPaint} from './types/figma.type'
+import {FILE_KEY, ICON_NODE_ID} from './config'
+import {IText, TImageResponse, TPaint, TTypeStyle} from './types/figma.type'
 import {getFigmaApi, getFileNode, getFileNodeWithIds, getStyles, getSvgCodeFromUrl} from './utils/api'
 import {rgbaToHex} from './utils/color'
-import {isComponent, isFrame, isGroup, isText} from './utils/figmaUtils'
-import {toSnakeCaseBySeparator} from './utils/string'
+import {isComponent, isGroup} from './utils/figmaUtils'
 import {isFulfilled, isNonEmpty} from './utils/utils'
 
 import type {TIconDocumentFrame, TSizeGroup, TSizeReturnType} from './types/icon.type'
-import type {TTypoDocumentFrame, TTypoFrame, TUsageFrame} from './types/typo.type'
 
 async function fetchFromFigma<T>({
     nodeId,
@@ -52,22 +50,36 @@ export async function setColor({accessToken}: {accessToken: string}) {
 }
 
 export async function setTypo({accessToken}: {accessToken: string}) {
-    return await fetchFromFigma({
-        nodeId: TYPO_NODE_ID,
-        accessToken,
-        transform(document: TTypoDocumentFrame) {
-            const usage =
-                document.children.filter<TUsageFrame>(isFrame).filter(({name}) => name === 'Usage')?.[0].children || []
+    const styles = await getStyles(accessToken)
 
-            return usage.filter<TTypoFrame>(isFrame).reduce(
-                (obj, {name, children}) => ({
-                    ...obj,
-                    [toSnakeCaseBySeparator(name)]: children.filter(isText)?.[0].style,
-                }),
-                {},
-            )
-        },
-    })
+    const textEntries = Object.entries(styles).filter(([, {styleType}]) => styleType === 'TEXT')
+
+    const ids = textEntries.map(([nodeId]) => nodeId)
+
+    const nodes = await getFileNodeWithIds<IText>(accessToken, ids)
+
+    const nodeEntries = Object.entries(nodes).map(
+        ([
+            ,
+            {
+                document: {name, style},
+            },
+        ]) => [name, style] as [string, TTypeStyle],
+    )
+
+    const toName = (name: string) => {
+        const [, usage, weight] = name.split('/')
+
+        return `${usage}_${weight}`
+    }
+
+    return nodeEntries.reduce(
+        (typoSet, [name, style]) => ({
+            ...typoSet,
+            [toName(name)]: style,
+        }),
+        {} as Record<string, TTypeStyle>,
+    )
 }
 
 export async function setIcon({accessToken}: {accessToken: string}) {

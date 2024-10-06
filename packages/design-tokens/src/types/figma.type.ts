@@ -38,7 +38,7 @@ export interface TRectangle {
     height: number
 }
 
-export interface IFigmaDocument<T extends IFrame = IFrame> {
+export interface IFigmaDocument<T = IFrame> {
     nodes: Record<
         string,
         {
