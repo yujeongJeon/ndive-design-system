@@ -1,7 +1,10 @@
 {
     "extends": "@ndive/tsconfig/react.json",
     "compilerOptions": {
-        "baseUrl": "."
+        "baseUrl": ".",
+        "paths": {
+            "$/*": ["src/*"]
+        }
     },
     "include": ["./src", "./scripts"],
     "exclude": ["node_modules", "dist"]
