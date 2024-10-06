@@ -40,8 +40,6 @@ export const transformReactComponent = async ({colorValueList, componentName, sv
         ['#fff', '#ffffff', '#000', '#000000', 'black', 'white', '#181600', ...colorValueList],
         svgCode,
     )
-    const fillValueCount = Object.keys(replaceAttrValues).length
-
     const tsxCode = await transform(
         svgCode,
         {
@@ -66,7 +64,7 @@ export const transformReactComponent = async ({colorValueList, componentName, sv
         encoding: 'utf-8',
     })
 
-    return {tsxCode, replaceAttrValues, fillValueCount}
+    return {componentName}
 }
 
 function kebabToPascal(str) {
@@ -101,7 +99,7 @@ async function fetchIcon() {
             recursive: true,
         })
 
-    await Promise.allSettled(
+    const settledResults = await Promise.allSettled(
         Object.entries(icon).map(
             async ([iconName, svgCode]) =>
                 await transformReactComponent({
@@ -113,6 +111,21 @@ async function fetchIcon() {
                 }),
         ),
     )
+
+    const exported = settledResults
+        .filter((result) => result.status === 'fulfilled')
+        .map(({value}) => value)
+        .filter((v) => v)
+        .map(
+            ({componentName}) => `export {default as ${componentName}} from './${componentName}';
+    `,
+        )
+        .join('')
+
+    // /src/components/icons/index.ts
+    fs.writeFileSync(normalize('../src/components/icons/index.ts'), exported, {
+        encoding: 'utf-8',
+    })
 }
 
 fetchIcon()
