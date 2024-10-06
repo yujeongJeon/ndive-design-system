@@ -1,6 +1,8 @@
 @import '$/styles/global.scss';
 
 .article {
+    @include displayBold;
+
     width: 100%;
     color: $Gray8;
 }
