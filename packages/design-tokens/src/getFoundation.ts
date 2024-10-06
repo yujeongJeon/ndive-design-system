@@ -1,26 +1,9 @@
-import {FILE_KEY, ICON_NODE_ID} from './config'
-import {IText, TImageResponse, TPaint, TTypeStyle} from './types/figma.type'
-import {getFigmaApi, getFileNode, getFileNodeWithIds, getStyles, getSvgCodeFromUrl} from './utils/api'
+import {IText, TPaint, TTypeStyle} from './types/figma.type'
+import {getComponents, getFileNodeWithIds, getImageNodeWithIds, getStyles, getSvgCodeFromUrl} from './utils/api'
 import {rgbaToHex} from './utils/color'
-import {isComponent, isGroup} from './utils/figmaUtils'
 import {isFulfilled, isNonEmpty} from './utils/utils'
 
-import type {TIconDocumentFrame, TSizeGroup, TSizeReturnType} from './types/icon.type'
-
-async function fetchFromFigma<T>({
-    nodeId,
-    accessToken,
-    transform,
-}: {
-    nodeId: string
-    accessToken: string
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    transform: (data: any) => T
-}) {
-    const data = await getFileNode({nodeId, accessToken, transform})
-
-    return data
-}
+import type {TSizeReturnType} from './types/icon.type'
 
 export async function setColor({accessToken}: {accessToken: string}) {
     const styles = await getStyles(accessToken)
@@ -83,79 +66,51 @@ export async function setTypo({accessToken}: {accessToken: string}) {
 }
 
 export async function setIcon({accessToken}: {accessToken: string}) {
-    // SIZE 가져오기
-    const sizeSet = await fetchFromFigma({
-        nodeId: ICON_NODE_ID,
-        accessToken,
-        transform(document: TIconDocumentFrame): TSizeReturnType {
-            const size = document.children.filter<TSizeGroup>(
-                (child): child is TSizeGroup => isGroup<TSizeGroup>(child) || child.name === 'Size',
-            )[0]
+    const components = await getComponents(accessToken)
 
-            return Object.fromEntries(
-                size.children
-                    .filter(isComponent)
-                    .map((component) => {
-                        const {width, height} = component.absoluteBoundingBox
+    const sizeIds = Object.entries(components)
+        .filter(([, {name}]) => name.startsWith('icon/'))
+        .map(([nodeId]) => nodeId)
 
-                        return [
-                            component.name.toUpperCase(),
-                            {
-                                width,
-                                height,
-                            },
-                        ] satisfies [string, {width: number; height: number}]
-                    })
-                    .sort(([, {width: left}], [, {width: right}]) => {
-                        return left - right
-                    }),
-            ) as TSizeReturnType
-        },
-    })
+    const sizeNodes = await getFileNodeWithIds(accessToken, sizeIds)
 
-    // ICON 가져오기
-    const iconSet = await getFileNode({
-        nodeId: ICON_NODE_ID,
-        accessToken,
-        async transform(document: TIconDocumentFrame) {
-            const components = document.children.filter(isComponent)
+    const sizeSet = Object.entries(sizeNodes).reduce((sizeMap, [, {document}]) => {
+        const {name, absoluteBoundingBox} = document
+        return {
+            ...sizeMap,
+            [name.split('/').pop() || '']: {
+                width: absoluteBoundingBox.width,
+                height: absoluteBoundingBox.height,
+            },
+        }
+    }, {} as TSizeReturnType)
 
-            const imageUrlMap = Object.fromEntries(components.map(({id, name}) => [id, name]))
+    const iconMap = Object.fromEntries(
+        Object.entries(components)
+            .filter(([, {name}]) => name.startsWith('ic-'))
+            .map(([nodeId, {name}]) => [nodeId, name]),
+    )
 
-            const res = await getFigmaApi().get<TImageResponse>(`/images/${FILE_KEY}`, {
-                headers: {
-                    'X-Figma-Token': accessToken,
-                },
-                params: {
-                    ids: Object.keys(imageUrlMap)
-                        .map((id) => decodeURIComponent(id))
-                        .join(','),
-                    format: 'svg',
-                },
-            })
+    const iconNodes = await getImageNodeWithIds(accessToken, Object.keys(iconMap))
 
-            if (!res.data.images || res.data?.err) {
-                throw new Error('icon image url을 가져오는 데 문제가 발생했습니다.')
-            }
+    if (!iconNodes.images || iconNodes?.err) {
+        throw new Error('icon image url을 가져오는 데 문제가 발생했습니다.')
+    }
 
-            const {images} = res.data
+    const settledResult = await Promise.allSettled(
+        Object.entries(iconNodes.images).map(async ([id, url]) => {
+            const code = await getSvgCodeFromUrl(url)
 
-            const settledResult = await Promise.allSettled(
-                Object.entries(images).map(async ([id, url]) => {
-                    const code = await getSvgCodeFromUrl(url)
+            return [iconMap[id], code] as [string, string]
+        }),
+    )
 
-                    return [imageUrlMap[id], code] as [string, string]
-                }),
-            )
-
-            return Object.fromEntries(
-                settledResult
-                    .filter(isFulfilled)
-                    .map(({value}) => value)
-                    .filter(isNonEmpty),
-            )
-        },
-    })
+    const iconSet = Object.fromEntries(
+        settledResult
+            .filter(isFulfilled)
+            .map(({value}) => value)
+            .filter(isNonEmpty),
+    )
 
     return {
         size: sizeSet,
