@@ -28,10 +28,13 @@ async function fetchColor() {
         })
 
     const content = `${Object.entries(colorSet)
-        .map(([variableName, color]) => `$${snakeToCamel(variableName)}: ${color};`)
-        .join('\n')}`
+        .map(
+            ([variableName, color]) => `$${snakeToCamel(variableName)}: ${color};
+`,
+        )
+        .join('')}`
 
-    fs.writeFileSync(path.join(stylesDir, 'global.scss'), content, {
+    fs.writeFileSync(path.join(stylesDir, 'color.scss'), content, {
         encoding: 'utf-8',
     })
 }
