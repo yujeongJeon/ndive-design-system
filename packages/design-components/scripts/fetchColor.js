@@ -37,6 +37,17 @@ async function fetchColor() {
     fs.writeFileSync(path.join(stylesDir, 'color.scss'), content, {
         encoding: 'utf-8',
     })
+
+    const jsonDir = normalize('../src/json')
+
+    !fs.existsSync(jsonDir) &&
+        fs.mkdirSync(jsonDir, {
+            recursive: true,
+        })
+
+    fs.writeFileSync(path.join(jsonDir, 'color.json'), JSON.stringify(colorSet), {
+        encoding: 'utf-8',
+    })
 }
 
 fetchColor()

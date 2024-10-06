@@ -11,7 +11,7 @@
             "cache": false
         },
         "fetch:icon": {
-            "dependsOn": [],
+            "dependsOn": ["fetch:color"],
             "cache": false
         },
         "fetch:tokens": {
