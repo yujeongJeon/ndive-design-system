@@ -1,10 +1,10 @@
 {
-    "ICON/XXS": {"width": 12, "height": 12},
-    "ICON/XS": {"width": 16, "height": 16},
-    "ICON/S": {"width": 20, "height": 20},
-    "ICON/M": {"width": 24, "height": 24},
-    "ICON/L": {"width": 32, "height": 32},
-    "ICON/XL": {"width": 40, "height": 40},
-    "ICON/XXL": {"width": 48, "height": 48},
-    "ICON/XXXL": {"width": 56, "height": 56}
+    "m": {"width": 24, "height": 24},
+    "l": {"width": 32, "height": 32},
+    "xl": {"width": 40, "height": 40},
+    "xs": {"width": 16, "height": 16},
+    "xxl": {"width": 48, "height": 48},
+    "xxxl": {"width": 56, "height": 56},
+    "xxs": {"width": 12, "height": 12},
+    "s": {"width": 20, "height": 20}
 }
