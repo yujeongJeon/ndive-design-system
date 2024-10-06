@@ -10,9 +10,32 @@ function normalize(relativePath) {
 
 dotenv.config({path: normalize('../.env')})
 
+function snakeToCamel(snake) {
+    return snake.replace(/(_\w)/g, function (match) {
+        return match[1].toUpperCase()
+    })
+}
+
 async function fetchColor() {
     const colorSet = await setColor({
         accessToken: process.env.FIGMA_TOKEN,
+    })
+
+    const stylesDir = normalize('../src/styles')
+    !fs.existsSync(stylesDir) &&
+        fs.mkdirSync(stylesDir, {
+            recursive: true,
+        })
+
+    const content = `${Object.entries(colorSet)
+        .map(
+            ([variableName, color]) => `$${snakeToCamel(variableName)}: ${color};
+`,
+        )
+        .join('')}`
+
+    fs.writeFileSync(path.join(stylesDir, 'color.scss'), content, {
+        encoding: 'utf-8',
     })
 
     const jsonDir = normalize('../src/json')

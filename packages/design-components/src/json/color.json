@@ -1,39 +1,28 @@
 {
-    "GRAYSCALE": {
-        "GRAY_10": "#121d2e",
-        "GRAY_9": "#232e40",
-        "GRAY_8": "#354153",
-        "GRAY_7": "#515c6d",
-        "GRAY_6": "#687486",
-        "GRAY_5": "#7f8a9b",
-        "GRAY_4": "#9ea6b4",
-        "GRAY_3": "#c0c7d2",
-        "GRAY_2": "#d7dbe2",
-        "GRAY_1": "#e6e9ee",
-        "GRAY_0.5": "#f2f4f6",
-        "GRAY_0.1": "#f9fafc"
-    },
-    "BORDER": {"BORDER_INVERSE": "#7f8a9b", "BORDER_PRIMARY": "#e6e9ee", "BORDER_SECONDARY": "#d7dbe2"},
-    "BACKGROUND": {
-        "BACKGROUND_POSITIVE": "#ebfbee",
-        "BACKGROUND_SECONDARY": "#f2f4f6",
-        "BACKGROUND_PRIMARY": "#f9fafc",
-        "BACKGROUND_LIGHT": "#fff9db"
-    },
-    "BRAND": {
-        "MAINGREEN_DEFAULT": "#3da451",
-        "MAINGREEN_DARK": "#2b8a3e",
-        "MAINGREEN_LIGHT": "#ebfbee",
-        "MAINYELLOW_LIGHT": "#fff9db",
-        "MAINYELLOW_DEFAULT": "#f9bb00",
-        "MAINYELLOW_DARK": "#f08c00"
-    },
-    "SUB": {
-        "RED_LIGHT": "#fff5f5",
-        "RED_DEFAULT": "#f03e3e",
-        "RED_DARK": "#c92a2a",
-        "TEAL_LIGHT": "#e6fcf5",
-        "TEAL_DEFAULT": "#12b886",
-        "TEAL_DARK": "#087f5b"
-    }
+    "Gray_9": "#232e40",
+    "Gray_10": "#121d2e",
+    "Gray_8": "#354153",
+    "Gray_7": "#515c6d",
+    "Gray_6": "#687486",
+    "Gray_5": "#7f8a9b",
+    "Gray_4": "#9ea6b4",
+    "Gray_3": "#c0c7d2",
+    "Gray_2": "#d7dbe2",
+    "Gray_1": "#e6e9ee",
+    "Gray_half": "#f2f4f6",
+    "Gray_pointone": "#f9fafc",
+    "MainGreen_light": "#ebfbee",
+    "MainYellow_light": "#fff9db",
+    "MainGreen_default": "#3da451",
+    "MainGreen_dark": "#2b8a3e",
+    "MainYellow_default": "#f9bb00",
+    "MainYellow_dark": "#f08c00",
+    "Red_light": "#fff5f5",
+    "Red_default": "#f03e3e",
+    "Red_dark": "#c92a2a",
+    "Teal_light": "#e6fcf5",
+    "Teal_default": "#12b886",
+    "Teal_dark": "#087f5b",
+    "gray_900": "#172e48",
+    "gray_000": "#ffffff"
 }

@@ -13,14 +13,41 @@ dotenv.config({path: normalize('../.env')})
 async function fetchTypo() {
     const typoSet = await setTypo({accessToken: process.env.FIGMA_TOKEN})
 
-    const jsonDir = normalize('../src/json')
+    const typoEntries = Object.entries(typoSet).map(([name, {fontSize, fontWeight, lineHeightPx, fontFamily}]) => [
+        name,
+        {
+            fontSize,
+            fontWeight,
+            lineHeightPx,
+            fontFamily,
+        },
+    ])
 
-    !fs.existsSync(jsonDir) &&
-        fs.mkdirSync(jsonDir, {
+    const stylesDir = normalize('../src/styles')
+    !fs.existsSync(stylesDir) &&
+        fs.mkdirSync(stylesDir, {
             recursive: true,
         })
 
-    fs.writeFileSync(path.join(jsonDir, 'typo.json'), JSON.stringify(typoSet), {
+    const toName = (name) => {
+        const [area, weight] = name.split('_')
+
+        return `${area[0].toLowerCase() + area.slice(1)}${weight.replace(/(.+)-(.+)/, '$1$2')}`
+    }
+
+    const content = `${typoEntries
+        .map(
+            ([name, {fontSize, fontWeight, lineHeightPx, fontFamily}]) => `@mixin ${toName(name)} {
+    font-size: ${fontSize}px;
+    font-weight: ${fontWeight}px;
+    line-height: ${Math.round(lineHeightPx)}px;
+    font-family: ${fontFamily};
+}
+`,
+        )
+        .join('')}`
+
+    fs.writeFileSync(path.join(stylesDir, 'typo.scss'), content, {
         encoding: 'utf-8',
     })
 }

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import path from 'node:path'
 
-import {BuildOptions, defineConfig} from 'vite'
+import {AliasOptions, BuildOptions, defineConfig, PluginOption, ResolveOptions} from 'vite'
 import dts from 'vite-plugin-dts'
 
 const normalizeOutput = (exportPath: string | {default: string}) => {
@@ -12,10 +12,16 @@ export default ({
     pkg,
     entry,
     target,
+    resolve,
+    plugins,
 }: {
     pkg: Record<string, any>
     entry: {index: string} & Record<string, string>
     target: BuildOptions['target']
+    resolve?: ResolveOptions & {
+        alias?: AliasOptions
+    }
+    plugins?: PluginOption[]
 }) => {
     const outputPath = pkg.exports ? pkg.exports['.'] : pkg.main
 
@@ -29,6 +35,7 @@ export default ({
                 outDir,
                 rollupTypes: true,
             }),
+            ...(plugins || []),
         ],
         build: {
             outDir,
@@ -53,5 +60,6 @@ export default ({
             },
             target,
         },
+        resolve,
     })
 }

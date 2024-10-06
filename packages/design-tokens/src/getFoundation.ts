@@ -1,147 +1,116 @@
-import {COLOR_NODE_ID, FILE_KEY, ICON_NODE_ID, TYPO_NODE_ID} from './config'
-import {TImageResponse} from './types/figma.type'
-import {getFigmaApi, getFileNode, getSvgCodeFromUrl} from './utils/api'
-import {parseColor} from './utils/color'
-import {isComponent, isFrame, isGroup, isText} from './utils/figmaUtils'
-import {toSnakeCaseBySeparator} from './utils/string'
+import {IText, TPaint, TTypeStyle} from './types/figma.type'
+import {getComponents, getFileNodeWithIds, getImageNodeWithIds, getStyles, getSvgCodeFromUrl} from './utils/api'
+import {rgbaToHex} from './utils/color'
 import {isFulfilled, isNonEmpty} from './utils/utils'
 
-import type {TColorDocumentFrame, TColorReturnType, TColorSetFrame} from './types/color.type'
-import type {TIconDocumentFrame, TSizeGroup, TSizeReturnType} from './types/icon.type'
-import type {TTypoDocumentFrame, TTypoFrame, TUsageFrame} from './types/typo.type'
-
-async function fetchFromFigma<T>({
-    nodeId,
-    accessToken,
-    transform,
-}: {
-    nodeId: string
-    accessToken: string
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    transform: (data: any) => T
-}) {
-    const data = await getFileNode({nodeId, accessToken, transform})
-
-    return data
-}
+import type {TSizeReturnType} from './types/icon.type'
 
 export async function setColor({accessToken}: {accessToken: string}) {
-    return await fetchFromFigma({
-        nodeId: COLOR_NODE_ID,
-        accessToken,
-        transform: function transform(document: TColorDocumentFrame) {
-            const colorSet: TColorReturnType = document.children
-                .filter<TColorSetFrame>(isFrame) // 1-depth : Sub, Grayscale, ...
-                .map(({name, children}) => ({
-                    name,
-                    children: children.filter(isFrame), // 2-depth : [Gray_10, Gray_9, ...]
-                }))
-                .reduce(
-                    (root, {name, children}) => ({
-                        ...root,
-                        [name.toUpperCase()]: parseColor(children),
-                    }),
-                    {} as TColorReturnType,
-                )
+    const styles = await getStyles(accessToken)
 
-            return colorSet
-        },
-    })
+    const colorEntries = Object.entries(styles).filter(([, {styleType}]) => styleType === 'FILL')
+
+    const ids = colorEntries.map(([nodeId]) => nodeId)
+
+    const nodes = await getFileNodeWithIds(accessToken, ids)
+
+    const nodeEntries = Object.entries(nodes).map(
+        ([
+            ,
+            {
+                document: {name, fills},
+            },
+        ]) => [name, fills] as [string, TPaint[]],
+    )
+
+    return nodeEntries.reduce(
+        (colorSet, [name, fills]) => ({
+            ...colorSet,
+            [name.replace('/', '_')]: rgbaToHex(fills[0].color), // rgba -> hex로 변환
+        }),
+        {} as Record<string, string>,
+    )
 }
 
 export async function setTypo({accessToken}: {accessToken: string}) {
-    return await fetchFromFigma({
-        nodeId: TYPO_NODE_ID,
-        accessToken,
-        transform(document: TTypoDocumentFrame) {
-            const usage =
-                document.children.filter<TUsageFrame>(isFrame).filter(({name}) => name === 'Usage')?.[0].children || []
+    const styles = await getStyles(accessToken)
 
-            return usage.filter<TTypoFrame>(isFrame).reduce(
-                (obj, {name, children}) => ({
-                    ...obj,
-                    [toSnakeCaseBySeparator(name)]: children.filter(isText)?.[0].style,
-                }),
-                {},
-            )
-        },
-    })
+    const textEntries = Object.entries(styles).filter(([, {styleType}]) => styleType === 'TEXT')
+
+    const ids = textEntries.map(([nodeId]) => nodeId)
+
+    const nodes = await getFileNodeWithIds<IText>(accessToken, ids)
+
+    const nodeEntries = Object.entries(nodes).map(
+        ([
+            ,
+            {
+                document: {name, style},
+            },
+        ]) => [name, style] as [string, TTypeStyle],
+    )
+
+    const toName = (name: string) => {
+        const [, usage, weight] = name.split('/')
+
+        return `${usage}_${weight}`
+    }
+
+    return nodeEntries.reduce(
+        (typoSet, [name, style]) => ({
+            ...typoSet,
+            [toName(name)]: style,
+        }),
+        {} as Record<string, TTypeStyle>,
+    )
 }
 
 export async function setIcon({accessToken}: {accessToken: string}) {
-    // SIZE 가져오기
-    const sizeSet = await fetchFromFigma({
-        nodeId: ICON_NODE_ID,
-        accessToken,
-        transform(document: TIconDocumentFrame): TSizeReturnType {
-            const size = document.children.filter<TSizeGroup>(
-                (child): child is TSizeGroup => isGroup<TSizeGroup>(child) || child.name === 'Size',
-            )[0]
+    const components = await getComponents(accessToken)
 
-            return Object.fromEntries(
-                size.children
-                    .filter(isComponent)
-                    .map((component) => {
-                        const {width, height} = component.absoluteBoundingBox
+    const sizeIds = Object.entries(components)
+        .filter(([, {name}]) => name.startsWith('icon/'))
+        .map(([nodeId]) => nodeId)
 
-                        return [
-                            component.name.toUpperCase(),
-                            {
-                                width,
-                                height,
-                            },
-                        ] satisfies [string, {width: number; height: number}]
-                    })
-                    .sort(([, {width: left}], [, {width: right}]) => {
-                        return left - right
-                    }),
-            ) as TSizeReturnType
-        },
-    })
+    const sizeNodes = await getFileNodeWithIds(accessToken, sizeIds)
 
-    // ICON 가져오기
-    const iconSet = await getFileNode({
-        nodeId: ICON_NODE_ID,
-        accessToken,
-        async transform(document: TIconDocumentFrame) {
-            const components = document.children.filter(isComponent)
+    const sizeSet = Object.entries(sizeNodes).reduce((sizeMap, [, {document}]) => {
+        const {name, absoluteBoundingBox} = document
+        return {
+            ...sizeMap,
+            [name.split('/').pop() || '']: {
+                width: absoluteBoundingBox.width,
+                height: absoluteBoundingBox.height,
+            },
+        }
+    }, {} as TSizeReturnType)
 
-            const imageUrlMap = Object.fromEntries(components.map(({id, name}) => [id, name]))
+    const iconMap = Object.fromEntries(
+        Object.entries(components)
+            .filter(([, {name}]) => name.startsWith('ic-'))
+            .map(([nodeId, {name}]) => [nodeId, name]),
+    )
 
-            const res = await getFigmaApi().get<TImageResponse>(`/images/${FILE_KEY}`, {
-                headers: {
-                    'X-Figma-Token': accessToken,
-                },
-                params: {
-                    ids: Object.keys(imageUrlMap)
-                        .map((id) => decodeURIComponent(id))
-                        .join(','),
-                    format: 'svg',
-                },
-            })
+    const iconNodes = await getImageNodeWithIds(accessToken, Object.keys(iconMap))
 
-            if (!res.data.images || res.data?.err) {
-                throw new Error('icon image url을 가져오는 데 문제가 발생했습니다.')
-            }
+    if (!iconNodes.images || iconNodes?.err) {
+        throw new Error('icon image url을 가져오는 데 문제가 발생했습니다.')
+    }
 
-            const {images} = res.data
+    const settledResult = await Promise.allSettled(
+        Object.entries(iconNodes.images).map(async ([id, url]) => {
+            const code = await getSvgCodeFromUrl(url)
 
-            const settledResult = await Promise.allSettled(
-                Object.entries(images).map(async ([id, url]) => {
-                    const code = await getSvgCodeFromUrl(url)
+            return [iconMap[id], code] as [string, string]
+        }),
+    )
 
-                    return [imageUrlMap[id], code] as [string, string]
-                }),
-            )
-
-            return Object.fromEntries(
-                settledResult
-                    .filter(isFulfilled)
-                    .map(({value}) => value)
-                    .filter(isNonEmpty),
-            )
-        },
-    })
+    const iconSet = Object.fromEntries(
+        settledResult
+            .filter(isFulfilled)
+            .map(({value}) => value)
+            .filter(isNonEmpty),
+    )
 
     return {
         size: sizeSet,

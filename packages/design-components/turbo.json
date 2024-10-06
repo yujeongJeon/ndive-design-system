@@ -1,0 +1,22 @@
+{
+    "$schema": "https://turbo.build/schema.json",
+    "extends": ["//"],
+    "tasks": {
+        "fetch:color": {
+            "dependsOn": [],
+            "cache": false
+        },
+        "fetch:typo": {
+            "dependsOn": [],
+            "cache": false
+        },
+        "fetch:icon": {
+            "dependsOn": ["fetch:color"],
+            "cache": false
+        },
+        "fetch:tokens": {
+            "dependsOn": ["fetch:color", "fetch:typo", "fetch:icon"],
+            "cache": false
+        }
+    }
+}
