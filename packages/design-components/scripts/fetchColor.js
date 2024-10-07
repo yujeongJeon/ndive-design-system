@@ -21,6 +21,7 @@ async function fetchColor() {
         accessToken: process.env.FIGMA_TOKEN,
     })
 
+    // color.scss
     const stylesDir = normalize('../src/styles')
     !fs.existsSync(stylesDir) &&
         fs.mkdirSync(stylesDir, {
@@ -38,6 +39,7 @@ async function fetchColor() {
         encoding: 'utf-8',
     })
 
+    // color.json
     const jsonDir = normalize('../src/json')
 
     !fs.existsSync(jsonDir) &&
@@ -46,6 +48,17 @@ async function fetchColor() {
         })
 
     fs.writeFileSync(path.join(jsonDir, 'color.json'), JSON.stringify(colorSet), {
+        encoding: 'utf-8',
+    })
+
+    // color.types.ts
+    const colorTypeDefinition = `export type TColors = ${Object.keys(colorSet)
+        .map((colorKey) => snakeToCamel(colorKey))
+        .map((colorKey) => `"${colorKey}"`)
+        .join(' | ')};
+`
+
+    fs.writeFileSync(path.join(normalize('../src/types'), 'color.types.ts'), colorTypeDefinition, {
         encoding: 'utf-8',
     })
 }
