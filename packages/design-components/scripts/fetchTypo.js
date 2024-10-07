@@ -47,9 +47,16 @@ async function fetchTypo() {
         )
         .join('')}`
 
-    fs.writeFileSync(path.join(stylesDir, 'typo.scss'), content, {
-        encoding: 'utf-8',
-    })
+    fs.writeFileSync(
+        path.join(stylesDir, 'typo.scss'),
+        `@import "@fontsource/pretendard/500.css";
+@import "@fontsource/pretendard/700.css";
+
+${content}`,
+        {
+            encoding: 'utf-8',
+        },
+    )
 }
 
 fetchTypo()
