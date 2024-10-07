@@ -46,6 +46,7 @@
         "react-dom": "^18"
     },
     "dependencies": {
+        "@fontsource/pretendard": "^5.1.0",
         "classnames": "^2.5.1"
     }
 }
