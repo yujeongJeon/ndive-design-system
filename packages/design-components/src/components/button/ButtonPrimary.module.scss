@@ -5,6 +5,15 @@
 }
 .fill {
     color: $gray000;
+
+    &:disabled {
+        background-color: $Gray2 !important;
+
+        &:hover,
+        &:active {
+            background-color: $Gray2 !important;
+        }
+    }
 }
 
 @include setAllStyle(
@@ -21,12 +30,85 @@
 
 @include setAllStyle(
     (
+        mainGreen: $MainGreenDark,
+        mainYellow: $MainYellowDark,
+        red: $RedDark,
+        teal: $TealDark,
+    ),
+    background-color,
+    '.fill:hover',
+    $prefix: 'color'
+);
+
+@include setAllStyle(
+    (
+        mainGreen: $MainGreenDark,
+        mainYellow: $MainYellowDark,
+        red: $RedDark,
+        teal: $TealDark,
+    ),
+    background-color,
+    '.fill:active',
+    $prefix: 'color'
+);
+
+.line {
+    border: 1px solid;
+    background-color: $gray000;
+
+    &:disabled {
+        border-color: $Gray1 !important;
+        color: $Gray2 !important;
+
+        &:hover,
+        &:active {
+            background-color: $gray000 !important;
+            color: $Gray2 !important;
+        }
+    }
+}
+
+@include setAllStyle(
+    (
         mainGreen: $MainGreenDefault,
         mainYellow: $MainYellowDefault,
         red: $RedDefault,
         teal: $TealDefault,
     ),
     border-color,
+    '.line',
+    $prefix: 'color'
+);
+@include setAllStyle(
+    (
+        mainGreen: $MainGreenLight,
+        mainYellow: $MainYellowLight,
+        red: $RedLight,
+        teal: $TealLight,
+    ),
+    background-color,
+    '.line:hover',
+    $prefix: 'color'
+);
+@include setAllStyle(
+    (
+        mainGreen: $MainGreenLight,
+        mainYellow: $MainYellowLight,
+        red: $RedLight,
+        teal: $TealLight,
+    ),
+    background-color,
+    '.line:active',
+    $prefix: 'color'
+);
+@include setAllStyle(
+    (
+        mainGreen: $MainGreenDefault,
+        mainYellow: $MainYellowDefault,
+        red: $RedDefault,
+        teal: $TealDefault,
+    ),
+    color,
     '.line',
     $prefix: 'color'
 );
