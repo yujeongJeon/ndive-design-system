@@ -1,4 +1,4 @@
-import {ButtonPrimary as ButtonPrimaryComponent} from '@ndive/design-components'
+import {ButtonPrimary as ButtonPrimaryComponent, IconAdd} from '@ndive/design-components'
 
 import type {Meta, StoryObj} from '@storybook/react'
 
@@ -18,6 +18,10 @@ export const ButtonPrimary: Story = {
         fillType: 'fill',
         size: 'small',
         disabled: false,
+        icon: {
+            direction: 'front',
+            component: <IconAdd width={16} height={16} fill={'#fff'} />,
+        },
     },
     argTypes: {
         color: {

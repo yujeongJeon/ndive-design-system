@@ -15,9 +15,14 @@ export default function ButtonPrimary({
     fillType,
     size,
     disabled,
+    icon,
 }: CommonButtonProps & {
     color: Exclude<TPrimaryColors, 'gray'>
 }) {
+    const hasIcon = !!icon
+
+    const IconComponent = icon?.component
+
     return (
         <button
             className={cx('button', fillType, `size-${size}`, `color-${color}`)}
@@ -25,7 +30,13 @@ export default function ButtonPrimary({
             disabled={disabled}
             {...attributes}
         >
+            {hasIcon && icon.direction === 'front' && (
+                <span className={cx('icon', icon.direction)}>{IconComponent}</span>
+            )}
             {text}
+            {hasIcon && icon.direction === 'back' && (
+                <span className={cx('icon', icon.direction)}>{IconComponent}</span>
+            )}
         </button>
     )
 }
