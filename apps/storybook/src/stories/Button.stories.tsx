@@ -17,5 +17,25 @@ export const ButtonPrimary: Story = {
         color: 'mainGreen',
         fillType: 'fill',
         size: 'small',
+        disabled: false,
+    },
+    argTypes: {
+        color: {
+            control: {
+                type: 'select',
+            },
+            options: ['mainGreen', 'mainYellow', 'red', 'teal'],
+        },
+        fillType: {
+            control: {type: 'radio'},
+            options: ['fill', 'line'],
+        },
+        size: {
+            control: {type: 'radio'},
+            options: ['small', 'medium', 'large'],
+        },
+        disabled: {
+            control: {type: 'boolean'},
+        },
     },
 }
