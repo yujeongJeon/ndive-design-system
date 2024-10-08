@@ -16,6 +16,9 @@
         ".": {
             "import": "./dist/index.mjs",
             "types": "./dist/index.d.mts"
+        },
+        "./styles": {
+            "default": "./dist/style.css"
         }
     },
     "keywords": [],
@@ -32,6 +35,7 @@
         "@types/node": "^22.5.5",
         "@types/react": "^18.3.9",
         "@types/react-dom": "^18.3.0",
+        "@vitejs/plugin-react": "^4.3.2",
         "browserslist-to-esbuild": "^2.1.1",
         "dotenv": "^16.4.5",
         "react": "^18",

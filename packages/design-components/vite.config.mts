@@ -1,6 +1,7 @@
 import {fileURLToPath, URL} from 'node:url'
 
 import defineConfig from '@ndive/vite'
+import react from '@vitejs/plugin-react'
 import browserslistToEsbuild from 'browserslist-to-esbuild'
 
 import pkg from './package.json'
@@ -21,4 +22,5 @@ export default defineConfig({
             $: fileURLToPath(new URL('./src', import.meta.url)),
         },
     },
+    plugins: [react()],
 })
