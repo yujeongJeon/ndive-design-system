@@ -14,11 +14,17 @@ export default function ButtonPrimary({
     color,
     fillType,
     size,
+    disabled,
 }: CommonButtonProps & {
     color: Exclude<TPrimaryColors, 'gray'>
 }) {
     return (
-        <button className={cx('button', fillType, `size-${size}`, `color-${color}`)} onClick={onClick} {...attributes}>
+        <button
+            className={cx('button', fillType, `size-${size}`, `color-${color}`)}
+            onClick={onClick}
+            disabled={disabled}
+            {...attributes}
+        >
             {text}
         </button>
     )

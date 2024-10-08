@@ -3,7 +3,8 @@ import {HTMLAttributes, MouseEventHandler, ReactNode} from 'react'
 export interface CommonButtonProps {
     text: string
     fillType: 'fill' | 'line'
-    attributes?: Omit<HTMLAttributes<HTMLButtonElement>, 'onClick'>
+    attributes?: Omit<HTMLAttributes<HTMLButtonElement>, 'onClick' | 'disabled'>
+    disabled?: boolean
     onClick?: MouseEventHandler<HTMLButtonElement>
     icon?: {
         direction: 'front' | 'back'
