@@ -10,14 +10,21 @@ function normalize(relativePath) {
 
 dotenv.config({path: normalize('../.env')})
 
-function snakeToCamel(snake) {
+function snakeToPascal(snake) {
     return snake.replace(/(_\w)/g, function (match) {
         return match[1].toUpperCase()
     })
 }
 
+function pascalToCamel(str) {
+    if (str.length === 0) {
+        return str
+    }
+    return str.charAt(0).toLowerCase() + str.slice(1)
+}
+
 async function fetchColor() {
-    const colorSet = await setColor({
+    const {group, colorSet} = await setColor({
         accessToken: process.env.FIGMA_TOKEN,
     })
 
@@ -30,7 +37,7 @@ async function fetchColor() {
 
     const content = `${Object.entries(colorSet)
         .map(
-            ([variableName, color]) => `$${snakeToCamel(variableName)}: ${color};
+            ([variableName, color]) => `$${snakeToPascal(variableName)}: ${color};
 `,
         )
         .join('')}`
@@ -52,8 +59,8 @@ async function fetchColor() {
     })
 
     // color.types.ts
-    const colorTypeDefinition = `export type TColors = ${Object.keys(colorSet)
-        .map((colorKey) => snakeToCamel(colorKey))
+    const colorTypeDefinition = `export type TPrimaryColors = ${group
+        .map((colorKey) => pascalToCamel(colorKey))
         .map((colorKey) => `"${colorKey}"`)
         .join(' | ')};
 `
