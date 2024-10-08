@@ -5,9 +5,25 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "start:storybook": "storybook dev -p 6006",
+        "build:storybook": "storybook build -o ./dist --disable-telemetry"
     },
     "keywords": [],
     "author": "yujeong-jeon",
-    "license": "ISC"
+    "license": "ISC",
+    "devDependencies": {
+        "@ndive/design-components": "workspace:^",
+        "@ndive/tsconfig": "workspace:*",
+        "@ndive/vite": "workspace:^",
+        "@storybook/addon-essentials": "^8.3.5",
+        "@storybook/addon-links": "^8.3.5",
+        "@storybook/addons": "^7.6.17",
+        "@storybook/react": "^8.3.5",
+        "@storybook/react-vite": "^8.3.5",
+        "@types/node": "^22.5.5",
+        "@types/react": "^18.3.9",
+        "@vitejs/plugin-react": "^4.3.2",
+        "storybook": "^8.3.5",
+        "vite": "^5.4.6"
+    }
 }
