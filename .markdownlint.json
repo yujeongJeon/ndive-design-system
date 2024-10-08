@@ -3,5 +3,6 @@
     "extends": "@naverpay/markdown-lint",
     "MD013": false,
     "MD024": {"siblings_only": true},
-    "MD053": false
+    "MD053": false,
+    "MD030": false
 }
