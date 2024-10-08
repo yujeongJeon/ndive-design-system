@@ -39,7 +39,7 @@ async function fetchTypo() {
         .map(
             ([name, {fontSize, fontWeight, lineHeightPx, fontFamily}]) => `@mixin ${toName(name)} {
     font-size: ${fontSize}px;
-    font-weight: ${fontWeight}px;
+    font-weight: ${fontWeight};
     line-height: ${Math.round(lineHeightPx)}px;
     font-family: ${fontFamily};
 }
