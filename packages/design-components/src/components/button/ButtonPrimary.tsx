@@ -1,14 +1,24 @@
+import classnames from 'classnames/bind'
+
 import {CommonButtonProps} from '$/types/button.types'
+import {TPrimaryColors} from '$/types/color.types'
+
+import styles from './ButtonPrimary.module.scss'
+
+const cx = classnames.bind(styles)
 
 export default function ButtonPrimary({
     text,
     onClick,
     attributes,
+    color,
+    fillType,
+    size,
 }: CommonButtonProps & {
-    color: string // TODO 타입 정의 필요 through fetch:color
+    color: Exclude<TPrimaryColors, 'gray'>
 }) {
     return (
-        <button onClick={onClick} {...attributes}>
+        <button className={cx('button', fillType, `size-${size}`, `color-${color}`)} onClick={onClick} {...attributes}>
             {text}
         </button>
     )

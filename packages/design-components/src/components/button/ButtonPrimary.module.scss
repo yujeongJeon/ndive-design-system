@@ -1,0 +1,48 @@
+@import '$/styles/global.scss';
+
+.button {
+    border-radius: 32px;
+}
+.fill {
+    color: $gray000;
+}
+
+@include setAllStyle(
+    (
+        mainGreen: $MainGreenDefault,
+        mainYellow: $MainYellowDefault,
+        red: $RedDefault,
+        teal: $TealDefault,
+    ),
+    background-color,
+    '.fill',
+    $prefix: 'color'
+);
+
+@include setAllStyle(
+    (
+        mainGreen: $MainGreenDefault,
+        mainYellow: $MainYellowDefault,
+        red: $RedDefault,
+        teal: $TealDefault,
+    ),
+    border-color,
+    '.line',
+    $prefix: 'color'
+);
+
+.size-small {
+    @include body2Bold;
+
+    padding: 8px 14px;
+}
+.size-medium {
+    @include head4Bold;
+
+    padding: 10px 20px;
+}
+.size-large {
+    @include head3Bold;
+
+    padding: 12px 24px;
+}
