@@ -16,7 +16,7 @@
         "prepare": "lefthook install",
         "build": "turbo clean build",
         "fetch:tokens": "turbo fetch:tokens && pnpm fix:all",
-        "changeset-version": "changeset version && pnpm run md:fix",
+        "changeset-version": "changeset version && pnpm run md:fix && find packages/* -name CHANGELOG.md -print -exec cat {} ;",
         "release": "changeset publish"
     },
     "keywords": [],
