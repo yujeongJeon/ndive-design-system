@@ -5,6 +5,22 @@ import {isFulfilled, isNonEmpty} from './utils/utils'
 
 import type {TSizeReturnType} from './types/icon.type'
 
+function uniq<T>(array: T[]): T[] {
+    const seen = new Set<T>()
+
+    return array.filter((item) => {
+        // `item`이 string 타입일 경우 toLowerCase() 적용
+        const normalizedItem = (typeof item === 'string' ? item.toLowerCase() : item) as T
+
+        if (seen.has(normalizedItem)) {
+            return false
+        }
+
+        seen.add(normalizedItem)
+        return true
+    })
+}
+
 export async function setColor({accessToken}: {accessToken: string}) {
     const styles = await getStyles(accessToken)
 
@@ -23,13 +39,16 @@ export async function setColor({accessToken}: {accessToken: string}) {
         ]) => [name, fills] as [string, TPaint[]],
     )
 
-    return nodeEntries.reduce(
-        (colorSet, [name, fills]) => ({
-            ...colorSet,
-            [name.replace('/', '_')]: rgbaToHex(fills[0].color), // rgba -> hex로 변환
-        }),
-        {} as Record<string, string>,
-    )
+    return {
+        group: uniq(nodeEntries.map(([name]) => name.split('/')[0])),
+        colorSet: nodeEntries.reduce(
+            (colorSet, [name, fills]) => ({
+                ...colorSet,
+                [name.replace('/', '_')]: rgbaToHex(fills[0].color), // rgba -> hex로 변환
+            }),
+            {} as Record<string, string>,
+        ),
+    }
 }
 
 export async function setTypo({accessToken}: {accessToken: string}) {
