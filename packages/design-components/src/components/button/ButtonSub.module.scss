@@ -1,0 +1,81 @@
+@import '$/styles/global.scss';
+
+.button {
+    display: inline-flex;
+    box-sizing: border-box;
+    border-radius: 32px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.size-small {
+    @include body2Bold;
+
+    padding: 8px 14px;
+}
+.size-medium {
+    @include head4Bold;
+
+    padding: 10px 20px;
+}
+.size-large {
+    @include head3Bold;
+
+    padding: 12px 24px;
+}
+
+.icon {
+    display: block;
+    line-height: normal;
+
+    &.front {
+        margin-right: 6px;
+    }
+
+    &.back {
+        margin-left: 6px;
+    }
+}
+
+.fill {
+    background-color: $Gray6;
+    color: $gray000;
+
+    &:hover,
+    &:active {
+        background-color: $Gray8;
+    }
+
+    &:disabled {
+        background-color: $Gray2 !important;
+
+        &:hover,
+        &:active {
+            background-color: $Gray2 !important;
+        }
+    }
+}
+
+.line {
+    border: 1px solid;
+    color: $Gray8;
+    border-color: $Gray1;
+    background-color: $gray000;
+
+    &:hover,
+    &:active {
+        border-color: $Gray5;
+    }
+
+    &:disabled {
+        border-color: $Gray1 !important;
+        color: $Gray2 !important;
+
+        &:hover,
+        &:active {
+            border-color: $Gray1 !important;
+            color: $Gray2 !important;
+        }
+    }
+}
