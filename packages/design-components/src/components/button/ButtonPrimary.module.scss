@@ -136,6 +136,9 @@
 }
 
 .icon {
+    display: block;
+    line-height: normal;
+
     &.front {
         margin-right: 6px;
     }
