@@ -1,13 +1,13 @@
 import classnames from 'classnames/bind'
 
-import {CommonButtonProps} from '$/types/button.types'
+import {TButtonCommonProps} from '$/types/button.types'
 import {TPrimaryColors} from '$/types/color.types'
 
 import styles from './ButtonPrimary.module.scss'
 
 const cx = classnames.bind(styles)
 
-export type TButtonPrimaryProps = CommonButtonProps & {
+export type TButtonPrimaryProps = TButtonCommonProps & {
     color: Exclude<TPrimaryColors, 'gray'>
 }
 

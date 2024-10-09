@@ -1,12 +1,12 @@
 import classnames from 'classnames/bind'
 
-import {CommonButtonProps} from '$/types/button.types'
+import {TButtonCommonProps} from '$/types/button.types'
 
 import styles from './ButtonSub.module.scss'
 
 const cx = classnames.bind(styles)
 
-export default function ButtonSub({text, onClick, attributes, disabled, fillType, size, icon}: CommonButtonProps) {
+export default function ButtonSub({text, onClick, attributes, disabled, fillType, size, icon}: TButtonCommonProps) {
     const hasIcon = !!icon
 
     const IconComponent = icon?.component

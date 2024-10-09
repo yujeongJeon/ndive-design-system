@@ -1,4 +1,3 @@
-import {CommonButtonProps} from '$/types/button.types'
 import {TModalCommonProps} from '$/types/modal.types'
 
 import {TButtonPrimaryProps} from '../button/ButtonPrimary'
@@ -11,7 +10,7 @@ export default function ModalConfirm(
     _: TModalCommonProps & {
         buttons: {
             left: TButtonPrimaryProps
-            right: CommonButtonProps
+            right: TButtonPrimaryProps
         }
     },
 ) {

@@ -1,6 +1,6 @@
 import {HTMLAttributes, MouseEventHandler, ReactNode} from 'react'
 
-export interface CommonButtonProps {
+export interface TButtonCommonProps {
     text: string
     fillType: 'fill' | 'line'
     attributes?: Omit<HTMLAttributes<HTMLButtonElement>, 'onClick' | 'disabled'>
