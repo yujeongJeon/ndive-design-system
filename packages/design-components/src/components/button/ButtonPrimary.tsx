@@ -7,6 +7,10 @@ import styles from './ButtonPrimary.module.scss'
 
 const cx = classnames.bind(styles)
 
+export type TButtonPrimaryProps = CommonButtonProps & {
+    color: Exclude<TPrimaryColors, 'gray'>
+}
+
 export default function ButtonPrimary({
     text,
     onClick,
@@ -16,9 +20,7 @@ export default function ButtonPrimary({
     size,
     disabled,
     icon,
-}: CommonButtonProps & {
-    color: Exclude<TPrimaryColors, 'gray'>
-}) {
+}: TButtonPrimaryProps) {
     const hasIcon = !!icon
 
     const IconComponent = icon?.component
