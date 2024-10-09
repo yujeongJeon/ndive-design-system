@@ -10,17 +10,25 @@ function normalize(relativePath) {
 
 dotenv.config({path: normalize('../.env')})
 
-function snakeToCamel(snake) {
+function snakeToPascal(snake) {
     return snake.replace(/(_\w)/g, function (match) {
         return match[1].toUpperCase()
     })
 }
 
+function pascalToCamel(str) {
+    if (str.length === 0) {
+        return str
+    }
+    return str.charAt(0).toLowerCase() + str.slice(1)
+}
+
 async function fetchColor() {
-    const colorSet = await setColor({
+    const {group, colorSet} = await setColor({
         accessToken: process.env.FIGMA_TOKEN,
     })
 
+    // color.scss
     const stylesDir = normalize('../src/styles')
     !fs.existsSync(stylesDir) &&
         fs.mkdirSync(stylesDir, {
@@ -29,7 +37,7 @@ async function fetchColor() {
 
     const content = `${Object.entries(colorSet)
         .map(
-            ([variableName, color]) => `$${snakeToCamel(variableName)}: ${color};
+            ([variableName, color]) => `$${snakeToPascal(variableName)}: ${color};
 `,
         )
         .join('')}`
@@ -38,6 +46,7 @@ async function fetchColor() {
         encoding: 'utf-8',
     })
 
+    // color.json
     const jsonDir = normalize('../src/json')
 
     !fs.existsSync(jsonDir) &&
@@ -46,6 +55,17 @@ async function fetchColor() {
         })
 
     fs.writeFileSync(path.join(jsonDir, 'color.json'), JSON.stringify(colorSet), {
+        encoding: 'utf-8',
+    })
+
+    // color.types.ts
+    const colorTypeDefinition = `export type TPrimaryColors = ${group
+        .map((colorKey) => pascalToCamel(colorKey))
+        .map((colorKey) => `"${colorKey}"`)
+        .join(' | ')};
+`
+
+    fs.writeFileSync(path.join(normalize('../src/types'), 'color.types.ts'), colorTypeDefinition, {
         encoding: 'utf-8',
     })
 }

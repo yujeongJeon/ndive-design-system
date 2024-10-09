@@ -8,16 +8,22 @@ const normalizeOutput = (exportPath: string | {default: string}) => {
     return typeof exportPath === 'string' ? exportPath : exportPath?.default
 }
 
+export type DistributiveOmit<T, U extends keyof any> = T extends object ? Omit<T, U> : never
+type CustomBuildOptions = DistributiveOmit<BuildOptions['rollupOptions'], 'output'>
+
 export default ({
     pkg,
-    entry,
-    target,
+    buildOptions: {entry, target},
+    rollupOptions,
     resolve,
     plugins,
 }: {
     pkg: Record<string, any>
-    entry: {index: string} & Record<string, string>
-    target: BuildOptions['target']
+    buildOptions: {
+        entry: {index: string} & Record<string, string>
+        target: BuildOptions['target']
+    }
+    rollupOptions?: CustomBuildOptions
     resolve?: ResolveOptions & {
         alias?: AliasOptions
     }
@@ -44,9 +50,12 @@ export default ({
                 formats: ['es'],
             },
             rollupOptions: {
-                external: [...Object.keys(pkg.peerDependencies || {}), ...Object.keys(pkg.dependencies || {})].flatMap(
-                    (dep) => [dep, new RegExp(`^${dep}/.*`)],
-                ),
+                ...rollupOptions,
+                external:
+                    rollupOptions?.external ||
+                    [...Object.keys(pkg.peerDependencies || {}), ...Object.keys(pkg.dependencies || {})].flatMap(
+                        (dep) => [dep, new RegExp(`^${dep}/.*`)],
+                    ),
                 output: [
                     {
                         format: 'es',

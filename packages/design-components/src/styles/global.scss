@@ -1,2 +1,56 @@
+@charset "utf-8";
+
 @import 'color.scss';
 @import 'typo.scss';
+@import 'utils.scss';
+
+body,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+ol,
+li,
+dl,
+dt,
+dd,
+table,
+th,
+td,
+form,
+fieldset,
+legend,
+input,
+textarea,
+button,
+select {
+    margin: 0;
+    padding: 0;
+}
+
+button,
+select,
+input {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    border: 0 none;
+    background-color: transparent;
+}
+
+button {
+    cursor: pointer;
+    &:disabled {
+        cursor: default;
+    }
+}
+
+a,
+button,
+select {
+    color: inherit;
+}

@@ -1,66 +1,69 @@
+@import "@fontsource/pretendard/500.css";
+@import "@fontsource/pretendard/700.css";
+
 @mixin displayBold {
     font-size: 36px;
-    font-weight: 700px;
+    font-weight: 700;
     line-height: 43px;
     font-family: Pretendard;
 }
 @mixin head1Bold {
     font-size: 24px;
-    font-weight: 700px;
+    font-weight: 700;
     line-height: 29px;
     font-family: Pretendard;
 }
 @mixin head2Bold {
     font-size: 20px;
-    font-weight: 700px;
+    font-weight: 700;
     line-height: 24px;
     font-family: Pretendard;
 }
 @mixin head3Bold {
     font-size: 16px;
-    font-weight: 700px;
+    font-weight: 700;
     line-height: 22px;
     font-family: Pretendard;
 }
 @mixin head4Bold {
     font-size: 14px;
-    font-weight: 700px;
+    font-weight: 700;
     line-height: 20px;
     font-family: Pretendard;
 }
 @mixin body2Bold {
     font-size: 13px;
-    font-weight: 700px;
+    font-weight: 700;
     line-height: 18px;
     font-family: Pretendard;
 }
 @mixin captionBold {
     font-size: 12px;
-    font-weight: 700px;
+    font-weight: 700;
     line-height: 17px;
     font-family: Pretendard;
 }
 @mixin displayMedium {
     font-size: 36px;
-    font-weight: 500px;
+    font-weight: 500;
     line-height: 43px;
     font-family: Pretendard;
 }
 @mixin body1Medium {
     font-size: 14px;
-    font-weight: 500px;
+    font-weight: 500;
     line-height: 20px;
     font-family: Pretendard;
 }
 @mixin body2Medium {
     font-size: 13px;
-    font-weight: 500px;
+    font-weight: 500;
     line-height: 18px;
     font-family: Pretendard;
 }
 @mixin captionMedium {
     font-size: 12px;
-    font-weight: 500px;
+    font-weight: 500;
     line-height: 17px;
     font-family: Pretendard;
 }

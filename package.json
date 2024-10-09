@@ -17,7 +17,9 @@
         "build": "turbo clean build",
         "fetch:tokens": "turbo fetch:tokens && pnpm fix:all",
         "changeset-version": "changeset version && pnpm run md:fix",
-        "release": "changeset publish"
+        "release": "changeset publish",
+        "start:storybook": "turbo start:storybook",
+        "build:storybook": "turbo build:storybook"
     },
     "keywords": [],
     "author": "yujeong-jeon",

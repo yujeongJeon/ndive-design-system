@@ -1,0 +1,16 @@
+/// 입력받은 모든 클래스에 스타일 적용
+/// @param {map()} $map
+/// 분기 클래스명, 속성값 - 분기 클래스명과 해당 클래스에 필요한 하는 속성값을 map 형태로 입력합니다.
+/// @param {string} $style
+/// 스타일 - 공통으로 적용되어야 하는 속성명을 입력합니다.
+/// @param {string} $selector
+/// 클래스 셀렉터 - 기본: '' // 추가로 필요한 셀렉터가 있는 경우 추가합니다.
+/// @param {string} $prefix
+/// 클래스 prefix - default: 'type' // 클래스 프리픽스가 다른 경우 수정합니다.
+@mixin setAllStyle($map, $style, $selector: '', $prefix: 'type') {
+    @each $name, $value in $map {
+        .#{$prefix}-#{'' + $name}#{$selector} {
+            #{$style}: $value;
+        }
+    }
+}

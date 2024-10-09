@@ -39,7 +39,7 @@ async function fetchTypo() {
         .map(
             ([name, {fontSize, fontWeight, lineHeightPx, fontFamily}]) => `@mixin ${toName(name)} {
     font-size: ${fontSize}px;
-    font-weight: ${fontWeight}px;
+    font-weight: ${fontWeight};
     line-height: ${Math.round(lineHeightPx)}px;
     font-family: ${fontFamily};
 }
@@ -47,9 +47,16 @@ async function fetchTypo() {
         )
         .join('')}`
 
-    fs.writeFileSync(path.join(stylesDir, 'typo.scss'), content, {
-        encoding: 'utf-8',
-    })
+    fs.writeFileSync(
+        path.join(stylesDir, 'typo.scss'),
+        `@import "@fontsource/pretendard/500.css";
+@import "@fontsource/pretendard/700.css";
+
+${content}`,
+        {
+            encoding: 'utf-8',
+        },
+    )
 }
 
 fetchTypo()
