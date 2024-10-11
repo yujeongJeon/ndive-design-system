@@ -1,13 +1,5 @@
 @import '$/styles/global.scss';
-
-.button {
-    display: inline-flex;
-    box-sizing: border-box;
-    border-radius: 32px;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-}
+@import '$/components/button/Button.module.scss';
 
 .size-small {
     @include body2Bold;
@@ -23,19 +15,6 @@
     @include head3Bold;
 
     padding: 12px 24px;
-}
-
-.icon {
-    display: block;
-    line-height: normal;
-
-    &.front {
-        margin-right: 6px;
-    }
-
-    &.back {
-        margin-left: 6px;
-    }
 }
 
 .fill {

@@ -22,6 +22,7 @@ export const ButtonPrimary: Story = {
             direction: 'front',
             component: <IconAdd width={16} height={16} fill={'#fff'} />,
         },
+        isWide: false,
     },
     argTypes: {
         color: {
@@ -39,6 +40,9 @@ export const ButtonPrimary: Story = {
             options: ['small', 'medium', 'large'],
         },
         disabled: {
+            control: {type: 'boolean'},
+        },
+        isWide: {
             control: {type: 'boolean'},
         },
     },

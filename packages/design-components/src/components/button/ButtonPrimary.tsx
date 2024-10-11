@@ -1,11 +1,15 @@
 import classnames from 'classnames/bind'
 
-import {CommonButtonProps} from '$/types/button.types'
+import {TButtonCommonProps} from '$/types/button.types'
 import {TPrimaryColors} from '$/types/color.types'
 
 import styles from './ButtonPrimary.module.scss'
 
 const cx = classnames.bind(styles)
+
+export type TButtonPrimaryProps = TButtonCommonProps & {
+    color: Exclude<TPrimaryColors, 'gray'>
+}
 
 export default function ButtonPrimary({
     text,
@@ -16,16 +20,15 @@ export default function ButtonPrimary({
     size,
     disabled,
     icon,
-}: CommonButtonProps & {
-    color: Exclude<TPrimaryColors, 'gray'>
-}) {
+    isWide = false,
+}: TButtonPrimaryProps) {
     const hasIcon = !!icon
 
     const IconComponent = icon?.component
 
     return (
         <button
-            className={cx('button', fillType, `size-${size}`, `color-${color}`)}
+            className={cx('button', fillType, `size-${size}`, `color-${color}`, {wide: isWide})}
             onClick={onClick}
             disabled={disabled}
             {...attributes}

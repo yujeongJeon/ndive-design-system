@@ -1,0 +1,17 @@
+@import '$/styles/global.scss';
+
+.article {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    background-color: $gray900;
+    transition: opacity 0.2s cubic-bezier(0.33, 0, 0.2, 1);
+    will-change: opacity;
+    pointer-events: auto;
+    &.show {
+        opacity: 0.5;
+    }
+}
