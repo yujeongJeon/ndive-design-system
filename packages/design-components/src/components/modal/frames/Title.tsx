@@ -1,6 +1,6 @@
 import classnames from 'classnames/bind'
 
-import styles from '$/components/modal/frames/TItle.module.scss'
+import styles from './Title.module.scss'
 
 const cx = classnames.bind(styles)
 
