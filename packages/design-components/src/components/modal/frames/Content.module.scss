@@ -1,0 +1,7 @@
+@import '$/styles/global.scss';
+
+.content {
+    @include body1Medium;
+    padding: 12px 0 20px 0;
+    color: $Gray5;
+}

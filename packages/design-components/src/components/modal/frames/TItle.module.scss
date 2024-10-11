@@ -1,0 +1,7 @@
+@import '$/styles/global.scss';
+
+.title {
+    @include head3Bold;
+
+    text-align: center;
+}

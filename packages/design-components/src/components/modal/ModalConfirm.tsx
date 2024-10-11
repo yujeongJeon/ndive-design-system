@@ -1,27 +1,45 @@
+import classnames from 'classnames/bind'
+
+import ButtonPrimary, {TButtonPrimaryProps} from '$/components/button/ButtonPrimary'
+import Content from '$/components/modal/frames/Content'
+import Footer from '$/components/modal/frames/Footer'
+import Overlay from '$/components/modal/frames/Overlay'
+import Title from '$/components/modal/frames/Title'
 import {TModalCommonProps} from '$/types/modal.types'
 
-import {TButtonPrimaryProps} from '../button/ButtonPrimary'
-import Content from './frames/Content'
-import Footer from './frames/Footer'
-import Overlay from './frames/Overlay'
-import Title from './frames/Title'
+import styles from './Modal.module.scss'
 
-export default function ModalConfirm(
-    _: TModalCommonProps & {
-        buttons: {
-            left: TButtonPrimaryProps
-            right: TButtonPrimaryProps
-        }
-    },
-) {
+const cx = classnames.bind(styles)
+
+export default function ModalConfirm({
+    title,
+    content,
+    isShow,
+    onClose,
+    buttons: {left, right},
+}: TModalCommonProps & {
+    buttons: {
+        left: Omit<TButtonPrimaryProps, 'isWide'>
+        right: Omit<TButtonPrimaryProps, 'isWide'>
+    }
+}) {
+    const handleTransitionEnd = () => {}
+
     return (
-        <>
-            <div>
-                <Title />
-                <Content />
-                <Footer>버튼 두개</Footer>
-            </div>
-            <Overlay />
-        </>
+        <div className={cx('article')} onTransitionEnd={handleTransitionEnd}>
+            {isShow && (
+                <div className={cx('container')}>
+                    <Title text={title} />
+                    <Content>{content}</Content>
+                    <Footer>
+                        <div className={cx('button-group')}>
+                            <ButtonPrimary isWide {...left} />
+                            <ButtonPrimary isWide {...right} />
+                        </div>
+                    </Footer>
+                </div>
+            )}
+            <Overlay onClick={onClose} isShow={isShow} />
+        </div>
     )
 }

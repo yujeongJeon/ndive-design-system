@@ -1,6 +1,11 @@
-import {PropsWithChildren} from 'react'
+import {ReactNode} from 'react'
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export default function Footer({children}: PropsWithChildren<{}>) {
-    return <>{children}</>
+import classnames from 'classnames/bind'
+
+import styles from './Footer.module.scss'
+
+const cx = classnames.bind(styles)
+
+export default function Footer({children}: {children: ReactNode}) {
+    return <div className={cx('footer')}>{children}</div>
 }
