@@ -20,6 +20,7 @@ export default function ButtonPrimary({
     size,
     disabled,
     icon,
+    isWide = false,
 }: TButtonPrimaryProps) {
     const hasIcon = !!icon
 
@@ -27,7 +28,7 @@ export default function ButtonPrimary({
 
     return (
         <button
-            className={cx('button', fillType, `size-${size}`, `color-${color}`)}
+            className={cx('button', fillType, `size-${size}`, `color-${color}`, {wide: isWide})}
             onClick={onClick}
             disabled={disabled}
             {...attributes}

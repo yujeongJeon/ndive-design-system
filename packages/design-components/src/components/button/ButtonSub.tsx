@@ -6,14 +6,23 @@ import styles from './ButtonSub.module.scss'
 
 const cx = classnames.bind(styles)
 
-export default function ButtonSub({text, onClick, attributes, disabled, fillType, size, icon}: TButtonCommonProps) {
+export default function ButtonSub({
+    text,
+    onClick,
+    attributes,
+    disabled,
+    fillType,
+    size,
+    icon,
+    isWide = false,
+}: TButtonCommonProps) {
     const hasIcon = !!icon
 
     const IconComponent = icon?.component
 
     return (
         <button
-            className={cx('button', fillType, `size-${size}`)}
+            className={cx('button', fillType, `size-${size}`, {wide: isWide})}
             onClick={onClick}
             disabled={disabled}
             {...attributes}

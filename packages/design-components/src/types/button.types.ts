@@ -11,4 +11,5 @@ export interface TButtonCommonProps {
         component: ReactNode
     }
     size: 'small' | 'medium' | 'large'
+    isWide?: boolean
 }
