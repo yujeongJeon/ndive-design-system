@@ -82,8 +82,8 @@ importers:
   examples/shopping-web:
     dependencies:
       '@ndive/design-components':
-        specifier: ^0.0.2
-        version: 0.0.2(@types/react-dom@18.3.0)(@types/react@18.3.9)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: workspace:*
+        version: link:../../packages/design-components
       '@ndive/tsconfig':
         specifier: workspace:*
         version: link:../../shared/tsconfig
@@ -962,14 +962,6 @@ packages:
     resolution: {integrity: sha512-YIOen+hTzW18kl5PsOfty5QwqpgqNfErKs+qOX7TfDFv3PMDHzDVPlFuP9CwjY4bB6NZN9GEG3iaocT/bBBMyg==}
     peerDependencies:
       prettier: ^2.8.8 || ^3.0.0
-
-  '@ndive/design-components@0.0.2':
-    resolution: {integrity: sha512-v4Rcj20rNK4ot6Jd8KBcHQHUAICNA2GQcwHDY5npSGGzXlVjYZJ0fUW+MqQu4UokoroNM+jQifHtIqQ7JTqLRg==}
-    peerDependencies:
-      '@types/react': ^18
-      '@types/react-dom': ^18
-      react: ^18
-      react-dom: ^18
 
   '@next/eslint-plugin-next@14.2.11':
     resolution: {integrity: sha512-7mw+xW7Y03Ph4NTCcAzYe+vu4BNjEHZUfZayyF3Y1D9RX6c5NIe25m1grHEAkyUuaqjRxOYhnCNeglOkIqLkBA==}
@@ -5043,15 +5035,6 @@ snapshots:
   '@naverpay/prettier-config@1.0.0(prettier@2.8.8)':
     dependencies:
       prettier: 2.8.8
-
-  '@ndive/design-components@0.0.2(@types/react-dom@18.3.0)(@types/react@18.3.9)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      '@fontsource/pretendard': 5.1.0
-      '@types/react': 18.3.9
-      '@types/react-dom': 18.3.0
-      classnames: 2.5.1
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
 
   '@next/eslint-plugin-next@14.2.11':
     dependencies:

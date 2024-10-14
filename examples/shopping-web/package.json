@@ -9,7 +9,7 @@
     },
     "keywords": [],
     "dependencies": {
-        "@ndive/design-components": "^0.0.3",
+        "@ndive/design-components": "workspace:*",
         "@ndive/tsconfig": "workspace:*",
         "@vitejs/plugin-react": "^4.3.2",
         "react": "^18",
