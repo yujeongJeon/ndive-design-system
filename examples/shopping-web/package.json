@@ -1,6 +1,6 @@
 {
     "name": "shopping-web",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "private": true,
     "description": "",
     "main": "index.js",
@@ -9,7 +9,7 @@
     },
     "keywords": [],
     "dependencies": {
-        "@ndive/design-components": "^0.0.2",
+        "@ndive/design-components": "^0.0.3",
         "@ndive/tsconfig": "workspace:*",
         "@vitejs/plugin-react": "^4.3.2",
         "react": "^18",
