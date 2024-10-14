@@ -5,7 +5,7 @@ import type {Meta, StoryObj} from '@storybook/react'
 import '@ndive/design-components/styles'
 
 export default {
-    title: 'Button',
+    title: 'Components/Button',
     component: ButtonPrimaryComponent,
 } satisfies Meta<typeof ButtonPrimaryComponent>
 

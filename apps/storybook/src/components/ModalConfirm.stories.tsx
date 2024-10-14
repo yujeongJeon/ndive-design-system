@@ -5,7 +5,7 @@ import type {Meta, StoryObj} from '@storybook/react'
 import '@ndive/design-components/styles'
 
 export default {
-    title: 'Modal',
+    title: 'Components/Modal',
     component: ModalConfirmComponent,
 } satisfies Meta<typeof ModalConfirmComponent>
 

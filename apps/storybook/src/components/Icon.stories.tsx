@@ -131,6 +131,6 @@ export const Icon = () => {
 }
 
 export default {
-    title: 'Icons',
+    title: 'Components/Icons',
     component: Icon,
 } satisfies Meta<typeof Icon>
