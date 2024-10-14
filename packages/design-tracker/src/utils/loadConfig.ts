@@ -7,12 +7,24 @@ const CONFIG_NAME = 'ndive-design-tracker'
 
 const explorer = cosmiconfig(CONFIG_NAME, {
     searchPlaces: [
-        '.ndive-design-tracker.rc',
-        '.ndive-design-tracker.json',
-        '.ndive-design-tracker.yaml',
-        '.ndive-design-tracker.yml',
-        '.ndive-design-tracker.config.js',
+        'ndive-design-tracker.rc',
+        'ndive-design-tracker.json',
+        'ndive-design-tracker.yaml',
+        'ndive-design-tracker.yml',
+        'ndive-design-tracker.config.js',
     ],
+    loaders: {
+        '.rc': (filepath, content) => {
+            try {
+                return JSON.parse(content)
+            } catch (e: unknown) {
+                if (e instanceof Error) {
+                    throw new Error(`Failed to parse JSON in ${filepath}: ${e.message}`)
+                }
+                process.exit(1)
+            }
+        },
+    },
 })
 
 interface IGetPropValue {

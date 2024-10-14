@@ -6,7 +6,7 @@ const flags = {
         desc: 'Path to config file',
         type: 'string' as const,
         default: './ndive-design-tracker.js',
-        alias: '-c',
+        shortFlag: '-c',
         examples: [
             '-c /path/to/ndive-design-tracker.config.js',
             '-c /path/to/.ndive-design-tracker.(rc|json|yaml|yml)',
@@ -16,8 +16,9 @@ const flags = {
     path: {
         desc: '/path/to/folder',
         type: 'string' as const,
-        alias: '-p',
-        isRequired: true,
+        shortFlag: '-p',
+        default: '',
+        isRequired: false,
     },
 }
 
