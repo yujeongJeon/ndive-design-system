@@ -1,5 +1,17 @@
 # @ndive/design-components
 
+## 0.0.2
+
+### Patch Changes
+
+- 4f22164: ModalNotice, ModalConfirm 추가
+
+    [design-components] 모달 추가
+
+- bbfcd5f: package.json 수정
+
+    [components] package.json 잘못된거 수정
+
 ## 0.0.1
 
 ### Patch Changes

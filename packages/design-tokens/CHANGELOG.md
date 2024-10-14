@@ -1,5 +1,13 @@
 # @ndive/design-tokens
 
+## 0.0.2
+
+### Patch Changes
+
+- bbfcd5f: package.json 수정
+
+    [components] package.json 잘못된거 수정
+
 ## 0.0.1
 
 ### Patch Changes
