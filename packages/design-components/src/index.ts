@@ -8,3 +8,6 @@ export {default as ModalConfirm} from '$/components/modal/ModalConfirm'
 
 // Icon
 export * from '$/components/icons'
+
+// Constants
+export * from '$/constants/icon'

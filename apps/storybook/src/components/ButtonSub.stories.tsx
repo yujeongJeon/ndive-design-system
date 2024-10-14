@@ -1,20 +1,17 @@
-import {ButtonPrimary as ButtonPrimaryComponent, IconAdd} from '@ndive/design-components'
+import {ButtonSub as ButtonSubComponent, IconAdd} from '@ndive/design-components'
 
 import type {Meta, StoryObj} from '@storybook/react'
 
-import '@ndive/design-components/styles'
-
 export default {
-    title: 'Button',
-    component: ButtonPrimaryComponent,
-} satisfies Meta<typeof ButtonPrimaryComponent>
+    title: 'Components/Button',
+    component: ButtonSubComponent,
+} satisfies Meta<typeof ButtonSubComponent>
 
-type Story = StoryObj<typeof ButtonPrimaryComponent>
+type Story = StoryObj<typeof ButtonSubComponent>
 
-export const ButtonPrimary: Story = {
+export const ButtonSub: Story = {
     args: {
         text: '버튼',
-        color: 'mainGreen',
         fillType: 'fill',
         size: 'small',
         disabled: false,
@@ -25,12 +22,6 @@ export const ButtonPrimary: Story = {
         isWide: false,
     },
     argTypes: {
-        color: {
-            control: {
-                type: 'select',
-            },
-            options: ['mainGreen', 'mainYellow', 'red', 'teal'],
-        },
         fillType: {
             control: {type: 'radio'},
             options: ['fill', 'line'],

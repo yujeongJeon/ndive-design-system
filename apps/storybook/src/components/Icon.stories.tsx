@@ -52,11 +52,10 @@ import {
     IconEyeOn,
     IconEyeOff,
     IconReset,
+    SIZE,
 } from '@ndive/design-components'
 
 import type {Meta} from '@storybook/react'
-
-import '@ndive/design-components/styles'
 
 const iconSet = {
     IconDown,
@@ -114,10 +113,10 @@ const iconSet = {
     IconReset,
 }
 
-export const Icon = () => {
+export const Icon = ({size}: {size: keyof typeof SIZE}) => {
+    const sizeObj = SIZE[size]
     const commonProps = {
-        width: 24,
-        height: 24,
+        ...sizeObj,
         fill: '#000',
     }
 
@@ -131,6 +130,17 @@ export const Icon = () => {
 }
 
 export default {
-    title: 'Icons',
+    title: 'Components/Icons',
     component: Icon,
+    args: {
+        size: 'm',
+    },
+    argTypes: {
+        size: {
+            control: {
+                type: 'select',
+            },
+            options: Object.keys(SIZE),
+        },
+    },
 } satisfies Meta<typeof Icon>
