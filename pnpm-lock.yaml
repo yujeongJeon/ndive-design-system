@@ -69,6 +69,9 @@ importers:
       '@vitejs/plugin-react':
         specifier: ^4.3.2
         version: 4.3.2(vite@5.4.6(@types/node@22.5.5)(sass@1.79.4))
+      sass:
+        specifier: ^1.79.4
+        version: 1.79.4
       storybook:
         specifier: ^8.3.5
         version: 8.3.5
@@ -164,6 +167,9 @@ importers:
       vite:
         specifier: ^5.4.6
         version: 5.4.6(@types/node@22.5.5)(sass@1.79.4)
+      vite-plugin-static-copy:
+        specifier: ^2.0.0
+        version: 2.0.0(vite@5.4.6(@types/node@22.5.5)(sass@1.79.4))
 
   packages/design-tokens:
     dependencies:
@@ -4115,6 +4121,12 @@ packages:
     peerDependenciesMeta:
       vite:
         optional: true
+
+  vite-plugin-static-copy@2.0.0:
+    resolution: {integrity: sha512-b/quFjTUa/RY9t3geIyeeT2GtWEoRI0GawYFFjys5iMLGgVP638NTGu0RoMjwmi8MoZZ3BQw4OQvb1GpVcXZDA==}
+    engines: {node: ^18.0.0 || >=20.0.0}
+    peerDependencies:
+      vite: ^5.0.0
 
   vite@5.4.6:
     resolution: {integrity: sha512-IeL5f8OO5nylsgzd9tq4qD2QqI0k2CQLGrWD0rCN0EQJZpBK5vJAx0I+GDkMOXxQX/OfFHMuLIx6ddAxGX/k+Q==}
@@ -8604,6 +8616,14 @@ snapshots:
       - '@types/node'
       - rollup
       - supports-color
+
+  vite-plugin-static-copy@2.0.0(vite@5.4.6(@types/node@22.5.5)(sass@1.79.4)):
+    dependencies:
+      chokidar: 3.6.0
+      fast-glob: 3.3.2
+      fs-extra: 11.1.1
+      picocolors: 1.1.0
+      vite: 5.4.6(@types/node@22.5.5)(sass@1.79.4)
 
   vite@5.4.6(@types/node@22.5.5)(sass@1.79.4):
     dependencies:

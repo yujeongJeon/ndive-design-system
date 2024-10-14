@@ -23,6 +23,18 @@
         },
         "./styles": {
             "default": "./dist/style.css"
+        },
+        "./color": {
+            "default": "./dist/json/color.json"
+        },
+        "./icon": {
+            "default": "./dist/json/icon.json"
+        },
+        "./size": {
+            "default": "./dist/json/size.json"
+        },
+        "./scss/typo.scss": {
+            "default": "./dist/styles/typo.scss"
         }
     },
     "keywords": [],
@@ -45,7 +57,8 @@
         "react": "^18",
         "react-dom": "^18",
         "sass": "^1.79.4",
-        "vite": "^5.4.6"
+        "vite": "^5.4.6",
+        "vite-plugin-static-copy": "^2.0.0"
     },
     "peerDependencies": {
         "@types/react": "^18",
