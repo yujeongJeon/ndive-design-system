@@ -16,6 +16,8 @@
 
 ## Required Configuration
 
+This package uses an rc file such as `ndive-design-tracker.json` to set its behavior. Add the `ndive-design-tracker.json` file to the project root directory and set it as in the example below:
+
 이 패키지는 `ndive-design-tracker.json`과 같은 rc파일을 사용하여 동작을 설정합니다. 프로젝트 루트 디렉토리에 `ndive-design-tracker.json` 파일을 추가한 후 아래 예시와 같이 설정하세요:
 
 ```json
