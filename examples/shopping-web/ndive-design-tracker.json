@@ -1,0 +1,5 @@
+{
+    "crawlFrom": "./src",
+    "includeSubComponents": true,
+    "importedFrom": "@ndive/design-components"
+}
