@@ -2,11 +2,42 @@
     "name": "@ndive/design-tracker",
     "version": "0.0.0",
     "description": "",
-    "main": "index.js",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "bin": "./dist/index.js",
+    "files": [
+        "dist"
+    ],
+    "type": "module",
+    "exports": {
+        ".": {
+            "import": "./dist/index.js",
+            "types": "./dist/index.d.ts"
+        },
+        "./package.json": "./package.json"
+    },
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "build": "tsup bin/index.ts",
+        "clean": "rm -rf dist"
     },
     "keywords": [],
     "author": "yujeong-jeon",
-    "license": "ISC"
+    "license": "ISC",
+    "devDependencies": {
+        "@ndive/tsconfig": "workspace:*",
+        "@types/babel__core": "^7.20.5",
+        "@types/dlv": "^1.1.4",
+        "@types/node": "^22.5.5",
+        "tsup": "^8.3.0"
+    },
+    "dependencies": {
+        "@babel/core": "^7.25.8",
+        "@babel/parser": "^7.25.8",
+        "cli-meow-help": "^4.0.0",
+        "cosmiconfig": "^9.0.0",
+        "dlv": "^1.1.3",
+        "dset": "^3.1.4",
+        "fdir": "^6.4.0",
+        "meow": "^13.2.0"
+    }
 }
