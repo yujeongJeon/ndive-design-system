@@ -1,5 +1,13 @@
 # @ndive/design-storybook
 
+## 1.0.2
+
+### Patch Changes
+
+- 4f22164: ModalNotice, ModalConfirm 추가
+
+    [design-components] 모달 추가
+
 ## 1.0.1
 
 ### Patch Changes
