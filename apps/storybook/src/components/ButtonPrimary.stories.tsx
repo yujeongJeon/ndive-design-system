@@ -2,8 +2,6 @@ import {ButtonPrimary as ButtonPrimaryComponent, IconAdd} from '@ndive/design-co
 
 import type {Meta, StoryObj} from '@storybook/react'
 
-import '@ndive/design-components/styles'
-
 export default {
     title: 'Components/Button',
     component: ButtonPrimaryComponent,
