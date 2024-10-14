@@ -1,0 +1,64 @@
+@import '@ndive/design-components/scss/typo.scss';
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 10px 20px;
+    width: 100%;
+    margin-bottom: 16px;
+
+    &.heading {
+        .bold-1 {
+            @include head1Bold;
+        }
+
+        .bold-2 {
+            @include head2Bold;
+        }
+
+        .bold-3 {
+            @include head3Bold;
+        }
+
+        .bold-4 {
+            @include head4Bold;
+        }
+    }
+
+    &.display {
+        .bold {
+            @include displayBold;
+        }
+
+        .medium {
+            @include displayMedium;
+        }
+    }
+
+    &.body {
+        .bold {
+            @include body2Bold;
+        }
+
+        .medium-1 {
+            @include body1Medium;
+        }
+
+        .medium-2 {
+            @include body2Medium;
+        }
+    }
+
+    &.caption {
+        .bold {
+            @include captionBold;
+        }
+
+        .medium {
+            @include captionMedium;
+        }
+    }
+}
