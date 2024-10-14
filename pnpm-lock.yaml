@@ -76,6 +76,34 @@ importers:
         specifier: ^5.4.6
         version: 5.4.6(@types/node@22.5.5)(sass@1.79.4)
 
+  examples/shopping-web:
+    dependencies:
+      '@ndive/design-components':
+        specifier: ^0.0.2
+        version: 0.0.2(@types/react-dom@18.3.0)(@types/react@18.3.9)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@ndive/tsconfig':
+        specifier: workspace:*
+        version: link:../../shared/tsconfig
+      '@vitejs/plugin-react':
+        specifier: ^4.3.2
+        version: 4.3.2(vite@5.4.6(@types/node@22.5.5)(sass@1.79.4))
+      react:
+        specifier: ^18
+        version: 18.3.1
+      react-dom:
+        specifier: ^18
+        version: 18.3.1(react@18.3.1)
+      vite:
+        specifier: ^5.4.6
+        version: 5.4.6(@types/node@22.5.5)(sass@1.79.4)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.9
+        version: 18.3.9
+      '@types/react-dom':
+        specifier: ^18.3.0
+        version: 18.3.0
+
   packages/design-components:
     dependencies:
       '@fontsource/pretendard':
@@ -120,7 +148,7 @@ importers:
         version: 4.3.2(vite@5.4.6(@types/node@22.5.5)(sass@1.79.4))
       browserslist-to-esbuild:
         specifier: ^2.1.1
-        version: 2.1.1(browserslist@4.23.3)
+        version: 2.1.1(browserslist@4.24.0)
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
@@ -188,16 +216,10 @@ importers:
       meow:
         specifier: ^13.2.0
         version: 13.2.0
-      vite:
-        specifier: ^5.4.6
-        version: 5.4.6(@types/node@22.5.5)(sass@1.79.4)
     devDependencies:
       '@ndive/tsconfig':
         specifier: workspace:*
         version: link:../../shared/tsconfig
-      '@ndive/vite':
-        specifier: workspace:^
-        version: link:../../shared/vite
       '@types/babel__core':
         specifier: ^7.20.5
         version: 7.20.5
@@ -207,6 +229,9 @@ importers:
       '@types/node':
         specifier: ^22.5.5
         version: 22.5.5
+      tsup:
+        specifier: ^8.3.0
+        version: 8.3.0(@microsoft/api-extractor@7.47.7(@types/node@22.5.5))(postcss@8.4.47)(typescript@5.6.2)
 
   shared/tsconfig: {}
 
@@ -931,6 +956,14 @@ packages:
     resolution: {integrity: sha512-YIOen+hTzW18kl5PsOfty5QwqpgqNfErKs+qOX7TfDFv3PMDHzDVPlFuP9CwjY4bB6NZN9GEG3iaocT/bBBMyg==}
     peerDependencies:
       prettier: ^2.8.8 || ^3.0.0
+
+  '@ndive/design-components@0.0.2':
+    resolution: {integrity: sha512-v4Rcj20rNK4ot6Jd8KBcHQHUAICNA2GQcwHDY5npSGGzXlVjYZJ0fUW+MqQu4UokoroNM+jQifHtIqQ7JTqLRg==}
+    peerDependencies:
+      '@types/react': ^18
+      '@types/react-dom': ^18
+      react: ^18
+      react-dom: ^18
 
   '@next/eslint-plugin-next@14.2.11':
     resolution: {integrity: sha512-7mw+xW7Y03Ph4NTCcAzYe+vu4BNjEHZUfZayyF3Y1D9RX6c5NIe25m1grHEAkyUuaqjRxOYhnCNeglOkIqLkBA==}
@@ -4999,6 +5032,15 @@ snapshots:
     dependencies:
       prettier: 2.8.8
 
+  '@ndive/design-components@0.0.2(@types/react-dom@18.3.0)(@types/react@18.3.9)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@fontsource/pretendard': 5.1.0
+      '@types/react': 18.3.9
+      '@types/react-dom': 18.3.0
+      classnames: 2.5.1
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+
   '@next/eslint-plugin-next@14.2.11':
     dependencies:
       glob: 10.3.10
@@ -6026,9 +6068,9 @@ snapshots:
 
   browser-assert@1.2.1: {}
 
-  browserslist-to-esbuild@2.1.1(browserslist@4.23.3):
+  browserslist-to-esbuild@2.1.1(browserslist@4.24.0):
     dependencies:
-      browserslist: 4.23.3
+      browserslist: 4.24.0
       meow: 13.2.0
 
   browserslist@4.23.3:
