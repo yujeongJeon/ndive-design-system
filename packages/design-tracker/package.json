@@ -3,6 +3,7 @@
     "version": "0.0.0",
     "description": "",
     "main": "./dist/bin/index.mjs",
+    "types": "./dist/bin/index.d.mts",
     "bin": "./dist/bin/index.mjs",
     "files": [
         "dist"
