@@ -4,7 +4,7 @@ import {Meta} from '@storybook/react'
 import {determineFontColorByLuminance, hex2rgb} from '../utils'
 
 export default {
-    title: 'Foundations',
+    title: 'Foundations/Color',
 } satisfies Meta
 
 const ColorTemplate = () => {

@@ -3,7 +3,7 @@ import {Meta} from '@storybook/react'
 import styles from './Typo.module.scss'
 
 export default {
-    title: 'Foundations',
+    title: 'Foundations/Typo',
 } satisfies Meta
 
 export const TYPO = () => {
