@@ -2,7 +2,10 @@
     "name": "@ndive/design-components",
     "version": "0.0.1",
     "description": "",
-    "main": "index.js",
+    "main": "./dist/index.mjs",
+    "files": [
+        "dist"
+    ],
     "type": "module",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
