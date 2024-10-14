@@ -1,5 +1,17 @@
 # @ndive/design-components
 
+## 0.0.3
+
+### Patch Changes
+
+- f3cac48: json, scss 파일을 export합니다.
+
+    [storybook] 완성
+
+- b878e6f: (ModelNotice, ModalConfirm) 모달 닫을 때 요소를 완전히 파괴합니다.
+
+    [design-components] 모달 닫을 때 파괴
+
 ## 0.0.2
 
 ### Patch Changes
