@@ -8,38 +8,42 @@ import {runCli} from '../src/helpers/runCli'
 import {loadConfig} from '../src/utils/loadConfig'
 import {validateConfig} from '../src/utils/validateConfig'
 
-const {flags: options} = runCli()
+async function analyze() {
+    const {flags: options} = runCli()
 
-const config = await loadConfig()
+    const config = await loadConfig(options.config)
 
-if (config?.config) {
-    const configPath = path.resolve(process.cwd(), options.config)
-    const configDir = path.dirname(configPath)
+    if (config?.config) {
+        const configPath = path.resolve(process.cwd(), options.config)
+        const configDir = path.dirname(configPath)
 
-    const pathToCrawl = options.path && path.resolve(process.cwd(), options.path)
+        const pathToCrawl = options.path && path.resolve(process.cwd(), options.path)
 
-    if (pathToCrawl) {
-        run({
-            config: config?.config,
-            configDir,
-            crawlFrom: pathToCrawl,
-        })
-    } else {
-        const {crawlFrom, errors} = validateConfig(config?.config, configDir)
-        if (errors.length === 0) {
+        if (pathToCrawl) {
             run({
-                config: config.config,
+                config: config?.config,
                 configDir,
-                crawlFrom,
+                crawlFrom: pathToCrawl,
             })
         } else {
-            console.error(`Config errors:`)
+            const {crawlFrom, errors} = validateConfig(config?.config, configDir)
+            if (errors.length === 0) {
+                run({
+                    config: config.config,
+                    configDir,
+                    crawlFrom,
+                })
+            } else {
+                console.error(`Config errors:`)
 
-            errors.forEach((error) => {
-                console.error(`- ${error}`)
-            })
+                errors.forEach((error) => {
+                    console.error(`- ${error}`)
+                })
 
-            process.exit(1)
+                process.exit(1)
+            }
         }
     }
 }
+
+analyze()

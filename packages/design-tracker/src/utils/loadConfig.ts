@@ -40,11 +40,11 @@ export type ExcludeFn = (dirName: string, dirPath: string) => boolean
 
 export interface IConfig {
     crawlFrom: string
-    includeSubComponents: boolean
+    includeSubComponents?: boolean
     importedFrom: string | RegExp
-    globs: string[]
+    globs?: string[]
     exclude?: (string | RegExp)[] | ExcludeFn
-    getComponentName: ({
+    getComponentName?: ({
         imported,
         local,
         moduleName,
@@ -55,12 +55,14 @@ export interface IConfig {
         moduleName: string
         importType: string
     }) => string
-    components: Record<string, boolean>
-    getPropValue: ({node, componentName, propName, defaultGetPropValue}: IGetPropValue) => string
+    components?: Record<string, boolean>
+    getPropValue?: ({node, componentName, propName, defaultGetPropValue}: IGetPropValue) => string
     outputTo?: string
 }
 
-export const loadConfig = async (): Promise<
+export const loadConfig = async (
+    searchFrom = process.cwd(),
+): Promise<
     | {
           config: IConfig
           filepath: string
@@ -69,7 +71,7 @@ export const loadConfig = async (): Promise<
     | undefined
 > => {
     try {
-        const result = await explorer.search() // 탐색하여 설정 파일 찾기
+        const result = await explorer.search(searchFrom) // 탐색하여 설정 파일 찾기
         if (!result) {
             console.error(`${CONFIG_NAME} rc 파일이 필요합니다.`)
             process.exit(1)

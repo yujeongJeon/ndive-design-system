@@ -12,7 +12,12 @@ import scan from './scan'
 const DEFAULT_GLOBS = ['**/!(*.test|*.spec).@(js|ts)?(x)']
 
 async function run({config, configDir, crawlFrom}: {config: IConfig; configDir: string; crawlFrom: string}) {
-    const globs = config.globs || DEFAULT_GLOBS
+    const globs = config?.globs || DEFAULT_GLOBS
+
+    if (!globs || globs.length === 0) {
+        throw new Error('No valid globs specified.')
+    }
+
     const files = new Fdir()
         .glob(...globs)
         .exclude(getExcludeFn(config.exclude))
