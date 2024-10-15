@@ -151,7 +151,7 @@ importers:
         version: 4.3.2(vite@5.4.6(@types/node@22.5.5)(sass@1.79.4))
       browserslist-to-esbuild:
         specifier: ^2.1.1
-        version: 2.1.1(browserslist@4.24.0)
+        version: 2.1.1(browserslist@4.23.3)
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
@@ -222,6 +222,9 @@ importers:
       meow:
         specifier: ^13.2.0
         version: 13.2.0
+      picomatch:
+        specifier: ^4
+        version: 4.0.2
     devDependencies:
       '@ndive/tsconfig':
         specifier: workspace:*
@@ -6063,9 +6066,9 @@ snapshots:
 
   browser-assert@1.2.1: {}
 
-  browserslist-to-esbuild@2.1.1(browserslist@4.24.0):
+  browserslist-to-esbuild@2.1.1(browserslist@4.23.3):
     dependencies:
-      browserslist: 4.24.0
+      browserslist: 4.23.3
       meow: 13.2.0
 
   browserslist@4.23.3:
