@@ -20,6 +20,12 @@ const flags = {
         default: '',
         isRequired: false,
     },
+    verbose: {
+        desc: 'show more information about the transform process.',
+        type: 'boolean' as const,
+        default: false,
+        isRequired: false,
+    },
 }
 
 const helpText = meowHelp({

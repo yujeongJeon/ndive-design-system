@@ -8,10 +8,22 @@
 - This package is created for learning purposes. Caution is advised when using in production. Use at your own risk.
 - 이 패키지는 학습용으로 제작되었습니다. 프로덕션 환경에서 사용 시 주의가 필요합니다. 사용 시 본인의 책임 하에 사용해 주시기 바랍니다.
 
-## how to use
+## How to use
+
+Installing the package is as follows:
+
+패키지 설치는 다음과 같습니다:
 
 ```bash
-➜ npx @ndive/design-tracker
+➜ npm install --save-dev @ndive/design-tracker
+```
+
+Next, the package runs as follows:
+
+실행은 다음과 같습니다:
+
+```bash
+➜ npx @ndive/design-tracker --config /path/to/config --path /path/to/folder
 ```
 
 ## Required Configuration

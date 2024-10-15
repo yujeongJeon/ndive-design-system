@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import fs from 'node:fs'
 import path from 'node:path'
 
@@ -11,24 +12,40 @@ import scan from './scan'
 
 const DEFAULT_GLOBS = ['**/!(*.test|*.spec).@(js|ts)?(x)']
 
-async function run({config, configDir, crawlFrom}: {config: IConfig; configDir: string; crawlFrom: string}) {
+async function run({
+    config,
+    configDir,
+    crawlFrom,
+    debug,
+}: {
+    config: IConfig
+    configDir: string
+    crawlFrom: string
+    debug: boolean
+}) {
+    if (debug) {
+        console.log(`crawlFrom is ${crawlFrom}\n`)
+        console.log(`load config: ${JSON.stringify(config, undefined, 4)}\n`)
+    }
+
     const globs = config?.globs || DEFAULT_GLOBS
 
     if (!globs || globs.length === 0) {
         throw new Error('No valid globs specified.')
     }
 
-    const files = new Fdir()
-        .glob(...globs)
+    const files = new Fdir({
+        normalizePath: true,
+    })
+        .glob(...(globs ?? DEFAULT_GLOBS))
         .exclude(getExcludeFn(config.exclude))
         .withFullPaths()
         .crawl(crawlFrom)
         .sync()
 
     if (files.length === 0) {
-        // eslint-disable-next-line no-console
         console.error(`No files found to scan.`)
-        process.exit(1)
+        process.exit(0)
     }
 
     const report = {}
@@ -56,7 +73,6 @@ async function run({config, configDir, crawlFrom}: {config: IConfig; configDir: 
         const dataStr = isPlainObject(data) ? JSON.stringify(data, null, 4) : String(data)
 
         if (destination === 'stdout') {
-            // eslint-disable-next-line no-console
             console.log(dataStr)
         } else {
             const filePath = path.resolve(configDir, destination)

@@ -5,6 +5,7 @@ import path from 'node:path'
 
 import run from '../src/helpers/run'
 import {runCli} from '../src/helpers/runCli'
+import {getAbsolutePath} from '../src/utils'
 import {loadConfig} from '../src/utils/loadConfig'
 import {validateConfig} from '../src/utils/validateConfig'
 
@@ -17,21 +18,23 @@ async function analyze() {
         const configPath = path.resolve(process.cwd(), options.config)
         const configDir = path.dirname(configPath)
 
-        const pathToCrawl = options.path && path.resolve(process.cwd(), options.path)
+        const pathToCrawl = options.path && getAbsolutePath(options.path)
 
         if (pathToCrawl) {
-            run({
-                config: config?.config,
+            await run({
+                config: config.config,
                 configDir,
                 crawlFrom: pathToCrawl,
+                debug: options.verbose,
             })
         } else {
             const {crawlFrom, errors} = validateConfig(config?.config, configDir)
             if (errors.length === 0) {
-                run({
+                await run({
                     config: config.config,
                     configDir,
                     crawlFrom,
+                    debug: options.verbose,
                 })
             } else {
                 console.error(`Config errors:`)

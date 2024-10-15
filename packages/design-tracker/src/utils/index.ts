@@ -1,3 +1,5 @@
+import path from 'node:path'
+
 import {IConfig} from './loadConfig'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -66,4 +68,8 @@ export function getExcludeFn(
     }
 
     return () => false
+}
+
+export function getAbsolutePath(pathname: string, dirPath = process.cwd()) {
+    return path.isAbsolute(pathname) ? pathname : path.resolve(dirPath, pathname)
 }
