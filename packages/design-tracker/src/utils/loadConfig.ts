@@ -1,4 +1,6 @@
 /* eslint-disable no-console */
+import path from 'node:path'
+
 import {cosmiconfig} from 'cosmiconfig'
 
 import type {types as t} from '@babel/core'
@@ -7,24 +9,14 @@ const CONFIG_NAME = 'ndive-design-tracker'
 
 const explorer = cosmiconfig(CONFIG_NAME, {
     searchPlaces: [
-        'ndive-design-tracker.rc',
-        'ndive-design-tracker.json',
-        'ndive-design-tracker.yaml',
-        'ndive-design-tracker.yml',
-        'ndive-design-tracker.config.js',
+        `${CONFIG_NAME}.json`,
+        `${CONFIG_NAME}.yaml`,
+        `${CONFIG_NAME}.yml`,
+        `${CONFIG_NAME}.config.js`,
+        `${CONFIG_NAME}.config.ts`,
+        `${CONFIG_NAME}.config.mjs`,
+        `${CONFIG_NAME}.config.cjs`,
     ],
-    loaders: {
-        '.rc': (filepath, content) => {
-            try {
-                return JSON.parse(content)
-            } catch (e: unknown) {
-                if (e instanceof Error) {
-                    throw new Error(`Failed to parse JSON in ${filepath}: ${e.message}`)
-                }
-                process.exit(1)
-            }
-        },
-    },
 })
 
 interface IGetPropValue {
@@ -61,7 +53,7 @@ export interface IConfig {
 }
 
 export const loadConfig = async (
-    searchFrom = process.cwd(),
+    configPath?: string,
 ): Promise<
     | {
           config: IConfig
@@ -71,7 +63,14 @@ export const loadConfig = async (
     | undefined
 > => {
     try {
-        const result = await explorer.search(searchFrom) // 탐색하여 설정 파일 찾기
+        let result
+
+        if (configPath) {
+            result = await explorer.load(path.resolve(process.cwd(), configPath))
+        } else {
+            result = await explorer.search()
+        }
+
         if (!result) {
             console.error(`${CONFIG_NAME} rc 파일이 필요합니다.`)
             process.exit(1)
