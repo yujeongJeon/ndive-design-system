@@ -20,18 +20,20 @@ async function analyze() {
         const pathToCrawl = options.path && path.resolve(process.cwd(), options.path)
 
         if (pathToCrawl) {
-            run({
-                config: config?.config,
+            await run({
+                config: config.config,
                 configDir,
                 crawlFrom: pathToCrawl,
+                debug: options.verbose,
             })
         } else {
             const {crawlFrom, errors} = validateConfig(config?.config, configDir)
             if (errors.length === 0) {
-                run({
+                await run({
                     config: config.config,
                     configDir,
                     crawlFrom,
+                    debug: options.verbose,
                 })
             } else {
                 console.error(`Config errors:`)

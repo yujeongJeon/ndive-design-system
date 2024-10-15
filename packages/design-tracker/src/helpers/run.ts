@@ -11,15 +11,30 @@ import scan from './scan'
 
 const DEFAULT_GLOBS = ['**/!(*.test|*.spec).@(js|ts)?(x)']
 
-async function run({config, configDir, crawlFrom}: {config: IConfig; configDir: string; crawlFrom: string}) {
+async function run({
+    config,
+    configDir,
+    crawlFrom,
+    debug,
+}: {
+    config: IConfig
+    configDir: string
+    crawlFrom: string
+    debug: boolean
+}) {
+    // eslint-disable-next-line no-console
+    debug && console.log(`load config: ${JSON.stringify(config, undefined, 4)}\n`)
+
     const globs = config?.globs || DEFAULT_GLOBS
 
     if (!globs || globs.length === 0) {
         throw new Error('No valid globs specified.')
     }
 
-    const files = new Fdir()
-        .glob(...globs)
+    const files = new Fdir({
+        normalizePath: true,
+    })
+        .glob(...(globs ?? DEFAULT_GLOBS))
         .exclude(getExcludeFn(config.exclude))
         .withFullPaths()
         .crawl(crawlFrom)
