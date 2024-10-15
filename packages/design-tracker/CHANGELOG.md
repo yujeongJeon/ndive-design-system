@@ -1,5 +1,13 @@
 # @ndive/design-tracker
 
+## 0.0.4
+
+### Patch Changes
+
+- c92d5a4: 절대 경로 대응
+
+    verbose 추가 + fdir 옵션 수정
+
 ## 0.0.3
 
 ### Patch Changes
