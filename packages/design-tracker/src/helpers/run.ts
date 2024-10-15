@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import fs from 'node:fs'
 import path from 'node:path'
 
@@ -22,8 +23,10 @@ async function run({
     crawlFrom: string
     debug: boolean
 }) {
-    // eslint-disable-next-line no-console
-    debug && console.log(`load config: ${JSON.stringify(config, undefined, 4)}\n`)
+    if (debug) {
+        console.log(`crawlFrom is ${crawlFrom}\n`)
+        console.log(`load config: ${JSON.stringify(config, undefined, 4)}\n`)
+    }
 
     const globs = config?.globs || DEFAULT_GLOBS
 
@@ -41,9 +44,8 @@ async function run({
         .sync()
 
     if (files.length === 0) {
-        // eslint-disable-next-line no-console
         console.error(`No files found to scan.`)
-        process.exit(1)
+        process.exit(0)
     }
 
     const report = {}
@@ -71,7 +73,6 @@ async function run({
         const dataStr = isPlainObject(data) ? JSON.stringify(data, null, 4) : String(data)
 
         if (destination === 'stdout') {
-            // eslint-disable-next-line no-console
             console.log(dataStr)
         } else {
             const filePath = path.resolve(configDir, destination)

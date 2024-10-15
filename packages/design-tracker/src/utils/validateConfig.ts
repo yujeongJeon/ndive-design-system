@@ -1,8 +1,9 @@
 import fs from 'node:fs'
-import path from 'node:path'
 
 import {isPlainObject} from './isPlainObject'
 import {IConfig} from './loadConfig'
+
+import {getAbsolutePath} from './index'
 
 export function validateConfig(config: IConfig, configDir: string) {
     const result: {
@@ -18,7 +19,7 @@ export function validateConfig(config: IConfig, configDir: string) {
     } else if (typeof config.crawlFrom !== 'string') {
         result.errors.push(`crawlFrom should be a string`)
     } else {
-        const crawlFrom = path.resolve(configDir, config.crawlFrom)
+        const crawlFrom = getAbsolutePath(config.crawlFrom, configDir)
 
         if (fs.existsSync(crawlFrom)) {
             result.crawlFrom = crawlFrom
