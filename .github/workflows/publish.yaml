@@ -1,0 +1,30 @@
+name: Publish Packages
+on:
+    push:
+        branches:
+            - main
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+    release:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: pnpm/action-setup@v4
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: '20'
+                  cache: 'pnpm'
+            - run: pnpm i --frozen-lockfile
+            - run: pnpm build
+            - name: Create and publish versions
+              uses: changesets/action@v1
+              with:
+                  publish: pnpm release
+                  commit: '🚀 update versions'
+                  title: '📦 update versions'
+                  version: pnpm changeset-version
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -1,0 +1,8 @@
+{
+    "$schema": "https://raw.githubusercontent.com/DavidAnson/markdownlint/v0.34.0/schema/markdownlint-config-schema.json",
+    "extends": "@naverpay/markdown-lint",
+    "MD013": false,
+    "MD024": {"siblings_only": true},
+    "MD053": false,
+    "MD030": false
+}
