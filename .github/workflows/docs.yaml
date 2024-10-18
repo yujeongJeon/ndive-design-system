@@ -17,4 +17,10 @@ jobs:
                   cache: 'pnpm'
             - run: pnpm i --frozen-lockfile
             - run: pnpm build:storybook
-            - run: pnpm deploy:storybook
+            - name: Deploy
+              uses: peaceiris/actions-gh-pages@v4
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: ./apps/storybook/dist
+                  publish_branch: gh-pages
+                  commit_message: ${{ github.event.head_commit.message }}
