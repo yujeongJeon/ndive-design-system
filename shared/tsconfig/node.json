@@ -4,13 +4,8 @@
     "extends": "./base.json",
     "compilerOptions": {
         "target": "ESNext",
-        "strict": true,
-        "outDir": "dist",
         "module": "ESNext",
         "allowSyntheticDefaultImports": true,
-        "esModuleInterop": true,
-        "isolatedModules": true,
-        "allowJs": true,
-        "resolveJsonModule": true
+        "isolatedModules": true
     }
 }
