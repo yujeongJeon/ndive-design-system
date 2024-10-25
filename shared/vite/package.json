@@ -3,12 +3,13 @@
     "version": "1.0.1",
     "description": "",
     "private": true,
-    "main": "dist/defineConfig.mjs",
-    "types": "./dist/defineConfig.d.mts",
+    "main": "dist/defineConfig.js",
+    "types": "./dist/defineConfig.d.ts",
+    "type": "module",
     "exports": {
         ".": {
-            "import": "./dist/defineConfig.mjs",
-            "types": "./dist/defineConfig.d.mts"
+            "import": "./dist/defineConfig.js",
+            "types": "./dist/defineConfig.d.ts"
         }
     },
     "scripts": {
