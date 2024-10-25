@@ -5,7 +5,6 @@
     "compilerOptions": {
         "target": "ESNext",
         "module": "ESNext",
-        "allowSyntheticDefaultImports": true,
-        "isolatedModules": true
+        "allowSyntheticDefaultImports": true
     }
 }
