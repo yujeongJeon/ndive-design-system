@@ -6,7 +6,6 @@
         "target": "ESNext",
         "module": "ESNext",
         "allowSyntheticDefaultImports": true,
-        "isolatedModules": true,
-        "noEmit": true
+        "isolatedModules": true
     }
 }

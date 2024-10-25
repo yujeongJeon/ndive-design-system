@@ -5,7 +5,6 @@
     "compilerOptions": {
         "target": "ES6",
         "lib": ["dom", "dom.iterable", "esnext"],
-        "noEmit": true,
         "module": "esnext",
         "jsx": "react-jsx"
     }
