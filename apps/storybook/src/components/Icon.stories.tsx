@@ -1,3 +1,4 @@
+import {SIZE} from '@ndive/design-components'
 import {
     IconDown,
     IconUp,
@@ -52,8 +53,7 @@ import {
     IconEyeOn,
     IconEyeOff,
     IconReset,
-    SIZE,
-} from '@ndive/design-components'
+} from '@ndive/design-components/icons'
 
 import type {Meta} from '@storybook/react'
 
