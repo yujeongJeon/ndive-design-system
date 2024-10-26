@@ -2,82 +2,18 @@ import fs from 'node:fs'
 import path from 'node:path'
 
 import {setIcon} from '@ndive/design-tokens'
-import {transform} from '@svgr/core'
-import * as dotenv from 'dotenv'
 
 import colorJson from '../src/json/color.json' assert {type: 'json'}
+import {normalize} from './utils/normalize.js'
+import {kebabToPascal} from './utils/string.js'
+import {transformReactComponent} from './utils/svgr.js'
 
-function normalize(relativePath) {
-    return path.resolve(import.meta.dirname, relativePath)
-}
-
-dotenv.config({path: normalize('../.env')})
-
-const BREAK_LINE = '\n'
-
-const getDefaultTemplate =
-    () =>
-    ({componentName, jsx, imports, props}, {tpl}) => {
-        return tpl`
-            ${imports};
-            ${BREAK_LINE}
-            function ${componentName} (${props}) {
-                return ${jsx}
-            }
-            ${BREAK_LINE}
-            export default memo(${componentName});
-        `
-    }
-
-const replaceFillProps = (colorList, svgCode) => {
-    const filteredColorValueList = colorList.filter((color) => svgCode.includes(color))
-
-    return filteredColorValueList.reduce((obj, key) => ({...obj, [key]: '{props.fill}'}), {})
-}
-
-export const transformReactComponent = async ({colorValueList, componentName, svgCode}) => {
-    const replaceAttrValues = replaceFillProps(
-        ['#fff', '#ffffff', '#000', '#000000', 'black', 'white', '#181600', ...colorValueList],
-        svgCode,
-    )
-    const tsxCode = await transform(
-        svgCode,
-        {
-            plugins: ['@svgr/plugin-svgo', '@svgr/plugin-jsx', '@svgr/plugin-prettier'],
-            jsxRuntime: 'automatic',
-            typescript: true,
-            dimensions: true,
-            expandProps: 'end',
-            icon: true,
-            memo: true,
-            replaceAttrValues,
-            svgProps: {
-                width: '{props.width}',
-                height: '{props.height}',
-            },
-            template: getDefaultTemplate(),
-        },
-        {componentName, filePath: normalize('../src/components/icons')},
-    )
-
-    fs.writeFileSync(normalize(`../src/components/icons/${componentName}.tsx`), tsxCode, {
-        encoding: 'utf-8',
-    })
-
-    return {componentName}
-}
-
-function kebabToPascal(str) {
-    return str
-        .split('-')
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join('')
-}
+import './utils/loadEnv.js'
 
 async function fetchIcon() {
     const {size, icon} = await setIcon({accessToken: process.env.FIGMA_TOKEN})
 
-    const jsonDir = normalize('../src/json')
+    const jsonDir = normalize(import.meta.dirname, '../src/json')
 
     !fs.existsSync(jsonDir) &&
         fs.mkdirSync(jsonDir, {
@@ -92,7 +28,7 @@ async function fetchIcon() {
         encoding: 'utf-8',
     })
 
-    const iconsDir = normalize('../src/components/icons')
+    const iconsDir = normalize(import.meta.dirname, '../src/components/icons')
 
     !fs.existsSync(iconsDir) &&
         fs.mkdirSync(iconsDir, {
@@ -108,6 +44,7 @@ async function fetchIcon() {
                         .flat(),
                     componentName: kebabToPascal(iconName).replace('Ic', 'Icon'),
                     svgCode,
+                    filePath: iconsDir,
                 }),
         ),
     )
@@ -123,7 +60,7 @@ async function fetchIcon() {
         .join('')
 
     // /src/components/icons/index.ts
-    fs.writeFileSync(normalize('../src/components/icons/index.ts'), exported, {
+    fs.writeFileSync(normalize(import.meta.dirname, '../src/components/icons/index.ts'), exported, {
         encoding: 'utf-8',
     })
 }
