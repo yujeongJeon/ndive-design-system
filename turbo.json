@@ -3,10 +3,11 @@
     "ui": "tui",
     "tasks": {
         "clean": {
-            "dependsOn": ["^clean"]
+            "dependsOn": ["^clean"],
+            "cache": false
         },
         "build": {
-            "dependsOn": ["^build"],
+            "dependsOn": ["clean", "^build"],
             "outputs": ["dist/**"]
         }
     }
