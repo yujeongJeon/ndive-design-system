@@ -1,4 +1,5 @@
-import {ButtonPrimary, ButtonSub, IconAdd, IconTrash} from '@ndive/design-components'
+import {ButtonPrimary, ButtonSub} from '@ndive/design-components'
+import {IconAdd, IconTrash} from '@ndive/design-components/icons'
 
 import Container from './Container'
 
