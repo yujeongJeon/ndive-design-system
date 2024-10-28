@@ -1,5 +1,11 @@
 # @ndive/design-storybook
 
+## 1.0.4
+
+### Patch Changes
+
+- 00af22b: 번들러 코드 수정
+
 ## 1.0.3
 
 ### Patch Changes

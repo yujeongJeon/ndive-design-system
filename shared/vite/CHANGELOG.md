@@ -1,5 +1,12 @@
 # @ndive/vite
 
+## 1.0.2
+
+### Patch Changes
+
+- 00af22b: 번들러 코드 수정
+- 18aef23: 번들러 코드 수정
+
 ## 1.0.1
 
 ### Patch Changes
