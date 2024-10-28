@@ -4,10 +4,6 @@ import path from 'node:path'
 import {AliasOptions, BuildOptions, defineConfig, PluginOption, ResolveOptions} from 'vite'
 import dts from 'vite-plugin-dts'
 
-const normalizeOutput = (exportPath: string | {default: string}) => {
-    return typeof exportPath === 'string' ? exportPath : exportPath?.default
-}
-
 export type DistributiveOmit<T, U extends keyof any> = T extends object ? Omit<T, U> : never
 type CustomBuildOptions = DistributiveOmit<BuildOptions['rollupOptions'], 'output'>
 
@@ -31,7 +27,12 @@ export default ({
 }) => {
     const outputPath = pkg.exports ? pkg.exports['.'] : pkg.main
 
-    const buildOutput = typeof outputPath === 'object' ? normalizeOutput(outputPath.import) : outputPath
+    const buildOutput =
+        typeof outputPath === 'string' ? outputPath : ((outputPath.import || outputPath.default) as string)
+
+    if (!buildOutput) {
+        throw new Error('"exports[\'.\']" 필드가 올바르지 않습니다.')
+    }
 
     const outDir = path.dirname(buildOutput)
 

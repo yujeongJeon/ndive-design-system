@@ -2,13 +2,9 @@ import fs from 'node:fs'
 import path from 'node:path'
 
 import {setTypo} from '@ndive/design-tokens'
-import * as dotenv from 'dotenv'
 
-function normalize(relativePath) {
-    return path.resolve(import.meta.dirname, relativePath)
-}
-
-dotenv.config({path: normalize('../.env')})
+import './utils/loadEnv.js'
+import {normalize} from './utils/normalize.js'
 
 async function fetchTypo() {
     const typoSet = await setTypo({accessToken: process.env.FIGMA_TOKEN})
@@ -23,7 +19,7 @@ async function fetchTypo() {
         },
     ])
 
-    const stylesDir = normalize('../src/styles')
+    const stylesDir = normalize(import.meta.dirname, '../src/styles')
     !fs.existsSync(stylesDir) &&
         fs.mkdirSync(stylesDir, {
             recursive: true,

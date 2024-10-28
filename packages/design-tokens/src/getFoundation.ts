@@ -1,25 +1,9 @@
 import {IText, TPaint, TTypeStyle} from './types/figma.type'
 import {getComponents, getFileNodeWithIds, getImageNodeWithIds, getStyles, getSvgCodeFromUrl} from './utils/api'
 import {rgbaToHex} from './utils/color'
-import {isFulfilled, isNonEmpty} from './utils/utils'
+import {isFulfilled, isNonEmpty, uniq} from './utils/utils'
 
 import type {TSizeReturnType} from './types/icon.type'
-
-function uniq<T>(array: T[]): T[] {
-    const seen = new Set<T>()
-
-    return array.filter((item) => {
-        // `item`이 string 타입일 경우 toLowerCase() 적용
-        const normalizedItem = (typeof item === 'string' ? item.toLowerCase() : item) as T
-
-        if (seen.has(normalizedItem)) {
-            return false
-        }
-
-        seen.add(normalizedItem)
-        return true
-    })
-}
 
 export async function setColor({accessToken}: {accessToken: string}) {
     const styles = await getStyles(accessToken)

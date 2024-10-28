@@ -1,4 +1,5 @@
-import {ButtonPrimary as ButtonPrimaryComponent, IconAdd} from '@ndive/design-components'
+import {ButtonPrimary as ButtonPrimaryComponent} from '@ndive/design-components'
+import {IconAdd} from '@ndive/design-components/icons'
 
 import type {Meta, StoryObj} from '@storybook/react'
 

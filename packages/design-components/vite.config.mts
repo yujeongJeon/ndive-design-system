@@ -14,7 +14,7 @@ export default defineConfig({
     buildOptions: {
         entry: {
             index: './src/index.ts',
-            global: './src/styles/global.scss',
+            icons: './src/components/icons/index.ts',
         },
         target: SUPPORT_TARGETS,
     },

@@ -1,5 +1,5 @@
-@import '@fontsource/pretendard/500.css';
-@import '@fontsource/pretendard/700.css';
+@import "@fontsource/pretendard/500.css";
+@import "@fontsource/pretendard/700.css";
 
 @mixin displayBold {
     font-size: 36px;
@@ -43,16 +43,16 @@
     line-height: 17px;
     font-family: Pretendard;
 }
-@mixin displayMedium {
-    font-size: 36px;
-    font-weight: 500;
-    line-height: 43px;
-    font-family: Pretendard;
-}
 @mixin body1Medium {
     font-size: 14px;
     font-weight: 500;
     line-height: 20px;
+    font-family: Pretendard;
+}
+@mixin displayMedium {
+    font-size: 36px;
+    font-weight: 500;
+    line-height: 43px;
     font-family: Pretendard;
 }
 @mixin body2Medium {
