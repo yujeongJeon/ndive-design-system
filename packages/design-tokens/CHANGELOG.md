@@ -1,5 +1,12 @@
 # @ndive/design-tokens
 
+## 0.0.4
+
+### Patch Changes
+
+- 00af22b: 번들러 코드 수정
+- 18aef23: 번들러 코드 수정
+
 ## 0.0.3
 
 ### Patch Changes

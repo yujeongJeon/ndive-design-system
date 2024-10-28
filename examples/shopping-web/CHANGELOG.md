@@ -1,5 +1,14 @@
 # shopping-web
 
+## 1.0.3
+
+### Patch Changes
+
+- 00af22b: 번들러 코드 수정
+- Updated dependencies [00af22b]
+- Updated dependencies [18aef23]
+  - @ndive/design-components@0.0.5
+
 ## 1.0.2
 
 ### Patch Changes
