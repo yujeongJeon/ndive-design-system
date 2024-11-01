@@ -1,6 +1,5 @@
 {
     "$schema": "https://json.schemastore.org/tsconfig",
-    "display": "React",
     "extends": "./base.json",
     "compilerOptions": {
         "target": "ES6",
