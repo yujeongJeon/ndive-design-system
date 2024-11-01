@@ -1,7 +1,7 @@
 # @ndive/design-tracker
 
-- Package for static analysis of code based on [react-scanner](https://www.npmjs.com/package/react-scanner) written in Typescript and `@babel/parser`
-- 타입스크립트와 `@babel/parser`로 [react-scanner](https://www.npmjs.com/package/react-scanner) 를 바탕으로 작성된 코드 정적 분석용 패키지
+- This CLI tool provides a static analysis of `@ndive/design-components` usage in your codebase. Leveraging [ts-morph](https://ts-morph.com/), it systematically examines how specific components or features are utilized within TypeScript code and generates a comprehensive report.
+- `@ndive/design-components`의 사용량을 분석하는 CLI 도구. [ts-morph](https://ts-morph.com/)를 활용해 타입스크립트 코드에서 컴포넌트 사용 패턴을 정적 분석하고, 명확하고 체계적인 리포트를 생성합니다.
 
 ## Warning
 
@@ -23,7 +23,7 @@ Next, the package runs as follows:
 실행은 다음과 같습니다:
 
 ```bash
-➜ npx @ndive/design-tracker --config /path/to/config --path /path/to/folder
+➜ npx @ndive/design-tracker --config /path/to/config --tsconfig /path/to/tsconfig.json
 ```
 
 ## Required Configuration
@@ -32,10 +32,10 @@ This package uses an rc file such as `ndive-design-tracker.json` to set its beha
 
 이 패키지는 `ndive-design-tracker.json`과 같은 rc파일을 사용하여 동작을 설정합니다. 프로젝트 루트 디렉토리에 `ndive-design-tracker.json` 파일을 추가한 후 아래 예시와 같이 설정하세요:
 
-```json
+```jsonc
 {
-    "crawlFrom": "./src",
-    "includeSubComponents": true,
-    "importedFrom": "@ndive/design-components"
+    "tsConfigFilePath": "./tsconfig.json",
+    "outputTo": "./data.json", // default "stdout",
+    "globs": ["**/!(*.test|*.spec|*.d).@(js|ts)?(x)"] // default ["**/!(*.test|*.spec|*.d).@(js|ts)?(x)"]
 }
 ```
