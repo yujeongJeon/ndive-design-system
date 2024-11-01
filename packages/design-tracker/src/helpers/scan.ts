@@ -1,266 +1,168 @@
-import path from 'node:path'
+import {minimatch} from 'minimatch'
+import {IConfig} from 'src/utils/loadConfig'
+import {Project, Symbol, ts, Type} from 'ts-morph'
 
-import {traverse, types as t, Node, NodePath} from '@babel/core'
-import {parse} from '@babel/parser'
-import getObjectPath from 'dlv'
-import {dset} from 'dset'
+type ModuleName = string
+type PropsResult = Record<string, {type: string; count: number}>
+type Result = Record<ModuleName, {instance: number; props?: PropsResult}>
 
-import {IConfig} from '../utils/loadConfig'
+const DEFAULT_GLOBS = ['**/!(*.test|*.spec|*.d).@(js|ts)?(x)']
 
-function getComponentNameFromAST(nameObj: Node): string {
-    switch (nameObj.type) {
-        case 'JSXIdentifier': {
-            return nameObj.name
-        }
+function filterSourceFiles({tsConfigFilePath, config}: {tsConfigFilePath: string; config?: IConfig}) {
+    const project = new Project({
+        tsConfigFilePath,
+    })
 
-        case 'JSXMemberExpression': {
-            return `${getComponentNameFromAST(nameObj.object)}.${getComponentNameFromAST(nameObj.property)}`
-        }
+    const allSourceFiles = project.getSourceFiles()
 
-        /* c8 ignore next 3 */
-        default: {
-            throw new Error(`Unknown name type: ${nameObj.type}`)
-        }
+    const globs = config?.globs || DEFAULT_GLOBS
+
+    if (!globs || globs.length === 0) {
+        throw new Error('No valid globs specified.')
     }
+
+    const includeGlobs = globs.filter((pattern) => !pattern.startsWith('!'))
+    const excludeGlobs = globs.filter((pattern) => pattern.startsWith('!')).map((pattern) => pattern.slice(1))
+
+    const filteredSourceFiles = allSourceFiles.filter((sourceFile) => {
+        const filePath = sourceFile.getFilePath()
+        const isIncluded = includeGlobs.some((include) => minimatch(filePath, include))
+        const isExcluded = excludeGlobs.some((exclude) => minimatch(filePath, exclude))
+
+        return isIncluded && !isExcluded
+    })
+
+    return filteredSourceFiles
 }
 
-function isPrimitiveLiteral(
-    node: t.Node,
-): node is t.BooleanLiteral | t.DecimalLiteral | t.NumericLiteral | t.StringLiteral {
-    return t.isLiteral(node) && !(t.isNullLiteral(node) || t.isTemplateLiteral(node) || t.isRegExpLiteral(node))
-}
-function getPropValue(node?: t.Node | null) {
-    if (!node || t.isNullLiteral(node) || t.isTemplateLiteral(node) || t.isRegExpLiteral(node)) {
-        return null
-    }
-
-    if (isPrimitiveLiteral(node)) {
-        return node.value
-    }
-
-    if (t.isJSXExpressionContainer(node)) {
-        if (t.isLiteral(node.expression) && isPrimitiveLiteral(node.expression)) {
-            return node.expression.value
-        }
-
-        return `(${node.expression.type})`
-    }
-
-    throw new Error(`Unknown node type: ${node.type}`)
-}
-
-function getInstanceInfo({
-    node,
-    filePath,
-    importInfo,
-    getPropValue: customGetPropValue,
-    componentName,
-}: {
-    node: t.JSXOpeningElement
-    filePath: string
-    componentName: string
-    importInfo: {
-        imported?: string
-        local: string
-        moduleName: string
-        importType: string
-    }
-} & Pick<IConfig, 'getPropValue'>) {
-    const {attributes} = node
-    const result = {
-        ...(importInfo !== undefined && {importInfo}),
-        props: {} as Record<string, string | number | boolean | null>,
-        propsSpread: false,
-        location: {
-            file: filePath,
-            start: node.name?.loc?.start,
-        },
-    }
-
-    for (let i = 0, len = attributes.length; i < len; i++) {
-        const attribute = attributes[i]
-
-        if (t.isJSXAttribute(attribute)) {
-            const {name, value} = attribute
-            const propName = typeof name.name === 'string' ? name.name : name.name.name
-            const propValue = customGetPropValue
-                ? customGetPropValue({
-                      node: value,
-                      propName,
-                      componentName,
-                      defaultGetPropValue: getPropValue,
-                  })
-                : getPropValue(value)
-
-            result.props[propName] = propValue
-        } else if (t.isJSXSpreadAttribute(attribute)) {
-            result.propsSpread = true
-        }
-    }
-
-    return result
-}
-
-function getImportedName(node: t.Identifier | t.StringLiteral) {
-    return t.isIdentifier(node) ? node.name : node.value
-}
-function scan({
-    code,
-    filePath,
-    components,
-    includeSubComponents = false,
-    importedFrom,
-    getComponentName = ({imported, local}) => (imported === 'default' ? local : imported || local),
-    report,
-    getPropValue: customGetPropValue,
-}: Pick<IConfig, 'components' | 'includeSubComponents' | 'importedFrom' | 'getComponentName' | 'getPropValue'> & {
-    code: string
-    filePath: string
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    report: any
-}) {
-    let ast
-    const plugins = path.extname(filePath).match(/.js/) ? 'flow' : 'typescript'
-
-    try {
-        ast = parse(code, {
-            sourceType: 'module',
-            plugins: ['jsx', plugins],
-        })
-    } catch {
-        // eslint-disable-next-line no-console
-        console.error(`Failed to parse: ${filePath}`)
-        return
-    }
-
-    const importsMap: Record<
-        string,
-        {
-            imported?: string
-            local: string
-            moduleName: string
-            importType: string
-        }
-    > = {}
-
-    traverse(ast, {
-        ImportDeclaration: ({node}) => {
-            const {source, specifiers} = node
-            const moduleName = source.value
-            const specifiersCount = specifiers.length
-
-            for (let i = 0; i < specifiersCount; i++) {
-                const importNode = specifiers[i]
-                switch (importNode.type) {
-                    case 'ImportNamespaceSpecifier':
-                    case 'ImportDefaultSpecifier': {
-                        const local = importNode.local?.name
-                        importsMap[local] = {
-                            local,
-                            moduleName,
-                            importType: importNode.type,
-                        }
-
-                        break
-                    }
-
-                    case 'ImportSpecifier': {
-                        const imported = importNode.imported ? getImportedName(importNode.imported) : null
-                        const local = importNode.local.name
-
-                        importsMap[local] = {
-                            ...(imported ? {imported} : {}),
-                            local,
-                            moduleName,
-                            importType: importNode.type,
-                        }
-                        break
-                    }
-                    default: {
-                        throw new Error(`Unknown import specifier type: ${(importNode as unknown as t.Node)?.type}`)
-                    }
-                }
-            }
-        },
-        JSXOpeningElement: (nodePath: NodePath<t.JSXOpeningElement>) => {
-            const {node} = nodePath
-            const name = getComponentNameFromAST(node.name)
-            const nameParts = name.split('.')
-            const [firstPart, ...restParts] = nameParts
-            const actualFirstPart = importsMap[firstPart] ? getComponentName(importsMap[firstPart]) : firstPart
-            const shouldReportComponent = () => {
-                if (components) {
-                    if (nameParts.length === 1) {
-                        if (components[actualFirstPart] === undefined) {
-                            return false
-                        }
-                    } else {
-                        const actualComponentName = [actualFirstPart, ...restParts].join('.')
-
-                        if (
-                            components[actualFirstPart] === undefined &&
-                            components[actualComponentName] === undefined
-                        ) {
-                            return false
-                        }
-                    }
-                }
-
-                if (includeSubComponents === false) {
-                    if (nameParts.length > 1) {
-                        return false
-                    }
-                }
-
-                if (importedFrom) {
-                    if (!importsMap[firstPart]) {
-                        return false
-                    }
-
-                    const actualImportedFrom = importsMap[firstPart].moduleName
-
-                    if (importedFrom instanceof RegExp) {
-                        if (importedFrom.test(actualImportedFrom) === false) {
-                            return false
-                        }
-                    } else if (actualImportedFrom !== importedFrom) {
-                        return false
-                    }
-                }
-
-                return true
-            }
-
-            if (!shouldReportComponent()) {
-                return nodePath.skip()
-            }
-
-            const componentParts = [actualFirstPart, ...restParts]
-
-            const componentPath = componentParts.join('.components.')
-            const componentName = componentParts.join('.')
-            let componentInfo = getObjectPath(report, componentPath)
-
-            if (!componentInfo) {
-                componentInfo = {}
-                dset(report, componentPath, componentInfo)
-            }
-
-            if (!componentInfo.instances) {
-                componentInfo.instances = []
-            }
-
-            const info = getInstanceInfo({
-                node,
-                filePath,
-                importInfo: importsMap[firstPart],
-                getPropValue: customGetPropValue,
-                componentName,
-            })
-
-            componentInfo.instances.push(info)
-        },
+function isJSXComponent(type: Type): boolean {
+    return type.getCallSignatures().some((signature) => {
+        const returnType = signature.getReturnType()
+        return returnType.isObject() && returnType.getProperties().some((prop) => prop.getName() === 'props')
     })
 }
 
-export default scan
+function getProps(type: Type): Record<string, string> | undefined {
+    const propsRecord: Record<string, string> = {}
+
+    const callSignatures = type.getCallSignatures()
+
+    // 함수형 컴포넌트
+    if (callSignatures.length > 0) {
+        const propsType = callSignatures[0].getParameters()[0]?.getTypeAtLocation(callSignatures[0].getDeclaration()!)
+        if (propsType) {
+            propsType.getApparentProperties().forEach((prop) => {
+                const propName = prop.getName()
+                const propType = prop.getValueDeclaration()?.getType().getText()
+                propsRecord[propName] = propType || 'unknown'
+            })
+            return propsRecord
+        }
+    }
+
+    // 클래스형 컴포넌트
+    if (type.isClassOrInterface()) {
+        const propsProperty = type.getProperty('props')
+        if (propsProperty) {
+            const propsType = propsProperty.getTypeAtLocation(propsProperty.getValueDeclaration()!)
+            propsType.getApparentProperties().forEach((prop) => {
+                const propName = prop.getName()
+                const propType = prop.getValueDeclaration()?.getType().getText()
+                propsRecord[propName] = propType || 'unknown'
+            })
+        }
+    }
+}
+
+function parseProps(
+    props: Record<string, string> | undefined,
+    initialValue: Record<string, {type: string; count: number}>,
+) {
+    if (!props) {
+        return
+    }
+    return Object.entries(props).reduce((propsMap, [propName, propType]) => {
+        if (!propsMap[propName]) {
+            propsMap[propName] = {
+                type: propType,
+                count: 1,
+            }
+        } else {
+            propsMap[propName].count++
+        }
+
+        return propsMap
+    }, initialValue)
+}
+
+function updateReport(type: Type<ts.Type>, importName: string, result: Result) {
+    const nextResult = JSON.parse(JSON.stringify(result))
+
+    if (isJSXComponent(type)) {
+        const props = getProps(type)
+        if (!nextResult[importName]) {
+            nextResult[importName] = {
+                instance: 1,
+                props: parseProps(props, {}),
+            }
+        } else {
+            nextResult[importName].instance += 1
+            nextResult[importName].props = parseProps(props, result[importName].props ?? {})
+        }
+    } else {
+        if (!nextResult[importName]) {
+            nextResult[importName] = {
+                instance: 1,
+            }
+        } else {
+            nextResult[importName].instance += 1
+        }
+    }
+    return nextResult
+}
+
+function extractModuleIdentifier(symbol?: Symbol) {
+    if (!symbol) {
+        return
+    }
+    const declarations = symbol.getDeclarations()
+    if (declarations.length > 0) {
+        const identifier = declarations[0]
+        return identifier.getType()
+    }
+}
+
+export function getPropsFromDesignComponents({tsConfigFilePath, config}: {tsConfigFilePath: string; config?: IConfig}) {
+    const sourceFiles = filterSourceFiles({tsConfigFilePath, config})
+
+    let report: Result = {}
+
+    sourceFiles.forEach((sourceFile) => {
+        sourceFile.getImportDeclarations().forEach((importDecl) => {
+            const moduleSpecifier = importDecl.getModuleSpecifierValue()
+
+            if (moduleSpecifier.startsWith('@ndive/design-components')) {
+                const defaultImport = importDecl.getDefaultImport()
+
+                if (defaultImport) {
+                    const importName = defaultImport.getText()
+                    const symbol = defaultImport.getSymbol()
+                    const type = extractModuleIdentifier(symbol)
+
+                    type && (report = updateReport(type, importName, report))
+                }
+
+                importDecl.getNamedImports().forEach((namedImport) => {
+                    const importName = namedImport.getName()
+
+                    const symbol = namedImport.getNameNode().getSymbol()
+                    const type = extractModuleIdentifier(symbol)
+
+                    type && (report = updateReport(type, importName, report))
+                })
+            }
+        })
+    })
+
+    return report
+}

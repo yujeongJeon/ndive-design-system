@@ -12,40 +12,41 @@ import {validateConfig} from '../src/utils/validateConfig'
 async function analyze() {
     const {flags: options} = runCli()
 
-    const config = await loadConfig(options.config)
+    const configFileInfo = await loadConfig(options.config)
+    const configPath = getAbsolutePath(options.config)
+    const configDir = path.dirname(configPath)
 
-    if (config?.config) {
-        const configPath = path.resolve(process.cwd(), options.config)
-        const configDir = path.dirname(configPath)
-
-        const pathToCrawl = options.path && getAbsolutePath(options.path)
-
-        if (pathToCrawl) {
+    if (configFileInfo?.config) {
+        const {tsConfigFilePath: tsConfigFilePathFromConfig, errors} = validateConfig(configFileInfo?.config, configDir)
+        if (errors.length === 0) {
             await run({
-                config: config.config,
+                config: configFileInfo.config,
                 configDir,
-                crawlFrom: pathToCrawl,
+                tsConfigFilePath: getAbsolutePath(tsConfigFilePathFromConfig),
                 debug: options.verbose,
             })
         } else {
-            const {crawlFrom, errors} = validateConfig(config?.config, configDir)
-            if (errors.length === 0) {
-                await run({
-                    config: config.config,
-                    configDir,
-                    crawlFrom,
-                    debug: options.verbose,
-                })
-            } else {
-                console.error(`Config errors:`)
+            console.error(`Config errors:`)
 
-                errors.forEach((error) => {
-                    console.error(`- ${error}`)
-                })
+            errors.forEach((error) => {
+                console.error(`- ${error}`)
+            })
 
-                process.exit(1)
-            }
+            process.exit(1)
         }
+    } else {
+        const tsConfigFilePath = options.tsconfig && getAbsolutePath(options.tsconfig)
+
+        if (!tsConfigFilePath) {
+            console.error(`tsConfigFilePath is missing. Add '-t' option or configuration file.`)
+            process.exit(1)
+        }
+
+        await run({
+            configDir,
+            tsConfigFilePath,
+            debug: options.verbose,
+        })
     }
 }
 
