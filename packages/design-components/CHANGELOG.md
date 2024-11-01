@@ -1,5 +1,11 @@
 # @ndive/design-components
 
+## 0.0.6
+
+### Patch Changes
+
+- 9daafa2: [design-tracker] config 옵션 통일
+
 ## 0.0.5
 
 ### Patch Changes

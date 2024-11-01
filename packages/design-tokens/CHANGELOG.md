@@ -1,5 +1,11 @@
 # @ndive/design-tokens
 
+## 0.0.5
+
+### Patch Changes
+
+- 9daafa2: [design-tracker] config 옵션 통일
+
 ## 0.0.4
 
 ### Patch Changes

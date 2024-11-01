@@ -1,5 +1,11 @@
 # @ndive/vite
 
+## 1.0.3
+
+### Patch Changes
+
+- 9daafa2: [design-tracker] config 옵션 통일
+
 ## 1.0.2
 
 ### Patch Changes
