@@ -36,6 +36,27 @@ export default ({
 
     const outDir = path.dirname(buildOutput)
 
+    type NullValue = null | undefined | void
+    const isExternalFunction = (
+        rollupExternal: unknown,
+    ): rollupExternal is (source: string, importer: string | undefined, isResolved: boolean) => boolean | NullValue =>
+        typeof rollupExternal === 'function'
+
+    const getNonNullableExternalArray = () =>
+        Array.isArray(rollupOptions?.external)
+            ? rollupOptions?.external
+            : rollupOptions?.external && !isExternalFunction(rollupOptions?.external)
+            ? [rollupOptions?.external]
+            : []
+
+    const external = isExternalFunction(rollupOptions?.external)
+        ? rollupOptions.external
+        : [
+              ...getNonNullableExternalArray(),
+              ...Object.keys(pkg.peerDependencies || {}),
+              ...Object.keys(pkg.dependencies || {}),
+          ].flatMap((dep) => [dep, new RegExp(`^${dep}/.*`)])
+
     return defineConfig({
         plugins: [
             dts({
@@ -52,11 +73,7 @@ export default ({
             },
             rollupOptions: {
                 ...rollupOptions,
-                external:
-                    rollupOptions?.external ||
-                    [...Object.keys(pkg.peerDependencies || {}), ...Object.keys(pkg.dependencies || {})].flatMap(
-                        (dep) => [dep, new RegExp(`^${dep}/.*`)],
-                    ),
+                external,
                 output: [
                     {
                         format: 'es',
