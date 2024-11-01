@@ -22,7 +22,7 @@ const explorer = cosmiconfig(CONFIG_NAME, {
 export type ExcludeFn = (dirName: string, dirPath: string) => boolean
 
 export interface IConfig {
-    tsconfigFilePath: string
+    tsConfigFilePath: string
     globs?: string[]
     outputTo?: string
 }
