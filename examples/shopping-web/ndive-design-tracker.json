@@ -1,4 +1,4 @@
 {
-    "tsconfigFilePath": "./tsconfig.json",
+    "tsConfigFilePath": "./tsconfig.json",
     "outputTo": "./data.json"
 }

@@ -13,17 +13,17 @@ export function validateConfig(config: IConfig, configDir: string) {
         tsConfigFilePath: '',
     }
 
-    if (config.tsconfigFilePath === undefined) {
-        result.errors.push(`tsconfigFilePath is missing`)
-    } else if (typeof config.tsconfigFilePath !== 'string') {
-        result.errors.push(`tsconfigFilePath should be a string`)
+    if (config.tsConfigFilePath === undefined) {
+        result.errors.push(`tsConfigFilePath is missing`)
+    } else if (typeof config.tsConfigFilePath !== 'string') {
+        result.errors.push(`tsConfigFilePath should be a string`)
     } else {
-        const tsconfigFilePath = getAbsolutePath(config.tsconfigFilePath, configDir)
+        const tsConfigFilePath = getAbsolutePath(config.tsConfigFilePath, configDir)
 
-        if (fs.existsSync(tsconfigFilePath)) {
-            result.tsConfigFilePath = tsconfigFilePath
+        if (fs.existsSync(tsConfigFilePath)) {
+            result.tsConfigFilePath = tsConfigFilePath
         } else {
-            result.errors.push(`tsConfigFilePath path doesn't exist (${tsconfigFilePath})`)
+            result.errors.push(`tsConfigFilePath path doesn't exist (${tsConfigFilePath})`)
         }
     }
 
