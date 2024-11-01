@@ -1,5 +1,13 @@
 # shopping-web
 
+## 1.0.4
+
+### Patch Changes
+
+- 32776d3: @ndive/design-tracker ts-morph 사용으로 개선합니다.
+
+    [design-tracker] 코드 및 사용법 전면 개선
+
 ## 1.0.3
 
 ### Patch Changes
