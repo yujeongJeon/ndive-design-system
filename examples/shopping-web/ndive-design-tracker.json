@@ -1,5 +1,4 @@
 {
-    "crawlFrom": "./src",
-    "includeSubComponents": true,
-    "importedFrom": "@ndive/design-components"
+    "tsconfigFilePath": "./tsconfig.json",
+    "outputTo": "./data.json"
 }

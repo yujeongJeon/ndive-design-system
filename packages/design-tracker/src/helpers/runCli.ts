@@ -13,11 +13,11 @@ const flags = {
         ],
         isRequired: false,
     },
-    path: {
-        desc: '/path/to/folder',
+    tsconfig: {
+        desc: '/path/to/tsconfig.json',
         type: 'string' as const,
-        shortFlag: '-p',
-        default: '',
+        shortFlag: '-t',
+        default: './tsconfig.json',
         isRequired: false,
     },
     verbose: {
@@ -32,8 +32,8 @@ const helpText = meowHelp({
     name: `@ndive/design-tracker`,
     flags,
     header: '',
-    footer: 'This package is a copy of react-scanner with replaced @babel/parser.',
-    desc: 'Analyzes the given code (TypeScript supported) and extracts React components and props usage.',
+    footer: 'This package tracks the usage of modules from @ndive/design-components.',
+    desc: 'Tracks the given code (TypeScript only) and extracts React components and props usage.',
 })
 
 export const runCli = () => {

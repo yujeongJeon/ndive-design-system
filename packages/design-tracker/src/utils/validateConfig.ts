@@ -1,6 +1,5 @@
 import fs from 'node:fs'
 
-import {isPlainObject} from './isPlainObject'
 import {IConfig} from './loadConfig'
 
 import {getAbsolutePath} from './index'
@@ -8,40 +7,23 @@ import {getAbsolutePath} from './index'
 export function validateConfig(config: IConfig, configDir: string) {
     const result: {
         errors: string[]
-        crawlFrom: string
+        tsConfigFilePath: string
     } = {
         errors: [] as string[],
-        crawlFrom: '',
+        tsConfigFilePath: '',
     }
 
-    if (config.crawlFrom === undefined) {
-        result.errors.push(`crawlFrom is missing`)
-    } else if (typeof config.crawlFrom !== 'string') {
-        result.errors.push(`crawlFrom should be a string`)
+    if (config.tsconfigFilePath === undefined) {
+        result.errors.push(`tsconfigFilePath is missing`)
+    } else if (typeof config.tsconfigFilePath !== 'string') {
+        result.errors.push(`tsconfigFilePath should be a string`)
     } else {
-        const crawlFrom = getAbsolutePath(config.crawlFrom, configDir)
+        const tsconfigFilePath = getAbsolutePath(config.tsconfigFilePath, configDir)
 
-        if (fs.existsSync(crawlFrom)) {
-            result.crawlFrom = crawlFrom
+        if (fs.existsSync(tsconfigFilePath)) {
+            result.tsConfigFilePath = tsconfigFilePath
         } else {
-            result.errors.push(`crawlFrom path doesn't exist (${crawlFrom})`)
-        }
-    }
-
-    if (config.exclude !== undefined) {
-        if (Array.isArray(config.exclude)) {
-            for (let i = 0, len = config.exclude.length; i < len; i++) {
-                if (typeof config.exclude[i] !== 'string' && config.exclude[i] instanceof RegExp === false) {
-                    result.errors.push(
-                        `every item in the exclude array should be a string or a regex (${typeof config.exclude[
-                            i
-                        ]} found)`,
-                    )
-                    break
-                }
-            }
-        } else if (typeof config.exclude !== 'function') {
-            result.errors.push(`exclude should be an array or a function`)
+            result.errors.push(`tsConfigFilePath path doesn't exist (${tsconfigFilePath})`)
         }
     }
 
@@ -57,31 +39,6 @@ export function validateConfig(config: IConfig, configDir: string) {
             }
         } else {
             result.errors.push(`globs should be an array`)
-        }
-    }
-
-    if (config.components !== undefined) {
-        if (isPlainObject(config.components)) {
-            for (const componentName in config.components) {
-                if (config.components[componentName] !== true) {
-                    result.errors.push(`the only supported value in the components object is true`)
-                    break
-                }
-            }
-        } else {
-            result.errors.push(`components should be an object`)
-        }
-    }
-
-    if (config.includeSubComponents !== undefined) {
-        if (typeof config.includeSubComponents !== 'boolean') {
-            result.errors.push(`includeSubComponents should be a boolean`)
-        }
-    }
-
-    if (config.importedFrom !== undefined) {
-        if (typeof config.importedFrom !== 'string' && config.importedFrom instanceof RegExp === false) {
-            result.errors.push(`importedFrom should be a string or a RegExp`)
         }
     }
 

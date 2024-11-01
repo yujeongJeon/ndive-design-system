@@ -1,6 +1,6 @@
 import {useState} from 'react'
 
-import {ButtonPrimary, ButtonSub} from '@ndive/design-components'
+import {ButtonPrimary, ButtonSub, SIZE} from '@ndive/design-components'
 import {IconAdd, IconTrash} from '@ndive/design-components/icons'
 
 import Container from './Container'
@@ -16,7 +16,7 @@ export default function App() {
                 color="mainGreen"
                 icon={{
                     direction: 'front',
-                    component: <IconAdd fill="#fff" width={16} height={16} />,
+                    component: <IconAdd fill="#fff" {...SIZE.s} />,
                 }}
                 onClick={() => setIsShow(true)}
             />
@@ -26,7 +26,7 @@ export default function App() {
                 fillType="fill"
                 icon={{
                     direction: 'front',
-                    component: <IconTrash fill="#fff" width={16} height={16} />,
+                    component: <IconTrash fill="#fff" {...SIZE.s} />,
                 }}
             />
             <Container isShow={isShow} onClose={() => setIsShow(false)} />
