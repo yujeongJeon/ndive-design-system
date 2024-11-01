@@ -1,6 +1,7 @@
 import {minimatch} from 'minimatch'
-import {IConfig} from 'src/utils/loadConfig'
 import {Project, Symbol, ts, Type} from 'ts-morph'
+
+import {IConfig} from '$/utils/loadConfig'
 
 type ModuleName = string
 type PropsResult = Record<string, {type: string; count: number}>
