@@ -2,9 +2,9 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
-import {isPlainObject} from '../utils/isPlainObject'
-import {IConfig} from '../utils/loadConfig'
-import {getPropsFromDesignComponents} from './scan'
+import {getPropsFromDesignComponents} from '$/helpers/scan'
+import {isPlainObject} from '$/utils/isPlainObject'
+import {IConfig} from '$/utils/loadConfig'
 
 async function run({
     config,

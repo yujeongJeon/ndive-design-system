@@ -1,8 +1,7 @@
 import fs from 'node:fs'
 
-import {IConfig} from './loadConfig'
-
-import {getAbsolutePath} from './index'
+import {getAbsolutePath} from '$/utils'
+import {IConfig} from '$/utils/loadConfig'
 
 export function validateConfig(config: IConfig, configDir: string) {
     const result: {
