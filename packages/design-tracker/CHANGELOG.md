@@ -1,5 +1,15 @@
 # @ndive/design-tracker
 
+## 0.0.7
+
+### Patch Changes
+
+- aebc630: [design-tracker] path alias 추가
+
+    [design-tracker] tsconfig path alias
+
+- 8eeb790: [design-tracker] props 사용횟수를 정확히 추출합니다.
+
 ## 0.0.6
 
 ### Patch Changes
