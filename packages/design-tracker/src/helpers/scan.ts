@@ -8,15 +8,31 @@ import {
     SourceFile,
     Symbol,
     SyntaxKind,
-    ts,
     Type,
 } from 'ts-morph'
 
 import {IConfig} from '$/utils/loadConfig'
 
 type ModuleName = string
-type PropsResult = Record<string, {type: string; count: number}>
-type Result = Record<ModuleName, {instance: number; props?: PropsResult}>
+type PropName = string
+type PropsResult = Record<PropName, {type: string; count: number}>
+type Result = Record<
+    ModuleName,
+    {
+        /**
+         * 사용 횟수
+         */
+        instance: number
+        /**
+         * React 컴포넌트일 때 props 사용 횟수 및 타입
+         */
+        props?: PropsResult
+        /**
+         * 모듈 타입
+         */
+        type?: string | Record<string, unknown>
+    }
+>
 
 const DEFAULT_GLOBS = ['**/!(*.test|*.spec|*.d).@(js|ts)?(x)']
 
@@ -167,17 +183,35 @@ function isComponentUsedInSourceFile({
     return nextProps
 }
 
+function getImportType(symbol?: Symbol) {
+    const declaredImportType = symbol?.getDeclarations()?.[0].getType().getText()
+
+    /**
+     * JSXElement의 경우 `typeof import(...).ButtonPrimary`와 같이 실제로 선언된 경로로 나옴
+     * TypeScript의 타입 시스템이 외부 모듈을 정적으로 참조하고, 구체적인 정의를 런타임에 해석하지 않기 때문임
+     * 반면, 일반 상수나 React의 고차 컴포넌트는 정적으로 타입이 명시되므로  TypeScript가 이를 정확히 파악할 수 있음
+     */
+    return declaredImportType?.startsWith('typeof import') ? undefined : declaredImportType
+}
+
 function updateReport({
-    type,
+    symbol,
     importName,
     report,
     sourceFile,
 }: {
-    type: Type<ts.Type>
+    symbol?: Symbol
     importName: string
     report: Result
     sourceFile: SourceFile
 }) {
+    const type = extractModuleIdentifier(symbol)
+
+    if (!type) {
+        return report
+    }
+
+    const importType = getImportType(symbol)
     const nextReport = JSON.parse(JSON.stringify(report)) as Result
 
     if (isJSXComponent(type)) {
@@ -186,6 +220,7 @@ function updateReport({
         if (!nextReport[importName]) {
             nextReport[importName] = {
                 instance: 1,
+                type: importType,
             }
             nextReport[importName].props = isComponentUsedInSourceFile({
                 sourceFile,
@@ -206,6 +241,7 @@ function updateReport({
         if (!nextReport[importName]) {
             nextReport[importName] = {
                 instance: 1,
+                type: importType,
             }
         } else {
             nextReport[importName].instance += 1
@@ -240,23 +276,15 @@ export function getPropsFromDesignComponents({tsConfigFilePath, config}: {tsConf
                 if (defaultImport) {
                     const importName = defaultImport.getText()
                     const symbol = defaultImport.getSymbol()
-                    const type = extractModuleIdentifier(symbol)
-                    /**
-                     * JSXElement의 경우 `typeof import(...).ButtonPrimary`와 같이 실제로 선언된 경로로 나옴
-                     * TypeScript의 타입 시스템이 외부 모듈을 정적으로 참조하고, 구체적인 정의를 런타임에 해석하지 않기 때문임
-                     */
-                    // const importType = symbol?.getDeclarations()?.[0].getType().getText()
 
-                    type && (report = updateReport({type, importName, report, sourceFile}))
+                    report = updateReport({symbol, importName, report, sourceFile})
                 }
 
                 importDecl.getNamedImports().forEach((namedImport) => {
                     const importName = namedImport.getName()
-
                     const symbol = namedImport.getNameNode().getSymbol()
-                    const type = extractModuleIdentifier(symbol)
 
-                    type && (report = updateReport({type, importName, report, sourceFile}))
+                    report = updateReport({symbol, importName, report, sourceFile})
                 })
             }
         })
