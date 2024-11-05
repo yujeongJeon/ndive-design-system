@@ -1,5 +1,16 @@
 import {minimatch} from 'minimatch'
-import {Project, Symbol, ts, Type} from 'ts-morph'
+import {
+    JsxAttribute,
+    JsxFragment,
+    JsxOpeningElement,
+    JsxSelfClosingElement,
+    Project,
+    SourceFile,
+    Symbol,
+    SyntaxKind,
+    ts,
+    Type,
+} from 'ts-morph'
 
 import {IConfig} from '$/utils/loadConfig'
 
@@ -39,7 +50,21 @@ function filterSourceFiles({tsConfigFilePath, config}: {tsConfigFilePath: string
 function isJSXComponent(type: Type): boolean {
     return type.getCallSignatures().some((signature) => {
         const returnType = signature.getReturnType()
-        return returnType.isObject() && returnType.getProperties().some((prop) => prop.getName() === 'props')
+
+        if (returnType.getText() === 'React.ReactNode') {
+            return true
+        }
+
+        if (returnType.isObject()) {
+            const hasProps = returnType.getProperties().some((prop) => prop.getName() === 'props')
+
+            const isSVGOrHTMLElement =
+                returnType.getApparentType().getSymbol()?.getName() === 'SVGElement' ||
+                returnType.getApparentType().getSymbol()?.getName() === 'HTMLElement'
+
+            return hasProps || isSVGOrHTMLElement
+        }
+        return false
     })
 }
 
@@ -75,51 +100,118 @@ function getProps(type: Type): Record<string, string> | undefined {
     }
 }
 
-function parseProps(
-    props: Record<string, string> | undefined,
-    initialValue: Record<string, {type: string; count: number}>,
-) {
-    if (!props) {
-        return
-    }
-    return Object.entries(props).reduce((propsMap, [propName, propType]) => {
-        if (!propsMap[propName]) {
-            propsMap[propName] = {
-                type: propType,
-                count: 1,
+function extractUsedProps(jsxElement: JsxOpeningElement | JsxSelfClosingElement) {
+    return jsxElement
+        .getAttributes()
+        .map((attr) => {
+            if (attr.getKind() === SyntaxKind.JsxAttribute) {
+                const jsxAttr = attr as JsxAttribute
+                const propName = jsxAttr.getNameNode().getText()
+                return propName
             }
-        } else {
-            propsMap[propName].count++
-        }
-
-        return propsMap
-    }, initialValue)
+            return ''
+        })
+        .filter<string>((v): v is string => !!v)
 }
 
-function updateReport(type: Type<ts.Type>, importName: string, result: Result) {
-    const nextResult = JSON.parse(JSON.stringify(result))
+function isJsxOpeningOrSelfClosingElement(
+    element: JsxOpeningElement | JsxSelfClosingElement | JsxFragment,
+): element is JsxOpeningElement | JsxSelfClosingElement {
+    return element.getKind() === SyntaxKind.JsxOpeningElement || element.getKind() === SyntaxKind.JsxSelfClosingElement
+}
+
+function isComponentUsedInSourceFile({
+    sourceFile,
+    importName,
+    propsType,
+    initialProps,
+}: {
+    sourceFile: SourceFile
+    importName: string
+    propsType?: Record<string, string>
+    initialProps: PropsResult
+}) {
+    const nextProps = JSON.parse(JSON.stringify(initialProps)) as PropsResult
+
+    const jsxElements = [
+        ...sourceFile.getDescendantsOfKind(SyntaxKind.JsxOpeningElement),
+        ...sourceFile.getDescendantsOfKind(SyntaxKind.JsxSelfClosingElement),
+        ...sourceFile.getDescendantsOfKind(SyntaxKind.JsxFragment),
+    ]
+
+    jsxElements.forEach((jsxElement) => {
+        if (!isJsxOpeningOrSelfClosingElement(jsxElement)) {
+            return
+        }
+
+        const tagName = jsxElement.getTagNameNode().getText()
+
+        if (tagName !== importName) {
+            return
+        }
+
+        const usedProps = extractUsedProps(jsxElement)
+
+        usedProps.forEach((propName) => {
+            const existingProp = nextProps[propName]
+
+            if (existingProp) {
+                nextProps[propName].count += 1
+            } else {
+                const propType = propsType?.[propName] || 'unknown'
+                nextProps[propName] = {type: propType, count: 1}
+            }
+        })
+    })
+
+    return nextProps
+}
+
+function updateReport({
+    type,
+    importName,
+    report,
+    sourceFile,
+}: {
+    type: Type<ts.Type>
+    importName: string
+    report: Result
+    sourceFile: SourceFile
+}) {
+    const nextReport = JSON.parse(JSON.stringify(report)) as Result
 
     if (isJSXComponent(type)) {
-        const props = getProps(type)
-        if (!nextResult[importName]) {
-            nextResult[importName] = {
+        const propsType = getProps(type)
+
+        if (!nextReport[importName]) {
+            nextReport[importName] = {
                 instance: 1,
-                props: parseProps(props, {}),
             }
+            nextReport[importName].props = isComponentUsedInSourceFile({
+                sourceFile,
+                propsType,
+                importName,
+                initialProps: {},
+            })
         } else {
-            nextResult[importName].instance += 1
-            nextResult[importName].props = parseProps(props, result[importName].props ?? {})
+            nextReport[importName].instance += 1
+            nextReport[importName].props = isComponentUsedInSourceFile({
+                sourceFile,
+                propsType,
+                importName,
+                initialProps: nextReport[importName].props || {},
+            })
         }
     } else {
-        if (!nextResult[importName]) {
-            nextResult[importName] = {
+        if (!nextReport[importName]) {
+            nextReport[importName] = {
                 instance: 1,
             }
         } else {
-            nextResult[importName].instance += 1
+            nextReport[importName].instance += 1
         }
     }
-    return nextResult
+    return nextReport
 }
 
 function extractModuleIdentifier(symbol?: Symbol) {
@@ -149,8 +241,13 @@ export function getPropsFromDesignComponents({tsConfigFilePath, config}: {tsConf
                     const importName = defaultImport.getText()
                     const symbol = defaultImport.getSymbol()
                     const type = extractModuleIdentifier(symbol)
+                    /**
+                     * JSXElement의 경우 `typeof import(...).ButtonPrimary`와 같이 실제로 선언된 경로로 나옴
+                     * TypeScript의 타입 시스템이 외부 모듈을 정적으로 참조하고, 구체적인 정의를 런타임에 해석하지 않기 때문임
+                     */
+                    // const importType = symbol?.getDeclarations()?.[0].getType().getText()
 
-                    type && (report = updateReport(type, importName, report))
+                    type && (report = updateReport({type, importName, report, sourceFile}))
                 }
 
                 importDecl.getNamedImports().forEach((namedImport) => {
@@ -159,7 +256,7 @@ export function getPropsFromDesignComponents({tsConfigFilePath, config}: {tsConf
                     const symbol = namedImport.getNameNode().getSymbol()
                     const type = extractModuleIdentifier(symbol)
 
-                    type && (report = updateReport(type, importName, report))
+                    type && (report = updateReport({type, importName, report, sourceFile}))
                 })
             }
         })
