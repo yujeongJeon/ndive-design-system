@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import path from 'node:path'
 
 import {cosmiconfig, CosmiconfigResult} from 'cosmiconfig'
@@ -53,7 +52,7 @@ export const loadConfig = async (
                   isEmpty: boolean
               }
             | undefined
-    } catch (error) {
-        console.error('something went wrong while loading config file.', error)
+    } catch {
+        /** IGNORE */
     }
 }
