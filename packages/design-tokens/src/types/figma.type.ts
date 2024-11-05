@@ -58,20 +58,16 @@ export interface ICommon<Name extends string = string> {
     absoluteRenderBounds: TRectangle
 }
 
-type TFrameOrGroup<Name extends string, SubName extends string> = IFrame<Name, SubName> | IGroup<Name, SubName>
+type TChildrenNode<Name extends string, SubName extends string> = IFrame<Name, SubName> | IGroup<Name, SubName>
 
 export interface IFrame<
     Name extends string = string,
     NameSet extends string = string,
     Nested extends string = string,
-    ChildrenNode = TFrameOrGroup<NameSet, Nested>,
+    ChildrenNode = TChildrenNode<NameSet, Nested>,
 > extends ICommon<Name> {
     type: 'FRAME'
     children: (ICommon | ChildrenNode)[]
-}
-
-export interface IVector<Name extends string = string> extends ICommon<Name> {
-    type: 'VECTOR'
 }
 
 export interface IText<Name extends string = string> extends ICommon<Name> {
@@ -82,11 +78,6 @@ export interface IText<Name extends string = string> extends ICommon<Name> {
 export interface IGroup<Name extends string = string, NameSet extends string = string> extends ICommon<Name> {
     type: 'GROUP'
     children: ICommon<NameSet>[]
-}
-
-export interface IComponent extends ICommon {
-    type: 'COMPONENT'
-    children: ICommon[]
 }
 
 export interface TImageResponse {
