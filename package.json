@@ -6,9 +6,9 @@
     "private": true,
     "scripts": {
         "lint": "eslint '**/*.{js,jsx,ts,tsx}'",
-        "lint:fix": "eslint '**/*.{js,jsx,ts,tsx}' --fix",
+        "lint:fix": "eslint '**/*.{js,jsx,ts,tsx}' --fix --quiet",
         "prettier": "prettier --check '**/*.{ts,tsx,js,mjs,cjs,jsx,json,yaml,yml}'",
-        "prettier:fix": "prettier --write '**/*.{ts,tsx,js,mjs,cjs,jsx,json,yaml,yml}'",
+        "prettier:fix": "prettier --write '**/*.{ts,tsx,js,mjs,cjs,jsx,json,yaml,yml}' --loglevel silent",
         "md": "markdownlint '**/*.md'",
         "md:fix": "markdownlint --fix '**/*.md'",
         "fix:all": "pnpm run lint:fix & pnpm run prettier:fix & pnpm run md:fix",
@@ -35,6 +35,7 @@
         "@naverpay/eslint-config": "^1.0.7",
         "@naverpay/markdown-lint": "^0.0.3",
         "@naverpay/prettier-config": "^1.0.0",
+        "eslint-config-turbo": "^2.2.3",
         "lefthook": "^1.7.15",
         "turbo": "^2.2.3",
         "typescript": "^5.6.2"

@@ -16,7 +16,8 @@
         },
         "fetch:tokens": {
             "dependsOn": ["fetch:color", "fetch:typo", "fetch:icon"],
-            "cache": false
+            "cache": false,
+            "env": ["FIGMA_TOKEN"]
         }
     }
 }

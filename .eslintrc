@@ -1,3 +1,16 @@
 {
-    "extends": ["@naverpay/eslint-config/typescript"]
+    "extends": ["@naverpay/eslint-config/typescript", "turbo"],
+    "overrides": [
+        {
+            "files": ["*.ts", "*.tsx"],
+            "parserOptions": {
+                "warnOnUnsupportedTypeScriptVersion": false
+            }
+        }
+    ],
+    "settings": {
+        "react": {
+            "version": "18.0"
+        }
+    }
 }
