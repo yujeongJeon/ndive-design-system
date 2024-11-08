@@ -114,13 +114,13 @@ importers:
       '@fontsource/pretendard':
         specifier: ^5.1.0
         version: 5.1.0
+      '@ndive/design-tokens':
+        specifier: workspace:^
+        version: link:../design-tokens
       classnames:
         specifier: ^2.5.1
         version: 2.5.1
     devDependencies:
-      '@ndive/design-tokens':
-        specifier: workspace:^
-        version: link:../design-tokens
       '@ndive/tsconfig':
         specifier: workspace:*
         version: link:../../shared/tsconfig
@@ -153,7 +153,7 @@ importers:
         version: 4.3.2(vite@5.4.6(@types/node@22.5.5)(sass@1.79.4))
       browserslist-to-esbuild:
         specifier: ^2.1.1
-        version: 2.1.1(browserslist@4.23.3)
+        version: 2.1.1(browserslist@4.24.0)
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
@@ -6068,9 +6068,9 @@ snapshots:
 
   browser-assert@1.2.1: {}
 
-  browserslist-to-esbuild@2.1.1(browserslist@4.23.3):
+  browserslist-to-esbuild@2.1.1(browserslist@4.24.0):
     dependencies:
-      browserslist: 4.23.3
+      browserslist: 4.24.0
       meow: 13.2.0
 
   browserslist@4.23.3:

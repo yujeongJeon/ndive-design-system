@@ -45,7 +45,6 @@
     "author": "yujeong-jeon",
     "license": "ISC",
     "devDependencies": {
-        "@ndive/design-tokens": "workspace:^",
         "@ndive/tsconfig": "workspace:*",
         "@ndive/vite": "workspace:^",
         "@svgr/core": "^8.1.0",
@@ -72,6 +71,7 @@
     },
     "dependencies": {
         "@fontsource/pretendard": "^5.1.0",
-        "classnames": "^2.5.1"
+        "classnames": "^2.5.1",
+        "@ndive/design-tokens": "workspace:^"
     }
 }
