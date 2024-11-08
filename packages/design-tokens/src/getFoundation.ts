@@ -71,23 +71,6 @@ export async function setTypo({accessToken}: {accessToken: string}) {
 export async function setIcon({accessToken}: {accessToken: string}) {
     const components = await getComponents(accessToken)
 
-    const sizeIds = Object.entries(components)
-        .filter(([, {name}]) => name.startsWith('icon/'))
-        .map(([nodeId]) => nodeId)
-
-    const sizeNodes = await getFileNodeWithIds(accessToken, sizeIds)
-
-    const sizeSet = Object.entries(sizeNodes).reduce((sizeMap, [, {document}]) => {
-        const {name, absoluteBoundingBox} = document
-        return {
-            ...sizeMap,
-            [name.split('/').pop() || '']: {
-                width: absoluteBoundingBox.width,
-                height: absoluteBoundingBox.height,
-            },
-        }
-    }, {} as TSizeReturnType)
-
     const iconMap = Object.fromEntries(
         Object.entries(components)
             .filter(([, {name}]) => name.startsWith('ic-'))
@@ -115,8 +98,28 @@ export async function setIcon({accessToken}: {accessToken: string}) {
             .filter(isNonEmpty),
     )
 
-    return {
-        size: sizeSet,
-        icon: iconSet,
-    }
+    return iconSet
+}
+
+export async function setSize({accessToken}: {accessToken: string}) {
+    const components = await getComponents(accessToken)
+
+    const sizeIds = Object.entries(components)
+        .filter(([, {name}]) => name.startsWith('icon/'))
+        .map(([nodeId]) => nodeId)
+
+    const sizeNodes = await getFileNodeWithIds(accessToken, sizeIds)
+
+    const sizeSet = Object.entries(sizeNodes).reduce((sizeMap, [, {document}]) => {
+        const {name, absoluteBoundingBox} = document
+        return {
+            ...sizeMap,
+            [name.split('/').pop() || '']: {
+                width: absoluteBoundingBox.width,
+                height: absoluteBoundingBox.height,
+            },
+        }
+    }, {} as TSizeReturnType)
+
+    return sizeSet
 }
