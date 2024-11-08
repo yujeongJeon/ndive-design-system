@@ -22,10 +22,10 @@ async function run({
         console.log(`load config: ${JSON.stringify(config, undefined, 4)}\n`)
     }
 
-    const result = getPropsFromDesignComponents({tsConfigFilePath, config})
+    const report = getPropsFromDesignComponents({tsConfigFilePath, config})
 
     const destination = config?.outputTo ?? 'stdout'
-    const dataStr = isPlainObject(result) ? JSON.stringify(result, null, 4).replace(/\\"/g, "'") : String(result)
+    const dataStr = isPlainObject(report) ? JSON.stringify(report, null, 4).replace(/\\"/g, "'") : String(report)
 
     if (destination === 'stdout') {
         console.log(dataStr)
