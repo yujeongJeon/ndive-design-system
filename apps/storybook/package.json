@@ -4,6 +4,7 @@
     "version": "1.0.4",
     "description": "",
     "main": "index.js",
+    "type": "module",
     "scripts": {
         "start:storybook": "storybook dev -p 6006",
         "build:storybook": "storybook build -o ./dist --disable-telemetry"
