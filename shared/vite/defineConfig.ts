@@ -80,34 +80,33 @@ const getBuildOutput = (pkg: ExtendedPackageJson): string => {
 }
 
 /**
- * package.json의 의존성을 기반으로 external 설정 배열 생성
- *
- * @param {ExtendedPackageJson} pkg - package.json 객체
- * @returns {(string | RegExp)[]} 의존성 이름과 경로 패턴 배열
- *
- * @example
- * // package.json: { "dependencies": { "react": "^17.0.0" } }
- * // 결과: ['react', /^react\/.*\/]
- */
-const getExternalDependencies = (pkg: ExtendedPackageJson): (string | RegExp)[] => {
-    const dependencies = [...Object.keys(pkg.peerDependencies || {}), ...Object.keys(pkg.dependencies || {})]
-    return dependencies.flatMap((dep) => [dep, new RegExp(`^${dep}/.*`)])
-}
-
-/**
  * 최종 external 설정을 생성
  * @param {CustomBuildOptions | undefined} rollupOptions - Rollup 빌드 옵션
  * @param {ExtendedPackageJson} pkg - package.json 객체
  */
 const getExternalConfig = (rollupOptions: CustomBuildOptions | undefined, pkg: ExtendedPackageJson) => {
+    /**
+     * package.json의 의존성을 기반으로 external 설정 배열 생성
+     *
+     * @returns {(string | RegExp)[]} 의존성 이름과 경로 패턴 배열
+     *
+     * @example
+     * // package.json: { "dependencies": { "react": "^17.0.0" } }
+     * // 결과: ['react', /^react\/.*\/]
+     */
+    const getExternalDependencies = (): (string | RegExp)[] => {
+        const dependencies = [...Object.keys(pkg.peerDependencies || {}), ...Object.keys(pkg.dependencies || {})]
+        return dependencies.flatMap((dep) => [dep, new RegExp(`^${dep}/.*`)])
+    }
+
     if (!rollupOptions?.external) {
-        return getExternalDependencies(pkg)
+        return getExternalDependencies()
     }
     if (typeof rollupOptions.external === 'function') {
         return rollupOptions.external
     }
     const explicitExternals = Array.isArray(rollupOptions.external) ? rollupOptions.external : [rollupOptions.external]
-    return [...explicitExternals, ...getExternalDependencies(pkg)]
+    return [...explicitExternals, ...getExternalDependencies()]
 }
 
 /**
