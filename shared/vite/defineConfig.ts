@@ -19,7 +19,7 @@ export type DistributiveOmit<T, U extends keyof any> = T extends object ? Omit<T
 type CustomBuildOptions = DistributiveOmit<BuildOptions['rollupOptions'], 'output'>
 
 /**
- * PackageJson.type을 constant로 선언하면 사용처에서 불필요한 타입 단언이 필요하므로 string으로 확장
+ * PackageJson.type을 Literal Type으로 선언하면 사용처에서 불필요한 타입 단언이 필요하므로 string으로 확장
  */
 type ExtendedPackageJson = Omit<PackageJson, 'type'> & {type?: string}
 
