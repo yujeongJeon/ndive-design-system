@@ -1,5 +1,4 @@
 import type {StorybookConfig} from '@storybook/react-vite'
-import path from 'node:path'
 
 export default {
     stories: ['../src/**/*.stories.@(js|jsx|ts|tsx)'],
@@ -8,7 +7,7 @@ export default {
         name: '@storybook/react-vite',
         options: {
             builder: {
-                viteConfigPath: path.resolve(__dirname, '../vite.config.ts'),
+                viteConfigPath: './vite.config.ts',
             },
         },
     },
