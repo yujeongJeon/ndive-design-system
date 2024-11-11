@@ -19,9 +19,14 @@ export type DistributiveOmit<T, U extends keyof any> = T extends object ? Omit<T
 type CustomBuildOptions = DistributiveOmit<BuildOptions['rollupOptions'], 'output'>
 
 /**
+ * PackageJson.type을 Literal Type으로 선언하면 사용처에서 불필요한 타입 단언이 필요하므로 string으로 확장
+ */
+type ExtendedPackageJson = Omit<PackageJson, 'type'> & {type?: string}
+
+/**
  * Vite 설정 생성을 위한 설정 옵션 인터페이스
  * @interface ConfigOptions
- * @property {PackageJson} pkg - package.json 파일의 내용
+ * @property {ExtendedPackageJson} pkg - package.json 파일의 내용
  * @property {Object} buildOptions - 빌드 관련 옵션
  * @property {LibraryOptions['entry']} buildOptions.entry - 라이브러리의 진입점 설정
  * @property {BuildOptions['target']} buildOptions.target - 빌드 타겟 설정 (예: es2015, es2020)
@@ -30,7 +35,7 @@ type CustomBuildOptions = DistributiveOmit<BuildOptions['rollupOptions'], 'outpu
  * @property {PluginOption[]} [plugins] - 추가할 Vite 플러그인 목록
  */
 interface ConfigOptions {
-    pkg: PackageJson
+    pkg: ExtendedPackageJson
     buildOptions: {
         entry: LibraryOptions['entry']
         target: BuildOptions['target']
@@ -42,11 +47,11 @@ interface ConfigOptions {
 
 /**
  * package.json에서 빌드 출력 경로를 추출
- * @param {PackageJson} pkg - package.json 객체
+ * @param {ExtendedPackageJson} pkg - package.json 객체
  * @returns {string} 빌드 출력 경로
  * @throws {Error} exports 또는 main 필드가 없거나 구조가 잘못된 경우
  */
-const getBuildOutput = (pkg: PackageJson): string => {
+const getBuildOutput = (pkg: ExtendedPackageJson): string => {
     const outputPath =
         pkg.exports && typeof pkg.exports === 'object' && '.' in pkg.exports ? pkg.exports['.'] : pkg.main
 
@@ -75,40 +80,39 @@ const getBuildOutput = (pkg: PackageJson): string => {
 }
 
 /**
- * package.json의 의존성을 기반으로 external 설정 배열 생성
- *
- * @param {PackageJson} pkg - package.json 객체
- * @returns {(string | RegExp)[]} 의존성 이름과 경로 패턴 배열
- *
- * @example
- * // package.json: { "dependencies": { "react": "^17.0.0" } }
- * // 결과: ['react', /^react\/.*\/]
- */
-const getExternalDependencies = (pkg: PackageJson): (string | RegExp)[] => {
-    const dependencies = [...Object.keys(pkg.peerDependencies || {}), ...Object.keys(pkg.dependencies || {})]
-    return dependencies.flatMap((dep) => [dep, new RegExp(`^${dep}/.*`)])
-}
-
-/**
  * 최종 external 설정을 생성
  * @param {CustomBuildOptions | undefined} rollupOptions - Rollup 빌드 옵션
- * @param {PackageJson} pkg - package.json 객체
+ * @param {ExtendedPackageJson} pkg - package.json 객체
  */
-const getExternalConfig = (rollupOptions: CustomBuildOptions | undefined, pkg: PackageJson) => {
+const getExternalConfig = (rollupOptions: CustomBuildOptions | undefined, pkg: ExtendedPackageJson) => {
+    /**
+     * package.json의 의존성을 기반으로 external 설정 배열 생성
+     *
+     * @returns {(string | RegExp)[]} 의존성 이름과 경로 패턴 배열
+     *
+     * @example
+     * // package.json: { "dependencies": { "react": "^17.0.0" } }
+     * // 결과: ['react', /^react\/.*\/]
+     */
+    const getExternalDependencies = (): (string | RegExp)[] => {
+        const dependencies = [...Object.keys(pkg.peerDependencies || {}), ...Object.keys(pkg.dependencies || {})]
+        return dependencies.flatMap((dep) => [dep, new RegExp(`^${dep}/.*`)])
+    }
+
     if (!rollupOptions?.external) {
-        return getExternalDependencies(pkg)
+        return getExternalDependencies()
     }
     if (typeof rollupOptions.external === 'function') {
         return rollupOptions.external
     }
     const explicitExternals = Array.isArray(rollupOptions.external) ? rollupOptions.external : [rollupOptions.external]
-    return [...explicitExternals, ...getExternalDependencies(pkg)]
+    return [...explicitExternals, ...getExternalDependencies()]
 }
 
 /**
  * Vite 라이브러리 빌드 설정을 생성하는 메인 함수
  * @param {ConfigOptions} options - 설정 옵션
- * @param {PackageJson} options.pkg - package.json 객체
+ * @param {ExtendedPackageJson} options.pkg - package.json 객체
  * @param {Object} options.buildOptions - 빌드 옵션
  * @param {LibraryOptions['entry']} options.buildOptions.entry - 진입점 설정
  * @param {BuildOptions['target']} options.buildOptions.target - 빌드 타겟
@@ -135,7 +139,6 @@ const defineConfig = ({pkg, buildOptions: {entry, target}, rollupOptions, resolv
             outDir,
             lib: {
                 entry,
-                formats: ['es'],
             },
             rollupOptions: {
                 ...rollupOptions,

@@ -14,7 +14,7 @@
         "fetch:typo": "node ./scripts/fetchTypo.js",
         "fetch:icon": "node ./scripts/fetchIcon.js",
         "clean": "rm -rf dist",
-        "build": "vite build --config vite.config.mts"
+        "build": "vite build --config vite.config.ts"
     },
     "exports": {
         ".": {

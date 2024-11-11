@@ -5,7 +5,11 @@ export default {
     addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
     framework: {
         name: '@storybook/react-vite',
-        options: {},
+        options: {
+            builder: {
+                viteConfigPath: './vite.config.ts',
+            },
+        },
     },
     core: {
         disableTelemetry: true,

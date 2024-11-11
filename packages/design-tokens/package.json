@@ -15,8 +15,8 @@
         }
     },
     "scripts": {
-        "build": "vite build --config vite.config.mts",
-        "clean": "rm -rf dist"
+        "clean": "rm -rf dist",
+        "build": "vite build --config vite.config.ts"
     },
     "keywords": [],
     "license": "ISC",
