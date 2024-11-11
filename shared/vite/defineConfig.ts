@@ -139,7 +139,6 @@ const defineConfig = ({pkg, buildOptions: {entry, target}, rollupOptions, resolv
             outDir,
             lib: {
                 entry,
-                formats: ['es'],
             },
             rollupOptions: {
                 ...rollupOptions,
