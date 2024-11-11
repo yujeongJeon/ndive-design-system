@@ -1,5 +1,13 @@
 # @ndive/design-components
 
+## 0.0.7
+
+### Patch Changes
+
+- ec1245c: [shared/vite] defineConfig 리팩터링
+- Updated dependencies [ec1245c]
+  - @ndive/design-tokens@0.0.6
+
 ## 0.0.6
 
 ### Patch Changes

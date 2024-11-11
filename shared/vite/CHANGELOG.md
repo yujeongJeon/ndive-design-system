@@ -1,5 +1,11 @@
 # @ndive/vite
 
+## 1.0.4
+
+### Patch Changes
+
+- ec1245c: [shared/vite] defineConfig 리팩터링
+
 ## 1.0.3
 
 ### Patch Changes
