@@ -6,6 +6,8 @@ on:
         types:
             - opened
             - synchronize
+    push:
+        branches: ['main']
 
 jobs:
     lint:
