@@ -1,6 +1,9 @@
 # ndive-design-system
 
 [![CI](https://github.com/yujeongJeon/ndive-design-system/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/yujeongJeon/ndive-design-system/actions/workflows/ci.yaml)
+![NPM Version](https://img.shields.io/npm/v/%40ndive%2Fdesign-tokens)
+![NPM Version](https://img.shields.io/npm/v/%40ndive%2Fdesign-components)
+![NPM Version](https://img.shields.io/npm/v/%40ndive%2Fdesign-tracker)
 
 - This project is a design system example created for practical exercises in Chapter 8 of the Npm Deep Dive book. The system is based on React and includes various UI components and style guides, designed to maintain consistency across multiple projects. Additionally, it features an API client for extracting design tokens from Figma and a tracker to analyze the usage of the design system.
 - 이 프로젝트는 npm deep dive 도서의 8장에서 실습용으로 작성된 디자인 시스템 예제입니다. 이 시스템은 React를 기반으로 하며, 다양한 UI 컴포넌트와 스타일 가이드를 포함하여 프로젝트 간의 일관성을 유지하기 위해 설계되었습니다. 또한 Figma에서 디자인 토큰을 추출하는 API 클라이언트와 디자인 시스템의 사용량을 분석하는 Tracker도 포함되어 있습니다.
