@@ -1,5 +1,14 @@
 # @ndive/design-components
 
+## 0.0.8
+
+### Patch Changes
+
+- 96ffb7a: vite.config.ts 정리
+- 047c779: /src/index.ts export 수정
+- Updated dependencies [96ffb7a]
+  - @ndive/design-tokens@0.0.7
+
 ## 0.0.7
 
 ### Patch Changes
