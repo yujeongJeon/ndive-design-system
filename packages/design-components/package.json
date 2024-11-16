@@ -1,7 +1,8 @@
 {
+    "$schema": "https://json.schemastore.org/package",
     "name": "@ndive/design-components",
     "version": "0.0.7",
-    "description": "",
+    "description": "This package is a react component package that implements a design system based on ndive-design-system figma.",
     "main": "./dist/index.mjs",
     "types": "./dist/index.d.ts",
     "files": [
@@ -19,11 +20,13 @@
     "exports": {
         ".": {
             "import": "./dist/index.mjs",
-            "types": "./dist/index.d.ts"
+            "types": "./dist/index.d.ts",
+            "default": "./dist/index.mjs"
         },
         "./icons": {
             "import": "./dist/icons.mjs",
-            "types": "./dist/icons.d.ts"
+            "types": "./dist/icons.d.ts",
+            "default": "./dist/icons.mjs"
         },
         "./styles": {
             "default": "./dist/style.css"
@@ -41,9 +44,22 @@
             "default": "./dist/styles/typo.scss"
         }
     },
-    "keywords": [],
-    "author": "yujeong-jeon",
-    "license": "ISC",
+    "keywords": ["ndive", "design-system", "components"],
+    "author": {
+        "name": "yujeong-jeon",
+        "email": "workingnewjeong@gmail.com"
+    },
+    "contributors": [
+        {
+            "email": "workingnewjeong@gmail.com",
+            "name": "yujeongJeon"
+        },
+        {
+            "email": "root@yceffort.kr",
+            "name": "yceffort"
+        }
+    ],
+    "license": "MIT",
     "devDependencies": {
         "@ndive/tsconfig": "workspace:*",
         "@ndive/vite": "workspace:^",
