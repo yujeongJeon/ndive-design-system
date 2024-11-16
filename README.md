@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/yujeongJeon/ndive-design-system/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/yujeongJeon/ndive-design-system/actions/workflows/ci.yaml)
 [![Deploy Storybook](https://github.com/yujeongJeon/ndive-design-system/actions/workflows/docs.yaml/badge.svg?branch=main)](https://github.com/yujeongJeon/ndive-design-system/actions/workflows/docs.yaml)
+[![Publish](https://github.com/yujeongJeon/ndive-design-system/actions/workflows/publish.yaml/badge.svg?branch=main)](https://github.com/yujeongJeon/ndive-design-system/actions/workflows/publish.yaml)
 ![NPM Version](https://img.shields.io/npm/v/%40ndive%2Fdesign-tokens)
 ![NPM Version](https://img.shields.io/npm/v/%40ndive%2Fdesign-components)
 ![NPM Version](https://img.shields.io/npm/v/%40ndive%2Fdesign-tracker)
