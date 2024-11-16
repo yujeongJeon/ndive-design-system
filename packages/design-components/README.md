@@ -1,6 +1,8 @@
 # @ndive/design-components
 
+![NPM Version](https://img.shields.io/npm/v/%40ndive%2Fdesign-components)
 <img alt="" src="https://img.shields.io/bundlephobia/min/%40ndive%2Fdesign-components" />
+![NPM Downloads](https://img.shields.io/npm/dw/%40ndive%2Fdesign-components)
 
 - This package is a react component package that implements a design system based on [`ndive-design-system`](https://www.figma.com/file/60fHi2F04BbdqDQWigiFjG?node-id=6-54&node-type=canvas&t=OVlVEItCjOZOhviC-0&type=design&mode=design) figma.
 - [`ndive-design-system`](https://www.figma.com/file/60fHi2F04BbdqDQWigiFjG?node-id=6-54&node-type=canvas&t=OVlVEItCjOZOhviC-0&type=design&mode=design) 피그마 기반의 디자인 시스템 전용 리액트 컴포넌트 패키지
@@ -10,7 +12,7 @@
 - This package is created for learning purposes. Caution is advised when using in production. Use at your own risk.
 - 이 패키지는 학습용으로 제작되었습니다. 프로덕션 환경에서 사용 시 주의가 필요합니다. 사용 시 본인의 책임 하에 사용해 주시기 바랍니다.
 
-## how to use
+## How to use
 
 To install this package first, use the following commands in your react project.
 

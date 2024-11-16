@@ -1,7 +1,8 @@
 {
+    "$schema": "https://json.schemastore.org/package",
     "name": "@ndive/design-tokens",
     "version": "0.0.6",
-    "description": "",
+    "description": "Package containing Node.js module to extract foundation from ndive-design-system figma",
     "main": "./dist/index.mjs",
     "types": "./dist/index.d.mts",
     "files": [
@@ -11,15 +12,34 @@
     "exports": {
         ".": {
             "import": "./dist/index.mjs",
-            "types": "./dist/index.d.mts"
+            "types": "./dist/index.d.mts",
+            "default": "./dist/index.mjs"
         }
     },
     "scripts": {
         "clean": "rm -rf dist",
         "build": "vite build --config vite.config.ts"
     },
-    "keywords": [],
-    "license": "ISC",
+    "keywords": [
+        "ndive",
+        "design-system",
+        "tokens"
+    ],
+    "author": {
+        "name": "yujeong-jeon",
+        "email": "workingnewjeong@gmail.com"
+    },
+    "contributors": [
+        {
+            "email": "workingnewjeong@gmail.com",
+            "name": "yujeongJeon"
+        },
+        {
+            "email": "root@yceffort.kr",
+            "name": "yceffort"
+        }
+    ],
+    "license": "MIT",
     "devDependencies": {
         "@ndive/tsconfig": "workspace:*",
         "@ndive/vite": "workspace:^",

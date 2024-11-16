@@ -1,5 +1,8 @@
 # @ndive/design-tracker
 
+![NPM Version](https://img.shields.io/npm/v/%40ndive%2Fdesign-tracker)
+![NPM Downloads](https://img.shields.io/npm/dw/%40ndive%2Fdesign-tracker)
+
 - This CLI tool provides a static analysis of `@ndive/design-components` usage in your codebase. Leveraging [ts-morph](https://ts-morph.com/), it systematically examines how specific components or features are utilized within TypeScript code and generates a comprehensive report.
 - `@ndive/design-components`의 사용량을 분석하는 CLI 도구. [ts-morph](https://ts-morph.com/)를 활용해 타입스크립트 코드에서 컴포넌트 사용 패턴을 정적 분석하고, 명확하고 체계적인 리포트를 생성합니다.
 

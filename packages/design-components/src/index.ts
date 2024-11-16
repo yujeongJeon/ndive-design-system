@@ -7,4 +7,4 @@ export {default as ModalNotice} from '$/components/modal/ModalNotice'
 export {default as ModalConfirm} from '$/components/modal/ModalConfirm'
 
 // Constants
-export * from '$/constants/icon'
+export {SIZE} from '$/constants/icon'

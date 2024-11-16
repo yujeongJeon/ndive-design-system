@@ -1,7 +1,8 @@
 {
+    "$schema": "https://json.schemastore.org/package",
     "name": "@ndive/design-tracker",
     "version": "0.0.7",
-    "description": "",
+    "description": "This CLI tool provides a static analysis of @ndive/design-components usage in your codebase.",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "bin": "./dist/index.js",
@@ -12,7 +13,8 @@
     "exports": {
         ".": {
             "import": "./dist/index.js",
-            "types": "./dist/index.d.ts"
+            "types": "./dist/index.d.ts",
+            "default": "./dist/index.js"
         },
         "./package.json": "./package.json"
     },
@@ -20,9 +22,26 @@
         "build": "tsup bin/index.ts",
         "clean": "rm -rf dist"
     },
-    "keywords": [],
-    "author": "yujeong-jeon",
-    "license": "ISC",
+    "keywords": [
+        "ndive",
+        "design-system",
+        "tracker"
+    ],
+    "author": {
+        "name": "yujeong-jeon",
+        "email": "workingnewjeong@gmail.com"
+    },
+    "contributors": [
+        {
+            "email": "workingnewjeong@gmail.com",
+            "name": "yujeongJeon"
+        },
+        {
+            "email": "root@yceffort.kr",
+            "name": "yceffort"
+        }
+    ],
+    "license": "MIT",
     "devDependencies": {
         "@ndive/tsconfig": "workspace:*",
         "@types/node": "^22.5.5",
