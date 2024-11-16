@@ -19,7 +19,7 @@
     "keywords": [],
     "devDependencies": {
         "@ndive/tsconfig": "workspace:*",
-        "tsup": "^8.3.0",
+        "tsup": "^8.3.5",
         "vite": "^5.4.6"
     },
     "dependencies": {
