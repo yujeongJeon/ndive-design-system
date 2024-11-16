@@ -11,15 +11,21 @@
 - `@ndive/design-tokens` : Figma로부터 디자인 토큰을 추출하고 업데이트합니다.
 - `@ndive/design-tracker` : `@ndive/design-components`의 사용량을 정적 분석합니다. 이 패키지는 [react-scanner](https://www.npmjs.com/package/react-scanner)를 기반으로 구현되었습니다.
 
-## apps
-
-ndive-design-system의 애플리케이션을 관리합니다.
-
-- `@ndive/design-storybook` : `@ndive/design-components`의 UI 컴포넌트를 보여주는 스토리북입니다.
-
 ## shared
 
 다음 패키지들은 외부에 배포되지 않으며, ndive-design-system 프로젝트 내부에서만 사용됩니다.
 
 - `@ndive/tsconfig` : 타입스크립트 구성 파일
 - `@ndive/vite` : Vite 번들러 설정 파일
+
+## apps
+
+ndive-design-system의 애플리케이션을 관리합니다.
+
+- `@ndive/design-storybook` : `@ndive/design-components`의 UI 컴포넌트를 보여주는 스토리북입니다.
+
+## examples
+
+ndive-design-system의 패키지를 활용한 예제 프로젝트입니다.
+
+- `shopping-web`: 장바구니 애플리케이션 예제 프로젝트
