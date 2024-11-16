@@ -1,5 +1,11 @@
 # @ndive/design-storybook
 
+## 1.0.5
+
+### Patch Changes
+
+- 96ffb7a: vite.config.ts 정리
+
 ## 1.0.4
 
 ### Patch Changes

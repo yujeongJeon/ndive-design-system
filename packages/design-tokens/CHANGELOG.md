@@ -1,5 +1,11 @@
 # @ndive/design-tokens
 
+## 0.0.7
+
+### Patch Changes
+
+- 96ffb7a: vite.config.ts 정리
+
 ## 0.0.6
 
 ### Patch Changes

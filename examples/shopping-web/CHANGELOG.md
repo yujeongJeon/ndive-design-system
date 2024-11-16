@@ -1,5 +1,14 @@
 # shopping-web
 
+## 1.0.7
+
+### Patch Changes
+
+- 96ffb7a: vite.config.ts 정리
+- Updated dependencies [96ffb7a]
+- Updated dependencies [047c779]
+  - @ndive/design-components@0.0.8
+
 ## 1.0.6
 
 ### Patch Changes
