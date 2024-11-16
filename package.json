@@ -21,7 +21,10 @@
         "build:storybook": "turbo build:storybook",
         "dev": "turbo dev"
     },
-    "keywords": ["ndive", "monorepo"],
+    "keywords": [
+        "ndive",
+        "monorepo"
+    ],
     "author": {
         "name": "yujeong-jeon",
         "email": "workingnewjeong@gmail.com"

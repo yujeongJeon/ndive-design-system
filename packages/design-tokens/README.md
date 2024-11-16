@@ -4,7 +4,6 @@
 <img alt="" src="https://img.shields.io/bundlephobia/minzip/%40ndive%2Fdesign-tokens" />
 ![NPM Downloads](https://img.shields.io/npm/dw/%40ndive%2Fdesign-tokens)
 
-
 - Package containing Node.js module to extract foundation from [`ndive-design-system`](https://figma.com/design/60fHi2F04BbdqDQWigiFjG/ndive-design-system) figma
 - [`ndive-design-system`](https://figma.com/design/60fHi2F04BbdqDQWigiFjG/ndive-design-system) 피그마에서 파운데이션을 추출하는 Node.js 모듈을 포함하는 패키지
 

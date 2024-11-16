@@ -22,7 +22,11 @@
         "build": "tsup bin/index.ts",
         "clean": "rm -rf dist"
     },
-    "keywords": ["ndive", "design-system", "tracker"],
+    "keywords": [
+        "ndive",
+        "design-system",
+        "tracker"
+    ],
     "author": {
         "name": "yujeong-jeon",
         "email": "workingnewjeong@gmail.com"

@@ -20,7 +20,11 @@
         "clean": "rm -rf dist",
         "build": "vite build --config vite.config.ts"
     },
-    "keywords": ["ndive", "design-system", "tokens"],
+    "keywords": [
+        "ndive",
+        "design-system",
+        "tokens"
+    ],
     "author": {
         "name": "yujeong-jeon",
         "email": "workingnewjeong@gmail.com"
