@@ -14,13 +14,13 @@
     "dependencies": {
         "@ndive/design-components": "workspace:*",
         "@ndive/tsconfig": "workspace:*",
-        "@vitejs/plugin-react": "^4.3.2",
         "react": "^18",
-        "react-dom": "^18",
-        "vite": "^5.4.6"
+        "react-dom": "^18"
     },
     "devDependencies": {
         "@types/react": "^18.3.9",
-        "@types/react-dom": "^18.3.0"
+        "@types/react-dom": "^18.3.0",
+        "@vitejs/plugin-react": "4.3.2",
+        "vite": "^5.4.11"
     }
 }
