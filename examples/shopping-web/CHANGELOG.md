@@ -1,5 +1,13 @@
 # shopping-web
 
+## 1.0.8
+
+### Patch Changes
+
+- 1274f5b: vite@6 migration
+- Updated dependencies [1274f5b]
+  - @ndive/design-components@0.0.9
+
 ## 1.0.7
 
 ### Patch Changes

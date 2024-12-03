@@ -1,5 +1,13 @@
 # @ndive/design-components
 
+## 0.0.9
+
+### Patch Changes
+
+- 1274f5b: vite@6 migration
+- Updated dependencies [1274f5b]
+  - @ndive/design-tokens@0.0.8
+
 ## 0.0.8
 
 ### Patch Changes
