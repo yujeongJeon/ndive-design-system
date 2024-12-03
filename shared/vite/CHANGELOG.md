@@ -1,5 +1,11 @@
 # @ndive/vite
 
+## 1.0.6
+
+### Patch Changes
+
+- 1274f5b: vite@6 migration
+
 ## 1.0.5
 
 ### Patch Changes

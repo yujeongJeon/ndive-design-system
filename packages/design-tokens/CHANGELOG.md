@@ -1,5 +1,11 @@
 # @ndive/design-tokens
 
+## 0.0.8
+
+### Patch Changes
+
+- 1274f5b: vite@6 migration
+
 ## 0.0.7
 
 ### Patch Changes

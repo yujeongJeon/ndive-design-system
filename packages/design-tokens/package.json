@@ -1,7 +1,7 @@
 {
     "$schema": "https://json.schemastore.org/package",
     "name": "@ndive/design-tokens",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "description": "Package containing Node.js module to extract foundation from ndive-design-system figma",
     "main": "./dist/index.mjs",
     "types": "./dist/index.d.mts",
