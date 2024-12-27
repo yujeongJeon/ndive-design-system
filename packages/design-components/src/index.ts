@@ -8,5 +8,3 @@ export {default as ModalConfirm} from '$/components/modal/ModalConfirm'
 
 // Constants
 export {SIZE} from '$/constants/icon'
-
-export {default as setIcon} from './test'
