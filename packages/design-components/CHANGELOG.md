@@ -1,5 +1,12 @@
 # @ndive/design-components
 
+## 0.0.10
+
+### Patch Changes
+
+- 2bd1b1a: [TEST] peerDeps test
+- 546b2b4: [TEST] components에서 tokens의 인터페이스를 외부로 export해보기
+
 ## 0.0.9
 
 ### Patch Changes
