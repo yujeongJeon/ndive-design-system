@@ -1,7 +1,7 @@
 {
     "$schema": "https://json.schemastore.org/package",
     "name": "@ndive/design-components",
-    "version": "0.0.9",
+    "version": "0.0.10",
     "description": "This package is a react component package that implements a design system based on ndive-design-system figma.",
     "main": "./dist/index.mjs",
     "types": "./dist/index.d.ts",

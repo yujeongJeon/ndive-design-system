@@ -1,5 +1,11 @@
 # @ndive/design-components
 
+## 0.0.10
+
+### Patch Changes
+
+- 2bd1b1a: [TEST] peerDeps test
+
 ## 0.0.9
 
 ### Patch Changes
