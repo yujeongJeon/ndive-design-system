@@ -1,5 +1,11 @@
 # @ndive/design-tokens
 
+## 0.0.9
+
+### Patch Changes
+
+- 023fbb1: [design-tokens] setSize를 setIcon에서 분리
+
 ## 0.0.8
 
 ### Patch Changes
