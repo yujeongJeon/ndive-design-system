@@ -1,5 +1,11 @@
 # @ndive/design-components
 
+## 0.0.11
+
+### Patch Changes
+
+- 023fbb1: [TEST] @changeset/cli 테스트
+
 ## 0.0.10
 
 ### Patch Changes
