@@ -1,5 +1,5 @@
 ---
-"@ndive/design-tokens": patch
+"@ndive/design-components": patch
 ---
 
-[design-tokens] setSize를 setIcon에서 분리
+[TEST] @changeset/cli 테스트
