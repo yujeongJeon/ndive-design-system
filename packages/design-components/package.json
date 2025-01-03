@@ -87,11 +87,11 @@
         "@types/react": "^18",
         "@types/react-dom": "^18",
         "react": "^18",
-        "react-dom": "^18",
-        "@ndive/design-tokens": "workspace:^"
+        "react-dom": "^18"
     },
     "dependencies": {
         "@fontsource/pretendard": "^5.1.0",
+        "@ndive/design-tokens": "workspace:^",
         "classnames": "^2.5.1"
     }
 }
