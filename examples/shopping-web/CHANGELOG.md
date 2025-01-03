@@ -1,5 +1,12 @@
 # shopping-web
 
+## 1.0.10
+
+### Patch Changes
+
+- Updated dependencies [023fbb1]
+  - @ndive/design-components@0.0.11
+
 ## 1.0.9
 
 ### Patch Changes
