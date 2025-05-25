@@ -9,5 +9,6 @@ export default defineConfig({
             index: './src/index.ts',
         },
         target: 'node20',
+        outDir: 'dist',
     },
 })
