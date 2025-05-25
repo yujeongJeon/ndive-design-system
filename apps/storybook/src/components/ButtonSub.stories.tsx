@@ -1,5 +1,5 @@
-import {ButtonSub as ButtonSubComponent} from '@ndive/design-components'
-import {IconAdd} from '@ndive/design-components/icons'
+import ButtonSubComponent from '@ndive/design-components/ButtonSub'
+import IconAdd from '@ndive/design-components/icons/IconAdd'
 
 import type {Meta, StoryObj} from '@storybook/react'
 

@@ -1,4 +1,4 @@
-import colors from '@ndive/design-components/color'
+import colors from '@ndive/design-components/json/color'
 import {Meta} from '@storybook/react'
 
 import {determineFontColorByLuminance, hex2rgb} from '../utils'

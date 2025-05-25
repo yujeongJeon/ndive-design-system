@@ -1,4 +1,4 @@
-import {ModalConfirm as ModalConfirmComponent} from '@ndive/design-components'
+import ModalConfirmComponent from '@ndive/design-components/ModalConfirm'
 
 import type {Meta, StoryObj} from '@storybook/react'
 
