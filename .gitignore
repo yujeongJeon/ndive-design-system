@@ -12,3 +12,5 @@ logs
 npm-debug.log*
 
 .env
+
+stats.html

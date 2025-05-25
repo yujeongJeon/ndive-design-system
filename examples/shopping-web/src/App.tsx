@@ -1,7 +1,10 @@
 import {useState} from 'react'
 
-import {ButtonPrimary, ButtonSub, SIZE} from '@ndive/design-components'
-import {IconAdd, IconTrash} from '@ndive/design-components/icons'
+import ButtonPrimary from '@ndive/design-components/ButtonPrimary'
+import ButtonSub from '@ndive/design-components/ButtonSub'
+import IconAdd from '@ndive/design-components/icons/IconAdd'
+import IconTrash from '@ndive/design-components/icons/IconTrash'
+import {SIZE} from '@ndive/design-components/size'
 
 import Container from './Container'
 
