@@ -18,6 +18,10 @@
             "dependsOn": ["fetch:color", "fetch:typo", "fetch:icon"],
             "cache": false,
             "env": ["FIGMA_TOKEN"]
+        },
+        "export:icon": {
+            "dependsOn": ["fetch:icon"],
+            "cache": false
         }
     }
 }

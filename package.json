@@ -19,7 +19,8 @@
         "release": "changeset publish",
         "start:storybook": "turbo start:storybook",
         "build:storybook": "turbo build:storybook",
-        "dev": "turbo dev"
+        "dev": "turbo dev",
+        "export:icon": "turbo export:icon && pnpm fix:all"
     },
     "keywords": [
         "ndive",
