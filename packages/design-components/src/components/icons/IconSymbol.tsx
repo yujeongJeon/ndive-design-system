@@ -28,6 +28,7 @@ function IconSymbol(props: SVGProps<SVGSVGElement>) {
                     id="icons__c"
                     width={234}
                     height={231}
+                    preserveAspectRatio="none"
                 />
             </defs>
         </svg>
