@@ -4,7 +4,12 @@
         "baseUrl": ".",
         "paths": {
             "$/*": ["src/*"]
-        }
+        },
+        "declarationMap": false,
+        /**
+         * @see https://github.com/qmhc/vite-plugin-dts/issues/166
+         */
+        "types": ["vite/client"]
     },
     "include": ["./src", "./scripts"],
     "exclude": ["node_modules", "dist"]
