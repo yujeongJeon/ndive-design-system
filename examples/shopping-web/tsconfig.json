@@ -1,7 +1,8 @@
 {
     "extends": "@ndive/tsconfig/react.json",
     "compilerOptions": {
-        "baseUrl": "."
+        "baseUrl": ".",
+        "moduleResolution": "bundler"
     },
     "include": ["./src"],
     "exclude": ["node_modules", "dist"]

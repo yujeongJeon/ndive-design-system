@@ -1,7 +1,5 @@
-import path from 'node:path'
-
 import {BuildOptions, defineConfig as viteDefineConfig, LibraryOptions, PluginOption, UserConfig} from 'vite'
-import dts from 'vite-plugin-dts'
+import dts, {type PluginOptions} from 'vite-plugin-dts'
 
 import type {PackageJson} from 'type-fest'
 
@@ -39,44 +37,12 @@ interface ConfigOptions {
     buildOptions: {
         entry: LibraryOptions['entry']
         target: BuildOptions['target']
+        outDir: BuildOptions['outDir']
     }
     rollupOptions?: Omit<BuildOptions['rollupOptions'], 'output'>
     resolve?: UserConfig['resolve']
     plugins?: PluginOption[]
-}
-
-/**
- * package.json에서 빌드 출력 경로를 추출
- * @param {ExtendedPackageJson} pkg - package.json 객체
- * @returns {string} 빌드 출력 경로
- * @throws {Error} exports 또는 main 필드가 없거나 구조가 잘못된 경우
- */
-const getBuildOutput = (pkg: ExtendedPackageJson): string => {
-    const outputPath =
-        pkg.exports && typeof pkg.exports === 'object' && '.' in pkg.exports ? pkg.exports['.'] : pkg.main
-
-    if (!outputPath) {
-        throw new Error('Missing "exports[\'.\']" or "main" field in package.json')
-    }
-
-    if (typeof outputPath === 'string') {
-        return outputPath
-    }
-
-    if (
-        outputPath &&
-        typeof outputPath === 'object' &&
-        !Array.isArray(outputPath) &&
-        ('import' in outputPath || 'default' in outputPath)
-    ) {
-        const output =
-            (outputPath as {import?: string; default?: string}).import ||
-            (outputPath as {import?: string; default?: string}).default
-        if (output) {
-            return output
-        }
-    }
-    throw new Error('Invalid "exports[\'.\']" field structure')
+    dtsOptions?: PluginOptions
 }
 
 /**
@@ -109,6 +75,12 @@ const getExternalConfig = (rollupOptions: CustomBuildOptions | undefined, pkg: E
     return [...explicitExternals, ...getExternalDependencies()]
 }
 
+// .ts .jsx .tsx .scss
+export const replaceESMExtension = (target: string) => {
+    const regex = /\.([tj]s[x]?|scss)$/
+    return target.replace(regex, '.mjs')
+}
+
 /**
  * Vite 라이브러리 빌드 설정을 생성하는 메인 함수
  * @param {ConfigOptions} options - 설정 옵션
@@ -120,18 +92,30 @@ const getExternalConfig = (rollupOptions: CustomBuildOptions | undefined, pkg: E
  * @param {UserConfig['resolve']} [options.resolve] - 모듈 해석 설정
  * @param {PluginOption[]} [options.plugins] - 추가 플러그인
  */
-const defineConfig = ({pkg, buildOptions: {entry, target}, rollupOptions, resolve, plugins}: ConfigOptions) => {
-    const buildOutput = getBuildOutput(pkg)
-    const outDir = path.dirname(buildOutput)
+const defineConfig = ({
+    pkg,
+    buildOptions: {entry, target, outDir},
+    rollupOptions,
+    resolve,
+    plugins,
+    dtsOptions,
+}: ConfigOptions) => {
     const external = getExternalConfig(rollupOptions, pkg)
+
+    /**
+     * dtsOptions을 별도로 주지 않으면 outDir에 엔트리의 모든 d.ts 파일을 생성
+     */
+    const dtsDefaultOptions = {
+        outDir,
+        rollupTypes: true,
+    }
 
     const preserveModulesRoot = typeof entry === 'object' && !Array.isArray(entry) ? entry.index : entry.toString()
 
     return viteDefineConfig({
         plugins: [
             dts({
-                outDir,
-                rollupTypes: true,
+                ...(dtsOptions || dtsDefaultOptions),
             }),
             ...(plugins || []),
         ],
@@ -147,7 +131,16 @@ const defineConfig = ({pkg, buildOptions: {entry, target}, rollupOptions, resolv
                     {
                         format: 'es',
                         dir: outDir,
-                        entryFileNames: `[name]${path.extname(buildOutput)}`,
+                        entryFileNames: (chunkInfo) => {
+                            const subPath = chunkInfo.facadeModuleId?.split('src')[1]
+
+                            if (subPath) {
+                                const relativePath = subPath.startsWith('/') ? subPath.slice(1) : subPath
+                                return replaceESMExtension(relativePath)
+                            }
+
+                            return `${chunkInfo.name}.mjs`
+                        },
                         preserveModulesRoot,
                         preserveModules: true,
                         interop: 'esModule',

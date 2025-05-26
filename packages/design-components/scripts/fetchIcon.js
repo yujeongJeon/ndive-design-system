@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
-import {setIcon} from '@ndive/design-tokens'
+import {setIcon, setSize} from '@ndive/design-tokens'
 
 import colorJson from '../src/json/color.json' assert {type: 'json'}
 import {normalize} from './utils/normalize.js'
@@ -11,7 +11,9 @@ import {transformReactComponent} from './utils/svgr.js'
 import './utils/loadEnv.js'
 
 async function fetchIcon() {
-    const {size, icon} = await setIcon({accessToken: process.env.FIGMA_TOKEN})
+    const iconMap = await setIcon({accessToken: process.env.FIGMA_TOKEN})
+
+    const sizeMap = await setSize({accessToken: process.env.FIGMA_TOKEN})
 
     const jsonDir = normalize(import.meta.dirname, '../src/json')
 
@@ -20,11 +22,11 @@ async function fetchIcon() {
             recursive: true,
         })
 
-    fs.writeFileSync(path.join(jsonDir, 'size.json'), JSON.stringify(size), {
+    fs.writeFileSync(path.join(jsonDir, 'size.json'), JSON.stringify(sizeMap), {
         encoding: 'utf-8',
     })
 
-    fs.writeFileSync(path.join(jsonDir, 'icon.json'), JSON.stringify(icon), {
+    fs.writeFileSync(path.join(jsonDir, 'icon.json'), JSON.stringify(iconMap), {
         encoding: 'utf-8',
     })
 
@@ -36,7 +38,7 @@ async function fetchIcon() {
         })
 
     const settledResults = await Promise.allSettled(
-        Object.entries(icon).map(
+        Object.entries(iconMap).map(
             async ([iconName, svgCode]) =>
                 await transformReactComponent({
                     colorValueList: Object.values(colorJson)

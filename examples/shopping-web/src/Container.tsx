@@ -1,4 +1,5 @@
-import {ButtonPrimary, ModalNotice} from '@ndive/design-components'
+import ButtonPrimary from '@ndive/design-components/ButtonPrimary'
+import ModalNotice from '@ndive/design-components/ModalNotice'
 
 export default function Container({isShow, onClose}: {isShow: boolean; onClose: () => void}) {
     return (

@@ -1,4 +1,4 @@
-import {ModalNotice as ModalNoticeComponent} from '@ndive/design-components'
+import ModalNoticeComponent from '@ndive/design-components/ModalNotice'
 
 import type {Meta, StoryObj} from '@storybook/react'
 

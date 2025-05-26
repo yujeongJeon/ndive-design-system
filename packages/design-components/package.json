@@ -3,8 +3,6 @@
     "name": "@ndive/design-components",
     "version": "0.0.11",
     "description": "This package is a react component package that implements a design system based on ndive-design-system figma.",
-    "main": "./dist/index.mjs",
-    "types": "./dist/index.d.ts",
     "files": [
         "dist"
     ],
@@ -15,33 +13,314 @@
         "fetch:typo": "node ./scripts/fetchTypo.js",
         "fetch:icon": "node ./scripts/fetchIcon.js",
         "clean": "rm -rf dist",
-        "build": "vite build --config vite.config.ts"
+        "build": "vite build --config vite.config.ts",
+        "export:icon": "node ./scripts/add-icons-to-exports.mjs"
     },
     "exports": {
-        ".": {
-            "import": "./dist/index.mjs",
-            "types": "./dist/index.d.ts",
-            "default": "./dist/index.mjs"
+        "./ButtonPrimary": {
+            "import": "./dist/components/button/ButtonPrimary.mjs",
+            "types": "./dist/components/button/ButtonPrimary.d.ts",
+            "default": "./dist/components/button/ButtonPrimary.mjs"
         },
-        "./icons": {
-            "import": "./dist/icons.mjs",
-            "types": "./dist/icons.d.ts",
-            "default": "./dist/icons.mjs"
+        "./ButtonSub": {
+            "import": "./dist/components/button/ButtonSub.mjs",
+            "types": "./dist/components/button/ButtonSub.d.ts",
+            "default": "./dist/components/button/ButtonSub.mjs"
+        },
+        "./ModalConfirm": {
+            "import": "./dist/components/modal/ModalConfirm.mjs",
+            "types": "./dist/components/modal/ModalConfirm.d.ts",
+            "default": "./dist/components/modal/ModalConfirm.mjs"
+        },
+        "./ModalNotice": {
+            "import": "./dist/components/modal/ModalNotice.mjs",
+            "types": "./dist/components/modal/ModalNotice.d.ts",
+            "default": "./dist/components/modal/ModalNotice.mjs"
+        },
+        "./size": {
+            "import": "./dist/constants/size.mjs",
+            "types": "./dist/constants/size.d.ts",
+            "default": "./dist/constants/size.mjs"
         },
         "./styles": {
             "default": "./dist/design-components.css"
         },
-        "./color": {
-            "default": "./dist/json/color.json"
-        },
-        "./icon": {
-            "default": "./dist/json/icon.json"
-        },
-        "./size": {
-            "default": "./dist/json/size.json"
-        },
         "./scss/typo.scss": {
             "default": "./dist/styles/typo.scss"
+        },
+        "./json/color": {
+            "default": "./dist/json/color.json"
+        },
+        "./json/icon": {
+            "default": "./dist/json/icon.json"
+        },
+        "./json/size": {
+            "default": "./dist/json/size.json"
+        },
+        "./icons/IconAdd": {
+            "import": "./dist/components/icons/IconAdd.mjs",
+            "types": "./dist/components/icons/IconAdd.d.ts",
+            "default": "./dist/components/icons/IconAdd.mjs"
+        },
+        "./icons/IconAlarm": {
+            "import": "./dist/components/icons/IconAlarm.mjs",
+            "types": "./dist/components/icons/IconAlarm.d.ts",
+            "default": "./dist/components/icons/IconAlarm.mjs"
+        },
+        "./icons/IconApple": {
+            "import": "./dist/components/icons/IconApple.mjs",
+            "types": "./dist/components/icons/IconApple.d.ts",
+            "default": "./dist/components/icons/IconApple.mjs"
+        },
+        "./icons/IconBack": {
+            "import": "./dist/components/icons/IconBack.mjs",
+            "types": "./dist/components/icons/IconBack.d.ts",
+            "default": "./dist/components/icons/IconBack.mjs"
+        },
+        "./icons/IconBackArrow": {
+            "import": "./dist/components/icons/IconBackArrow.mjs",
+            "types": "./dist/components/icons/IconBackArrow.d.ts",
+            "default": "./dist/components/icons/IconBackArrow.mjs"
+        },
+        "./icons/IconBookmark": {
+            "import": "./dist/components/icons/IconBookmark.mjs",
+            "types": "./dist/components/icons/IconBookmark.d.ts",
+            "default": "./dist/components/icons/IconBookmark.mjs"
+        },
+        "./icons/IconCalendar": {
+            "import": "./dist/components/icons/IconCalendar.mjs",
+            "types": "./dist/components/icons/IconCalendar.d.ts",
+            "default": "./dist/components/icons/IconCalendar.mjs"
+        },
+        "./icons/IconCamera": {
+            "import": "./dist/components/icons/IconCamera.mjs",
+            "types": "./dist/components/icons/IconCamera.d.ts",
+            "default": "./dist/components/icons/IconCamera.mjs"
+        },
+        "./icons/IconCancel": {
+            "import": "./dist/components/icons/IconCancel.mjs",
+            "types": "./dist/components/icons/IconCancel.d.ts",
+            "default": "./dist/components/icons/IconCancel.mjs"
+        },
+        "./icons/IconChat": {
+            "import": "./dist/components/icons/IconChat.mjs",
+            "types": "./dist/components/icons/IconChat.d.ts",
+            "default": "./dist/components/icons/IconChat.mjs"
+        },
+        "./icons/IconCheck": {
+            "import": "./dist/components/icons/IconCheck.mjs",
+            "types": "./dist/components/icons/IconCheck.d.ts",
+            "default": "./dist/components/icons/IconCheck.mjs"
+        },
+        "./icons/IconCheckBox": {
+            "import": "./dist/components/icons/IconCheckBox.mjs",
+            "types": "./dist/components/icons/IconCheckBox.d.ts",
+            "default": "./dist/components/icons/IconCheckBox.mjs"
+        },
+        "./icons/IconComment": {
+            "import": "./dist/components/icons/IconComment.mjs",
+            "types": "./dist/components/icons/IconComment.d.ts",
+            "default": "./dist/components/icons/IconComment.mjs"
+        },
+        "./icons/IconCommunity": {
+            "import": "./dist/components/icons/IconCommunity.mjs",
+            "types": "./dist/components/icons/IconCommunity.d.ts",
+            "default": "./dist/components/icons/IconCommunity.mjs"
+        },
+        "./icons/IconDocument": {
+            "import": "./dist/components/icons/IconDocument.mjs",
+            "types": "./dist/components/icons/IconDocument.d.ts",
+            "default": "./dist/components/icons/IconDocument.mjs"
+        },
+        "./icons/IconDown": {
+            "import": "./dist/components/icons/IconDown.mjs",
+            "types": "./dist/components/icons/IconDown.d.ts",
+            "default": "./dist/components/icons/IconDown.mjs"
+        },
+        "./icons/IconDownload": {
+            "import": "./dist/components/icons/IconDownload.mjs",
+            "types": "./dist/components/icons/IconDownload.d.ts",
+            "default": "./dist/components/icons/IconDownload.mjs"
+        },
+        "./icons/IconEyeOff": {
+            "import": "./dist/components/icons/IconEyeOff.mjs",
+            "types": "./dist/components/icons/IconEyeOff.d.ts",
+            "default": "./dist/components/icons/IconEyeOff.mjs"
+        },
+        "./icons/IconEyeOn": {
+            "import": "./dist/components/icons/IconEyeOn.mjs",
+            "types": "./dist/components/icons/IconEyeOn.d.ts",
+            "default": "./dist/components/icons/IconEyeOn.mjs"
+        },
+        "./icons/IconFilter": {
+            "import": "./dist/components/icons/IconFilter.mjs",
+            "types": "./dist/components/icons/IconFilter.d.ts",
+            "default": "./dist/components/icons/IconFilter.mjs"
+        },
+        "./icons/IconHeart": {
+            "import": "./dist/components/icons/IconHeart.mjs",
+            "types": "./dist/components/icons/IconHeart.d.ts",
+            "default": "./dist/components/icons/IconHeart.mjs"
+        },
+        "./icons/IconHome": {
+            "import": "./dist/components/icons/IconHome.mjs",
+            "types": "./dist/components/icons/IconHome.d.ts",
+            "default": "./dist/components/icons/IconHome.mjs"
+        },
+        "./icons/IconKakao": {
+            "import": "./dist/components/icons/IconKakao.mjs",
+            "types": "./dist/components/icons/IconKakao.d.ts",
+            "default": "./dist/components/icons/IconKakao.mjs"
+        },
+        "./icons/IconLocation": {
+            "import": "./dist/components/icons/IconLocation.mjs",
+            "types": "./dist/components/icons/IconLocation.d.ts",
+            "default": "./dist/components/icons/IconLocation.mjs"
+        },
+        "./icons/IconLockFill": {
+            "import": "./dist/components/icons/IconLockFill.mjs",
+            "types": "./dist/components/icons/IconLockFill.d.ts",
+            "default": "./dist/components/icons/IconLockFill.mjs"
+        },
+        "./icons/IconMap": {
+            "import": "./dist/components/icons/IconMap.mjs",
+            "types": "./dist/components/icons/IconMap.d.ts",
+            "default": "./dist/components/icons/IconMap.mjs"
+        },
+        "./icons/IconMenu": {
+            "import": "./dist/components/icons/IconMenu.mjs",
+            "types": "./dist/components/icons/IconMenu.d.ts",
+            "default": "./dist/components/icons/IconMenu.mjs"
+        },
+        "./icons/IconNew": {
+            "import": "./dist/components/icons/IconNew.mjs",
+            "types": "./dist/components/icons/IconNew.d.ts",
+            "default": "./dist/components/icons/IconNew.mjs"
+        },
+        "./icons/IconNext": {
+            "import": "./dist/components/icons/IconNext.mjs",
+            "types": "./dist/components/icons/IconNext.d.ts",
+            "default": "./dist/components/icons/IconNext.mjs"
+        },
+        "./icons/IconNotice": {
+            "import": "./dist/components/icons/IconNotice.mjs",
+            "types": "./dist/components/icons/IconNotice.d.ts",
+            "default": "./dist/components/icons/IconNotice.mjs"
+        },
+        "./icons/IconOn": {
+            "import": "./dist/components/icons/IconOn.mjs",
+            "types": "./dist/components/icons/IconOn.d.ts",
+            "default": "./dist/components/icons/IconOn.mjs"
+        },
+        "./icons/IconOption": {
+            "import": "./dist/components/icons/IconOption.mjs",
+            "types": "./dist/components/icons/IconOption.d.ts",
+            "default": "./dist/components/icons/IconOption.mjs"
+        },
+        "./icons/IconPencil": {
+            "import": "./dist/components/icons/IconPencil.mjs",
+            "types": "./dist/components/icons/IconPencil.d.ts",
+            "default": "./dist/components/icons/IconPencil.mjs"
+        },
+        "./icons/IconProfile": {
+            "import": "./dist/components/icons/IconProfile.mjs",
+            "types": "./dist/components/icons/IconProfile.d.ts",
+            "default": "./dist/components/icons/IconProfile.mjs"
+        },
+        "./icons/IconQuestion": {
+            "import": "./dist/components/icons/IconQuestion.mjs",
+            "types": "./dist/components/icons/IconQuestion.d.ts",
+            "default": "./dist/components/icons/IconQuestion.mjs"
+        },
+        "./icons/IconRecommend": {
+            "import": "./dist/components/icons/IconRecommend.mjs",
+            "types": "./dist/components/icons/IconRecommend.d.ts",
+            "default": "./dist/components/icons/IconRecommend.mjs"
+        },
+        "./icons/IconRemove": {
+            "import": "./dist/components/icons/IconRemove.mjs",
+            "types": "./dist/components/icons/IconRemove.d.ts",
+            "default": "./dist/components/icons/IconRemove.mjs"
+        },
+        "./icons/IconReply": {
+            "import": "./dist/components/icons/IconReply.mjs",
+            "types": "./dist/components/icons/IconReply.d.ts",
+            "default": "./dist/components/icons/IconReply.mjs"
+        },
+        "./icons/IconReset": {
+            "import": "./dist/components/icons/IconReset.mjs",
+            "types": "./dist/components/icons/IconReset.d.ts",
+            "default": "./dist/components/icons/IconReset.mjs"
+        },
+        "./icons/IconSearch": {
+            "import": "./dist/components/icons/IconSearch.mjs",
+            "types": "./dist/components/icons/IconSearch.d.ts",
+            "default": "./dist/components/icons/IconSearch.mjs"
+        },
+        "./icons/IconSend": {
+            "import": "./dist/components/icons/IconSend.mjs",
+            "types": "./dist/components/icons/IconSend.d.ts",
+            "default": "./dist/components/icons/IconSend.mjs"
+        },
+        "./icons/IconSetting": {
+            "import": "./dist/components/icons/IconSetting.mjs",
+            "types": "./dist/components/icons/IconSetting.d.ts",
+            "default": "./dist/components/icons/IconSetting.mjs"
+        },
+        "./icons/IconShare": {
+            "import": "./dist/components/icons/IconShare.mjs",
+            "types": "./dist/components/icons/IconShare.d.ts",
+            "default": "./dist/components/icons/IconShare.mjs"
+        },
+        "./icons/IconShield": {
+            "import": "./dist/components/icons/IconShield.mjs",
+            "types": "./dist/components/icons/IconShield.d.ts",
+            "default": "./dist/components/icons/IconShield.mjs"
+        },
+        "./icons/IconSiren": {
+            "import": "./dist/components/icons/IconSiren.mjs",
+            "types": "./dist/components/icons/IconSiren.d.ts",
+            "default": "./dist/components/icons/IconSiren.mjs"
+        },
+        "./icons/IconSymbol": {
+            "import": "./dist/components/icons/IconSymbol.mjs",
+            "types": "./dist/components/icons/IconSymbol.d.ts",
+            "default": "./dist/components/icons/IconSymbol.mjs"
+        },
+        "./icons/IconThumbUp": {
+            "import": "./dist/components/icons/IconThumbUp.mjs",
+            "types": "./dist/components/icons/IconThumbUp.d.ts",
+            "default": "./dist/components/icons/IconThumbUp.mjs"
+        },
+        "./icons/IconThumbUpFill": {
+            "import": "./dist/components/icons/IconThumbUpFill.mjs",
+            "types": "./dist/components/icons/IconThumbUpFill.d.ts",
+            "default": "./dist/components/icons/IconThumbUpFill.mjs"
+        },
+        "./icons/IconTransfer": {
+            "import": "./dist/components/icons/IconTransfer.mjs",
+            "types": "./dist/components/icons/IconTransfer.d.ts",
+            "default": "./dist/components/icons/IconTransfer.mjs"
+        },
+        "./icons/IconTrash": {
+            "import": "./dist/components/icons/IconTrash.mjs",
+            "types": "./dist/components/icons/IconTrash.d.ts",
+            "default": "./dist/components/icons/IconTrash.mjs"
+        },
+        "./icons/IconUp": {
+            "import": "./dist/components/icons/IconUp.mjs",
+            "types": "./dist/components/icons/IconUp.d.ts",
+            "default": "./dist/components/icons/IconUp.mjs"
+        },
+        "./icons/IconUserSquare": {
+            "import": "./dist/components/icons/IconUserSquare.mjs",
+            "types": "./dist/components/icons/IconUserSquare.d.ts",
+            "default": "./dist/components/icons/IconUserSquare.mjs"
+        },
+        "./icons/IconWarning": {
+            "import": "./dist/components/icons/IconWarning.mjs",
+            "types": "./dist/components/icons/IconWarning.d.ts",
+            "default": "./dist/components/icons/IconWarning.mjs"
         }
     },
     "keywords": [

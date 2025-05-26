@@ -13,10 +13,15 @@ export default defineConfig({
     pkg,
     buildOptions: {
         entry: {
-            index: './src/index.ts',
+            ButtonPrimary: './src/components/button/ButtonPrimary.tsx',
+            ButtonSub: './src/components/button/ButtonSub.tsx',
+            ModalConfirm: './src/components/modal/ModalConfirm.tsx',
+            ModalNotice: './src/components/modal/ModalNotice.tsx',
+            size: './src/constants/size.ts',
             icons: './src/components/icons/index.ts',
         },
         target: SUPPORT_TARGETS,
+        outDir: 'dist',
     },
     resolve: {
         alias: {
@@ -38,4 +43,7 @@ export default defineConfig({
             ],
         }),
     ],
+    dtsOptions: {
+        include: ['src/**/*'],
+    },
 })
