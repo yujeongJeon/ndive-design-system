@@ -1,5 +1,13 @@
 # @ndive/design-components
 
+## 0.0.12
+
+### Patch Changes
+
+- cada6fb: [design-components] 배럴파일을 제거하고 모든 exports를 분리합니다.
+- Updated dependencies [cada6fb]
+  - @ndive/design-tokens@0.0.9
+
 ## 0.0.11
 
 ### Patch Changes
